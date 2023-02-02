@@ -19,7 +19,7 @@
         <ul>
             <li><a href="AdminPanel">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/release-product">Release New Product</a></li>
-            <li><a href="#">Manufacture New Product</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/add-batch">Add New Batch</a></li>
             <div class="acc">
                 <li><a href="#">Account</a></li>
             </div>

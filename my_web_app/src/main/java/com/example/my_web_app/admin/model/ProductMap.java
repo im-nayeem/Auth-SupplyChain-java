@@ -32,7 +32,7 @@ public class ProductMap {
     /**=========Methods===========**/
     public void storeInDatabase()
     {
-        DatabaseConnection conn;
+        DatabaseConnection conn = null;
         try {
             conn = new DatabaseConnection();
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map VALUES(?,?,?)");
@@ -43,5 +43,12 @@ public class ProductMap {
         } catch (SQLException e) {
             throw new RuntimeException(e+"\nCouldn't Store in Database!");
         }
+        finally {
+            conn.close();
+        }
+    }
+
+    public String getProductCode() {
+        return productCode;
     }
 }
