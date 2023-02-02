@@ -17,8 +17,8 @@
 <header>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Release New Product</a></li>
+            <li><a href="AdminPanel">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/release-product">Release New Product</a></li>
             <li><a href="#">Manufacture New Product</a></li>
             <div class="acc">
                 <li><a href="#">Account</a></li>

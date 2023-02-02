@@ -11,11 +11,11 @@
 <head>
     <title>Company Info</title>
     <style>
-        <%@include file="../assets/companyForm.css"%>
+        <%@include file="../assets/form.css"%>
     </style>
 </head>
 <body>
-<form id="company-info-form" method="post" action="${pageContext.request.contextPath}/admin/storeCompanyInfo">
+<form id="company-form" method="post" action="${pageContext.request.contextPath}/admin/storeCompanyInfo">
     <div class="form-group">
         <label for="company-name">Company Name:</label>
         <input type="text" id="company-name" name="company-name" pattern="[a-zA-Z ]+" required>

@@ -1,4 +1,4 @@
-#company-info-form {
+#company-form {
     width: 500px;
     margin: 0 auto;
     padding: 20px;
@@ -30,7 +30,7 @@ input[type="number"] {
 }
 
 button[type="button"] {
-    background-color: #999;
+    background-color: #cb2929;
     color: #fff;
     padding: 10px 20px;
     border: none;
