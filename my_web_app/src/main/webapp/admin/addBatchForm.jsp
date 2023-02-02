@@ -25,6 +25,10 @@
     <input type="text" id="batch-id" name="batch-id" pattern="[A-Z]+(#B)[0-9]+" required>
   </div>
   <div class="form-group">
+    <label for="total-product">Total Product:</label>
+    <input type="number" id="total-product" name="total-product" pattern="[1-9]+" required>
+  </div>
+  <div class="form-group">
     <label for="manufacturing-date">Manufacturing Date:</label>
     <input type="date" id="manufacturing-date" name="manufacturing-date" required>
   </div>

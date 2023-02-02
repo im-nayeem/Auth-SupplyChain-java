@@ -14,13 +14,21 @@ import java.sql.SQLException;
 public class ProductMap {
     private String productName="";
     private String productCode="";
+    private String haveWarranty="";
+    private  String haveExpiration="";
     private String tableName="";
+    private int produced=0;
 
     /**----Constructor-----**/
+    public ProductMap(){
+
+    }
     public ProductMap(final HttpServletRequest request) {
         try{
             productName = request.getParameter("product-name");
             productCode = request.getParameter("product-code");
+            haveWarranty=request.getParameter("having-warranty");
+            haveExpiration=request.getParameter("having-expired-date");
             tableName = request.getParameter("table-name");
         }
         catch (Exception e)
@@ -35,10 +43,12 @@ public class ProductMap {
         DatabaseConnection conn = null;
         try {
             conn = new DatabaseConnection();
-            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map VALUES(?,?,?)");
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map(name,p_code,have_warranty,have_expiration,table_name) VALUES(?,?,?,?,?)");
             pstmt.setString(1,productName);
             pstmt.setString(2,productCode);
-            pstmt.setString(3,tableName);
+            pstmt.setString(3,haveWarranty);
+            pstmt.setString(4,haveExpiration);
+            pstmt.setString(5,tableName);
             pstmt.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e+"\nCouldn't Store in Database!");
@@ -46,6 +56,16 @@ public class ProductMap {
         finally {
             conn.close();
         }
+    }
+
+    public void markAsProduced()
+    {
+
+    }
+
+    public void getProductInfo(String productCode)
+    {
+
     }
 
     public String getProductCode() {

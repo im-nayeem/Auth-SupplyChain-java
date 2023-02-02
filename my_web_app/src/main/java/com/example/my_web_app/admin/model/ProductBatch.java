@@ -12,13 +12,14 @@ import java.sql.PreparedStatement;
  */
 public class ProductBatch {
     private String productName,productCode,batchId,manufacDate,expDate;
-    private int warrantyYear=0,warrantyMonth=0;
+    private int totalProduct=0,warrantyYear=0,warrantyMonth=0;
     private  DatabaseConnection conn;
 
     /**----------Constructor------------**/
     public ProductBatch(final HttpServletRequest request) {
         try{
             productCode = request.getParameter("product-code");
+            totalProduct = Integer.parseInt(request.getParameter("total-product"));
             batchId = request.getParameter("batch-id");
             manufacDate = request.getParameter("manufacturing-date");
             expDate = request.getParameter("expire-date");
@@ -36,13 +37,14 @@ public class ProductBatch {
     {
         try{
             conn = new DatabaseConnection();
-            PreparedStatement preparedStatement = conn.getPreparedStatement("INSERT INTO batch(batch_id,p_code,manufac_date,exp_date,warranty_year,warranty_month) VALUES(?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = conn.getPreparedStatement("INSERT INTO batch(batch_id,total_product,p_code,manufac_date,exp_date,warranty_year,warranty_month) VALUES(?,?,?,?,?,?,?)");
             preparedStatement.setString(1,batchId);
-            preparedStatement.setString(2,productCode);
-            preparedStatement.setString(3,manufacDate);
-            preparedStatement.setString(4,expDate);
-            preparedStatement.setInt(5,warrantyYear);
-            preparedStatement.setInt(6,warrantyMonth);
+            preparedStatement.setInt(2,totalProduct);
+            preparedStatement.setString(3,productCode);
+            preparedStatement.setString(4,manufacDate);
+            preparedStatement.setString(5,expDate);
+            preparedStatement.setInt(6,warrantyYear);
+            preparedStatement.setInt(7,warrantyMonth);
 
             preparedStatement.execute();
 

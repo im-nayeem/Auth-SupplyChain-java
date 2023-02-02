@@ -25,6 +25,20 @@
         <input type="text" id="product-code" name="product-code" pattern="[A-Z0-9]+" required>
     </div>
     <div class="form-group">
+        <label for="having-warranty">Having Warranty:</label>
+        <input type="radio" id="having-warranty-yes" name="having-warranty" value="yes" required>
+        <label for="having-warranty-yes">Yes</label>
+        <input type="radio" id="having-warranty-no" name="having-warranty" value="no" required>
+        <label for="having-warranty-no">No</label>
+    </div>
+    <div class="form-group">
+        <label for="having-expired-date">Having Expired Date:</label>
+        <input type="radio" id="having-expired-date-yes" name="having-expired-date" value="yes" required>
+        <label for="having-expired-date-yes">Yes</label>
+        <input type="radio" id="having-expired-date-no" name="having-expired-date" value="no" required>
+        <label for="having-expired-date-no">No</label>
+    </div>
+    <div class="form-group">
         <label for="table-name">Table Name:</label>
         <input type="text" id="table-name" name="table-name" pattern="[a-z_]+" required>
     </div>
