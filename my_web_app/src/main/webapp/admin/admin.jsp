@@ -1,5 +1,7 @@
 <%@include file="/includes/admin-header.jsp"%>
-<main>
+<style>
+  <%@include file="/assets/admin-dashboard.css"%>
+</style>
   <h1>Welcome to the Admin Panel Dashboard</h1>
   <div class="flex-wrapper">
     <div class="single-chart">

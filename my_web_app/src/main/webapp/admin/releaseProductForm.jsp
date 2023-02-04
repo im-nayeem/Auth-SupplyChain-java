@@ -38,10 +38,6 @@
         <input type="radio" id="having-expired-date-no" name="having-expired-date" value="no" required>
         <label for="having-expired-date-no">No</label>
     </div>
-    <div class="form-group">
-        <label for="table-name">Table Name:</label>
-        <input type="text" id="table-name" name="table-name" pattern="[a-z_]+" required>
-    </div>
     <div class="form-group form-actions">
         <button type="button" onclick="window.history.back()">Cancel</button>
         <button type="submit">Submit</button>

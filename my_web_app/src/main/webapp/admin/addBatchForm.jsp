@@ -22,7 +22,7 @@
   </div>
   <div class="form-group">
     <label for="batch-id">Batch ID:</label>
-    <input type="text" id="batch-id" name="batch-id" pattern="[A-Z]+(#B)[0-9]+" required>
+    <input type="text" id="batch-id" name="batch-id" pattern="B[0-9]+[A-Z]+" required>
   </div>
   <div class="form-group">
     <label for="total-product">Total Product:</label>

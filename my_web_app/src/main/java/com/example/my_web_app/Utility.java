@@ -8,7 +8,13 @@ package com.example.my_web_app;
 public class Utility {
     public static String getInitialQuery()
     {
-        return "CREATE table address(\n" +
+        return "CREATE TABLE admin(\n" +
+                "    email varchar(30) UNIQUE,\n" +
+                "    hash_key varchar(500),\n" +
+                "    salt varchar(500),\n" +
+                "    id int not null AUTO_INCREMENT PRIMARY KEY\n" +
+                "    );\n" +
+                " CREATE table address(\n" +
                 "     address_id int not null PRIMARY KEY,\n" +
                 "     division varchar(20),\n" +
                 "     district varchar(20),\n" +
@@ -74,16 +80,20 @@ public class Utility {
                 " CREATE TABLE product_map(\n" +
                 "     name varchar(100),\n" +
                 "     p_code varchar(5) PRIMARY KEY,\n" +
+                "     have_warranty varchar(3),\n" +
+                "     have_expiration varchar(3),\n" +
                 "     table_name varchar(20)\n" +
                 "     );\n" +
                 " CREATE index idx_product_map on product_map(p_code);\n" +
                 " CREATE TABLE batch(\n" +
                 "     batch_id varchar(15) PRIMARY KEY,\n" +
+                "     total_product int,\n" +
                 "     p_code varchar(5),\n" +
                 "     manufac_date date,\n" +
                 "     exp_date date,\n" +
                 "     warranty_year int,\n" +
                 "     warranty_month int,\n" +
+                "      produced int(1) default 0,\n" +
                 "     FOREIGN KEY(p_code) REFERENCES product_map(p_code)\n" +
                 "     );\n" +
                 " CREATE INDEX idx_batch on batch(batch_id);\n" +

@@ -43,8 +43,8 @@ public class AdminPanel extends HttpServlet {
         }
         catch (Exception e)
         {
-            request.setAttribute("error",e);
-            request.getRequestDispatcher("error/error.jsp").forward(request,response);
+//            request.setAttribute("error",e);
+//            request.getRequestDispatcher("error/error.jsp").forward(request,response);
 
             /** If Tables are not created then create tables and fill up form **/
             try{

@@ -34,6 +34,7 @@ public class storeCompanyInfo extends HttpServlet {
 
             pstmt.execute();
 
+            response.sendRedirect("../AdminPanel");
 
 
         }

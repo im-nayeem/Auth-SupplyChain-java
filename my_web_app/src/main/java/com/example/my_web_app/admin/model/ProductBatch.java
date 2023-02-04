@@ -4,23 +4,57 @@ import DB.DatabaseConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 02-Feb-23
  *
  * @author Nayeem
  */
-public class ProductBatch {
-    private String productName,productCode,batchId,manufacDate,expDate;
-    private int totalProduct=0,warrantyYear=0,warrantyMonth=0;
+public class ProductBatch{
+    private String batchId,productCode,manufacDate,expDate;
+    private int totalProduct=0,warrantyYear=0,warrantyMonth=0,produced=0;
     private  DatabaseConnection conn;
 
     /**----------Constructor------------**/
+    public ProductBatch(){
+
+    }
+    public ProductBatch(String batchId)
+    {
+        try{
+            conn = new DatabaseConnection();
+            PreparedStatement pstmt= conn.getPreparedStatement("SELECT * FROM batch WHERE batch_id=?");
+            pstmt.setString(1,batchId);
+            ResultSet resultSet = pstmt.executeQuery();
+            resultSet.next();
+
+            this.batchId = resultSet.getString("batch_id");
+            this.productCode = resultSet.getString("p_code");
+            this.totalProduct = resultSet.getInt("total_product");
+            this.warrantyMonth = resultSet.getInt("warranty_month");
+            this.warrantyYear = resultSet.getInt("warranty_year");
+            this.manufacDate = resultSet.getString("manufac_date");
+            this.expDate = resultSet.getString("exp_date");
+            this.produced=resultSet.getInt("produced");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e+" Product Batch");
+        }
+        finally {
+            conn.close();
+        }
+
+    }
+
     public ProductBatch(final HttpServletRequest request) {
         try{
-            productCode = request.getParameter("product-code");
             totalProduct = Integer.parseInt(request.getParameter("total-product"));
             batchId = request.getParameter("batch-id");
+            productCode = request.getParameter("product-code");
             manufacDate = request.getParameter("manufacturing-date");
             expDate = request.getParameter("expire-date");
             warrantyYear = Integer.parseInt(request.getParameter("warranty-year"));
@@ -30,6 +64,17 @@ public class ProductBatch {
         {
             throw new RuntimeException(e+"\n Couldn't Get Form Data!");
         }
+    }
+    public  ProductBatch(final ResultSet resultSet) throws Exception {
+
+        this.batchId = resultSet.getString("batch_id");
+        this.productCode = resultSet.getString("p_code");
+        this.totalProduct = resultSet.getInt("total_product");
+        this.warrantyMonth = resultSet.getInt("warranty_month");
+        this.warrantyYear = resultSet.getInt("warranty_year");
+        this.manufacDate = resultSet.getString("manufac_date");
+        this.expDate = resultSet.getString("exp_date");
+        this.produced=resultSet.getInt("produced");
     }
 
     /**==================== Methods ==========================**/
@@ -54,5 +99,53 @@ public class ProductBatch {
         finally {
             conn.close();
         }
+    }
+    public List<ProductBatch> getAllBatch()
+    {
+        try {
+            List<ProductBatch>batchList = new ArrayList<>();
+            conn = new DatabaseConnection();
+            ResultSet resultSet = conn.executeQuery("SELECT * FROM batch");
+            while(resultSet.next())
+                batchList.add(new ProductBatch(resultSet));
+            return  batchList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            conn.close();
+        }
+    }
+
+    public String getBatchId() {
+        return batchId;
+    }
+
+    public String getManufacDate() {
+        return manufacDate;
+    }
+
+    public String getExpDate() {
+        return expDate;
+    }
+
+    public int getTotalProduct() {
+        return totalProduct;
+    }
+
+    public int getWarrantyYear() {
+        return warrantyYear;
+    }
+
+    public int getWarrantyMonth() {
+        return warrantyMonth;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public int getProduced() {
+        return produced;
     }
 }

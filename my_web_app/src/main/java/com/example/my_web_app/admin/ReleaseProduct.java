@@ -24,7 +24,7 @@ public class ReleaseProduct extends HttpServlet {
         try {
             ProductMap productMap = new ProductMap(request);
             productMap.storeInDatabase();
-            request.getSession().setAttribute("p_code",productMap.getProductCode());
+            productMap.createProductTable();
             response.sendRedirect("add-batch?p_code="+productMap.getProductCode());
         } catch (Exception e) {
             request.setAttribute("error",e);
