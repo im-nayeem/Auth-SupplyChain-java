@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Admin Panel Dashboard</title>
+    <title>Admin Panel</title>
     <style>
         <%@include file="../assets/admin.css"%>
     </style>

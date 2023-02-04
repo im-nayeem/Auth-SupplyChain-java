@@ -43,7 +43,7 @@ public class ProductInfoGenerator {
             throw new RuntimeException(e+" \nProductInfoGenerator");
         }
         finally {
-//            conn.close();
+            conn.close();
         }
 
     }

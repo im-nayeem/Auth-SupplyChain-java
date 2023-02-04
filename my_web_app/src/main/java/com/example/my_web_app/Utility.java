@@ -103,4 +103,14 @@ public class Utility {
                 "\n";
     }
 
+    public static String getCode(String Id)
+    {
+        int i;
+        for(i=0;i<Id.length();i++)
+        {
+            if(Character.isDigit(Id.charAt(i)))
+                break;
+        }
+        return Id.substring(0,i);
+    }
 }

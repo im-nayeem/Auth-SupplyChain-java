@@ -117,6 +117,31 @@ public class ProductBatch{
         }
     }
 
+    /**
+     * Method to get all products for this batch
+     * @return lst the list of all product
+     */
+    public List<Product> getAllProduct()
+    {
+        try{
+            conn = new DatabaseConnection();
+
+            List<Product> lst = new ArrayList<>();
+            ProductMap productMap = new ProductMap(productCode);
+
+            PreparedStatement pstmt = conn.getPreparedStatement("SELECT * FROM "+productMap.getTableName()+" WHERE batch = ?");
+            pstmt.setString(1,batchId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next())
+                lst.add(new Product(rs));
+
+            return lst;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e+" getAllProduct");
+        }
+    }
+
     public String getBatchId() {
         return batchId;
     }

@@ -1,11 +1,14 @@
 package com.example.my_web_app.admin;
 
+import com.example.my_web_app.admin.model.Product;
+import com.example.my_web_app.admin.model.ProductBatch;
 import com.example.my_web_app.admin.model.ProductInfoGenerator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created on 03-Feb-23
@@ -16,31 +19,44 @@ import java.io.IOException;
 public class GenerateQRCode extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
-            if(request.getParameter("batch")==null)
-            {
+        try {
+            if (request.getParameter("batch") == null) {
                 //get-all-batch-info
-                request.getRequestDispatcher("/admin/all-batch.jsp").forward(request,response);
+                request.getRequestDispatcher("/admin/all-batch.jsp").forward(request, response);
+            }
+            //if product info for this batch is not generated,generate them first
+//            ProductInfoGenerator productInfoGenerator = new ProductInfoGenerator();
+//            productInfoGenerator.generateProductInfo(request.getParameter("batch"));
+
+            //get list of all products
+            ProductBatch productBatch = new ProductBatch(request.getParameter("batch"));
+            List<Product> productList = productBatch.getAllProduct();
+
+            request.setAttribute("productList",productList);
+
+            //dispatch to qrCode.jsp to generate qr code
+            request.getRequestDispatcher("/admin/qrCode.jsp").forward(request, response);
+        } catch (Exception e) {
+            try {
+                //if product info are already generated then generate qr code
+                ProductBatch productBatch = new ProductBatch(request.getParameter("batch"));
+                List<Product> productList = productBatch.getAllProduct();
+                request.setAttribute("productList",productList);
+
+                request.getRequestDispatcher("/admin/qrCode.jsp").forward(request, response);
+            } catch (Exception ex) {
+                request.setAttribute("error", e + "\n");
+                request.getRequestDispatcher("/error/error.jsp").forward(request, response);
             }
 
-            ProductInfoGenerator productInfoGenerator = new ProductInfoGenerator();
-            productInfoGenerator.generateProductInfo(request.getParameter("batch"));
-
-            request.getRequestDispatcher("/admin/qrCode.jsp").forward(request,response);
-        } catch (Exception e) {
-//            try {
-//                request.getRequestDispatcher("/admin/qrCode.jsp").forward(request,response);
-//            } catch (Exception ex) {
-                request.setAttribute("error",e+"\n");
-                request.getRequestDispatcher("/error/error.jsp").forward(request,response);
-//            }
+            }
 
         }
 
+        @Override
+        protected void doPost (HttpServletRequest request, HttpServletResponse response) throws
+        ServletException, IOException {
+
+        }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-}
