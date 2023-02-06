@@ -1,4 +1,4 @@
-package com.example.my_web_app.admin.model;
+package com.example.my_web_app.common.model;
 
 import DB.DatabaseConnection;
 

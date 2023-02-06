@@ -1,7 +1,5 @@
-<%@ page import="java.net.InetAddress" %>
-<%@ page import="java.net.NetworkInterface" %>
-<%@ page import="java.util.Enumeration" %>
-<%@ page import="java.net.Inet4Address" %><%--
+<%@ page import="com.example.my_web_app.Utility" %>
+<%--
   Created by IntelliJ IDEA.
   User: Nayeem
   Date: 03-Feb-23
@@ -30,91 +28,70 @@
         window.print();
     });
 </script>
+<%String wirelessIp = Utility.getIp();%>
 
 <script>
-    <%
-    String wirelessIp = "";
-Enumeration<NetworkInterface> n = NetworkInterface.getNetworkInterfaces();
-while(n.hasMoreElements())
-{
-    NetworkInterface e = n.nextElement();
-    if (!e.getName().toLowerCase().contains("wireless")) {
-        continue;
-    }
-    Enumeration<InetAddress> a = e.getInetAddresses();
-    while (a.hasMoreElements())
-    {
-        InetAddress addr = a.nextElement();
-        if (!addr.isLinkLocalAddress() && !addr.isLoopbackAddress() && addr instanceof Inet4Address) {
-            wirelessIp = addr.getHostAddress();
-            break;
+    let sections = [];
+    let section={};
+    let url={};
+    <c:forEach items="${productList}" var="product">
+        section = {};
+        section.label = "${product.getProductId()}";
+        section.urls = [];
+
+        for (let j = 1; j <= 2; j++) {
+            url = {};
+            url.url = "${pageContext.request.scheme}://"+"<%= wirelessIp %>"+":${pageContext.request.serverPort}"+"${pageContext.request.contextPath}";
+            if(j&1)
+            {
+                url.label = "Customer";
+                url.url += "/view-product?pid=" + "${product.getProductId()}";
+            }
+            else{
+                url.label = "Seller";
+                url.url += "/seller/sell?pid=" + "${product.getProductId()}";
+            }
+            section.urls.push(url);
+
+
         }
-    }
-    if (!wirelessIp.isEmpty()) {
-        break;
-    }
-    }
-%>
-let sections = [];
-let section={};
-let url={};
-<c:forEach items="${productList}" var="product">
-section = {};
-section.label = "${product.getProductId()}";
-section.urls = [];
-for (let j = 1; j <= 2; j++) {
-    url = {};
-    url.url = "${pageContext.request.scheme}://"+"<%= wirelessIp %>"+":${pageContext.request.serverPort}"+"${pageContext.request.contextPath}";
-    if(j&1)
-    {
-        url.label = "Customer";
-        url.url += "/verify?pid=" + "${product.getProductId()}";
-    }
-    else{
-        url.label = "Seller";
-        url.url += "/seller/sell?pid=" + "${product.getProductId()}";
-    }
-    section.urls.push(url);
+        sections.push(section);
+    </c:forEach>
 
+    const qrContainer = document.getElementById('qrContainer');
 
-}
-sections.push(section);
-</c:forEach>
+    sections.forEach(({ label, urls }) => {
+        const section = document.createElement('div');
+        section.classList.add('section');
 
-const qrContainer = document.getElementById('qrContainer');
+        const sectionLabel = document.createElement('h3');
+        sectionLabel.classList.add('sectionLabel');
+        sectionLabel.innerText = label;
+        section.appendChild(sectionLabel);
 
-sections.forEach(({ label, urls }) => {
-    const section = document.createElement('div');
-    section.classList.add('section');
+        urls.forEach(({ label, url }) => {
+            const qrBlock = document.createElement('div');
+            qrBlock.classList.add('qrBlock');
 
-    const sectionLabel = document.createElement('h3');
-    sectionLabel.classList.add('sectionLabel');
-    sectionLabel.innerText = label;
-    section.appendChild(sectionLabel);
+            const qrCode = new QRCode(qrBlock, {
+                text: url,
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
 
-    urls.forEach(({ label, url }) => {
-        const qrBlock = document.createElement('div');
-        qrBlock.classList.add('qrBlock');
+            const qrLabel = document.createElement('p');
+            qrLabel.innerText = label;
+            qrBlock.appendChild(qrLabel);
 
-        const qrCode = new QRCode(qrBlock, {
-            text: url,
-            width: 128,
-            height: 128,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            section.appendChild(qrBlock);
         });
 
-        const qrLabel = document.createElement('p');
-        qrLabel.innerText = label;
-        qrBlock.appendChild(qrLabel);
-
-        section.appendChild(qrBlock);
+        qrContainer.appendChild(section);
     });
-
-    qrContainer.appendChild(section);
-});
-        </script>
+</script>
 
 
 

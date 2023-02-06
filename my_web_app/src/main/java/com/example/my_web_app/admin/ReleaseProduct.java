@@ -1,6 +1,6 @@
 package com.example.my_web_app.admin;
 
-import com.example.my_web_app.admin.model.ProductMap;
+import com.example.my_web_app.common.model.ProductMap;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

@@ -1,11 +1,10 @@
-package com.example.my_web_app.admin.model;
+package com.example.my_web_app.common.model;
 
 import DB.DatabaseConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +99,12 @@ public class ProductBatch{
             conn.close();
         }
     }
+
+    /**
+     *
+     * Method to get list of all batches
+     * @return batchList the list of all batches
+     */
     public List<ProductBatch> getAllBatch()
     {
         try {

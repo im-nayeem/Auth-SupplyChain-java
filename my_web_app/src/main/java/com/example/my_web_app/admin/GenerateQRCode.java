@@ -1,7 +1,7 @@
 package com.example.my_web_app.admin;
 
-import com.example.my_web_app.admin.model.Product;
-import com.example.my_web_app.admin.model.ProductBatch;
+import com.example.my_web_app.common.model.Product;
+import com.example.my_web_app.common.model.ProductBatch;
 import com.example.my_web_app.admin.model.ProductInfoGenerator;
 
 import javax.servlet.*;
@@ -21,16 +21,16 @@ public class GenerateQRCode extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             if (request.getParameter("batch") == null) {
-                //get-all-batch-info
+                List<ProductBatch>batchList = new ProductBatch().getAllBatch();
+                request.setAttribute("batchList",batchList);
                 request.getRequestDispatcher("/admin/all-batch.jsp").forward(request, response);
             }
             //if product info for this batch is not generated,generate them first
-//            ProductInfoGenerator productInfoGenerator = new ProductInfoGenerator();
-//            productInfoGenerator.generateProductInfo(request.getParameter("batch"));
+            ProductInfoGenerator productInfoGenerator = new ProductInfoGenerator();
+            productInfoGenerator.generateProductInfo(request.getParameter("batch"));
 
             //get list of all products
-            ProductBatch productBatch = new ProductBatch(request.getParameter("batch"));
-            List<Product> productList = productBatch.getAllProduct();
+            List<Product> productList = new ProductBatch(request.getParameter("batch")).getAllProduct();
 
             request.setAttribute("productList",productList);
 
@@ -39,10 +39,9 @@ public class GenerateQRCode extends HttpServlet {
         } catch (Exception e) {
             try {
                 //if product info are already generated then generate qr code
-                ProductBatch productBatch = new ProductBatch(request.getParameter("batch"));
-                List<Product> productList = productBatch.getAllProduct();
-                request.setAttribute("productList",productList);
+                List<Product> productList = new ProductBatch(request.getParameter("batch")).getAllProduct();
 
+                request.setAttribute("productList",productList);
                 request.getRequestDispatcher("/admin/qrCode.jsp").forward(request, response);
             } catch (Exception ex) {
                 request.setAttribute("error", e + "\n");

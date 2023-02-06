@@ -1,0 +1,27 @@
+#batchList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#batchList th, #batchList td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#batchList th {
+    background-color: #ddd;
+}
+#batchList a{
+    color: #3b5c75;
+}
+#batchList thead th{
+    border: 1px dotted black;
+}
+#batchList tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#batchList tr:nth-child(odd) {
+    background-color: #fff;
+}

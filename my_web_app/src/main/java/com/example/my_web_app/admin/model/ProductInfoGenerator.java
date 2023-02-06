@@ -1,6 +1,9 @@
 package com.example.my_web_app.admin.model;
 
 import DB.DatabaseConnection;
+import com.example.my_web_app.common.model.Product;
+import com.example.my_web_app.common.model.ProductBatch;
+import com.example.my_web_app.common.model.ProductMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

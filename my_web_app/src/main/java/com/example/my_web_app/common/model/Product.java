@@ -1,4 +1,4 @@
-package com.example.my_web_app.admin.model;
+package com.example.my_web_app.common.model;
 
 import DB.DatabaseConnection;
 import com.example.my_web_app.Utility;
@@ -33,7 +33,7 @@ public class Product{
             PreparedStatement pstmt  = conn.getPreparedStatement("SELECT * FROM "+productMap.getTableName()+" WHERE pid=?");
             pstmt.setString(1,productId);
             ResultSet resultSet = pstmt.executeQuery();
-
+            resultSet.next();
             this.productId = resultSet.getString("pid");
             this.batchId  = resultSet.getString("batch");
             this.status = resultSet.getString("status");
@@ -41,7 +41,7 @@ public class Product{
             this.lastHolder = resultSet.getString("last_holder");
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e+"\nProduct");
         }
         finally {
             conn.close();
