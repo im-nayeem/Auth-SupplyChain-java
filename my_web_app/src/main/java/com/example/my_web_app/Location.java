@@ -23,9 +23,9 @@ public class Location {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
+   public int getId(){
+        return id;
+   }
 
     @Override
     public String toString(){
