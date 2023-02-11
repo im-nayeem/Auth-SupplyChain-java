@@ -1,8 +1,14 @@
 package com.example.my_web_app;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.util.Enumeration;
+import java.net.URL;
+import java.util.*;
 
 /**
  * Created on 31-Jan-23
@@ -136,5 +142,54 @@ public class Utility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Method getGeoList
+     * @param url the url of json to get list of location
+     * @return map the map list of <id,location name>
+     * @throws Exception
+     */
+    public static Map<Integer,String> getGeoList(URL url) throws Exception{
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
+
+        //Getting the response code
+        int responsecode = conn.getResponseCode();
+        if (responsecode != 200) {
+            throw new RuntimeException("HttpResponseCode: " + responsecode);
+        } else {
+
+            String inline = "";
+            Scanner scanner = new Scanner(url.openStream());
+
+            //Write all the JSON data into a string using a scanner
+            while (scanner.hasNext()) {
+                inline += scanner.nextLine();
+            }
+
+            //Close the scanner
+            scanner.close();
+
+            //Using the JSON simple library parse the string into a json object
+            JSONParser parse = new JSONParser();
+            JSONArray data_obj = (JSONArray) parse.parse(inline);
+
+            JSONObject obj = (JSONObject) data_obj.get(2);
+            JSONArray arr = (JSONArray) obj.get("data");
+
+            Map<Integer, String> map = new HashMap<>();
+            for (int i = 0; i < arr.size(); i++) {
+                JSONObject location = (JSONObject) arr.get(i);
+//                    System.out.println(division);
+                String name = (String) location.get("name");
+                int id = Integer.parseInt((String) location.get("id"));
+                map.put(id, name);
+            }
+            return  map;
+
+        }
     }
 }

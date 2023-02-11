@@ -14,7 +14,7 @@
           <element id="module-output" name="my_web_app" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.json:json:20210118" />
+          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.22" />
           <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
