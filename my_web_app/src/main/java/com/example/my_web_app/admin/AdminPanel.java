@@ -2,6 +2,7 @@ package com.example.my_web_app.admin;
 
 import DB.DatabaseConnection;
 import com.example.my_web_app.Utility;
+import com.example.my_web_app.common.model.Company;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -26,16 +27,17 @@ public class AdminPanel extends HttpServlet {
         try
         {
             conn=new DatabaseConnection();
-            ResultSet rs= conn.executeQuery("Select COUNT(*) as c from company_info;");
+            ResultSet rs= conn.executeQuery("Select * from company_info;");
             if(rs.next())
             {
-                if(rs.getInt("c")==0)
+                //check if company info is initialized
+                if(rs.getRow()==0)
                 {
-
                     throw new RuntimeException("No Data!");
                 }
 
             }
+            request.getSession().setAttribute("company",new Company());
             request.getRequestDispatcher("admin/admin.jsp").forward(request,response);
 
 
@@ -58,7 +60,7 @@ public class AdminPanel extends HttpServlet {
                 }
                 catch (Exception e1)
                 {
-                    request.setAttribute("error",e+"\n"+ex+"\n"+e1);
+                    request.setAttribute("error",e+"\n"+ex);
                     request.getRequestDispatcher("error/error.jsp").forward(request,response);
                 }
             }

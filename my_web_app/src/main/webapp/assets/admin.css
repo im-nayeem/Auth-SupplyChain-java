@@ -25,6 +25,8 @@ nav a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    border: 0.5px dotted rgba(0, 0, 0, 0.22);
+    margin-right: 5px;
 }
 
 nav a:hover {
