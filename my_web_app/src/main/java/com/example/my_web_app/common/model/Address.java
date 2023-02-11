@@ -1,11 +1,13 @@
 package com.example.my_web_app.common.model;
 
 import DB.DatabaseConnection;
+import com.example.my_web_app.Location;
 import com.example.my_web_app.Utility;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Map;
 
 public class Address {
@@ -57,7 +59,7 @@ public class Address {
         }
     }
 
-    public static Map<Integer,String> getDivisionList()
+    public static List<Location> getDivisionList()
     {
         try {
             return Utility.getGeoList(new URL("https://raw.githubusercontent.com/nuhil/bangladesh-geocode/master/divisions/divisions.json"));
@@ -65,7 +67,7 @@ public class Address {
             throw new RuntimeException(e);
         }
     }
-    public static Map<Integer,String> getDistrictList()
+    public static List<Location> getDistrictList()
     {
         try {
             return Utility.getGeoList(new URL("https://raw.githubusercontent.com/nuhil/bangladesh-geocode/master/districts/districts.json"));
@@ -73,7 +75,7 @@ public class Address {
             throw new RuntimeException(e);
         }
     }
-    public static Map<Integer,String> getUpazilaList()
+    public static List<Location> getUpazilaList()
     {
         try {
             return Utility.getGeoList(new URL("https://raw.githubusercontent.com/nuhil/bangladesh-geocode/master/upazilas/upazilas.json"));
@@ -82,7 +84,7 @@ public class Address {
         }
 
     }
-    public static Map<Integer,String > getUnionList()
+    public static List<Location> getUnionList()
     {
         try {
             return Utility.getGeoList(new URL("https://raw.githubusercontent.com/nuhil/bangladesh-geocode/master/unions/unions.json"));

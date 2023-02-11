@@ -147,10 +147,10 @@ public class Utility {
     /**
      * Method getGeoList
      * @param url the url of json to get list of location
-     * @return map the map list of <id,location name>
+     * @return map the list of location
      * @throws Exception
      */
-    public static Map<Integer,String> getGeoList(URL url) throws Exception{
+    public static List<Location> getGeoList(URL url) throws Exception{
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -180,13 +180,29 @@ public class Utility {
             JSONObject obj = (JSONObject) data_obj.get(2);
             JSONArray arr = (JSONArray) obj.get("data");
 
-            Map<Integer, String> map = new HashMap<>();
+            List<Location> map = new ArrayList<>();
             for (int i = 0; i < arr.size(); i++) {
                 JSONObject location = (JSONObject) arr.get(i);
 //                    System.out.println(division);
                 String name = (String) location.get("name");
                 int id = Integer.parseInt((String) location.get("id"));
-                map.put(id, name);
+                int parentId=-1;
+                if(location.getOrDefault("division_id",null)!=null)
+                {
+                    parentId = Integer.parseInt((String) location.get("division_id"));
+                }
+                else if(location.getOrDefault("district_id",null)!=null)
+                {
+                    parentId = Integer.parseInt((String) location.get("district_id"));
+
+                }
+                else if(location.getOrDefault("upazilla_id",null)!=null)
+                {
+                    parentId = Integer.parseInt((String) location.get("upazilla_id"));
+
+                }
+
+                map.add(new Location(name,id,parentId));
             }
             return  map;
 
