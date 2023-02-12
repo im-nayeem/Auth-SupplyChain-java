@@ -25,7 +25,7 @@ public class Utility {
                 "    id int not null AUTO_INCREMENT PRIMARY KEY\n" +
                 "    );\n" +
                 " CREATE table address(\n" +
-                "     address_id int not null PRIMARY KEY,\n" +
+                "     address_id varchar(15) not null PRIMARY KEY,\n" +
                 "     division varchar(20),\n" +
                 "     district varchar(20),\n" +
                 "     upazila varchar(30),\n" +
