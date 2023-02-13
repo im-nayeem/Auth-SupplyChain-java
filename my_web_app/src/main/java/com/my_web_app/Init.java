@@ -1,4 +1,4 @@
-package com.example.my_web_app;
+package com.my_web_app;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

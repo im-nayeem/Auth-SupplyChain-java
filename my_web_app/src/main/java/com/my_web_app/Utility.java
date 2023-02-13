@@ -1,4 +1,4 @@
-package com.example.my_web_app;
+package com.my_web_app;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created on 31-Jan-23
@@ -37,9 +38,10 @@ public class Utility {
                 "CREATE TABLE role(\n" +
                 "     role_id int not null AUTO_INCREMENT PRIMARY KEY,\n" +
                 "     role_name varchar(15),\n" +
-                "     role_desc varchar(15),\n" +
-                "     table_name varchar(10)\n" +
                 "     );\n"+
+                "INSERT INTO role(role_name) VALUES(\"seller\");\n" +
+                "INSERT INTO role(role_name) VALUES(\"distributor\");\n" +
+                "INSERT INTO role(role_name) VALUES(\"supplier\");"+
 
                 " CREATE TABLE users(\n" +
                 "     nid int PRIMARY KEY,\n" +
@@ -218,5 +220,9 @@ public class Utility {
             return  map;
 
         }
+    }
+
+    public  static  int getVerificationCode(){
+        return   ThreadLocalRandom.current().nextInt(1111, 1000000 );
     }
 }

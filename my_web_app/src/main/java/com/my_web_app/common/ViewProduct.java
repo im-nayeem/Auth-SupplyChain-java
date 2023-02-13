@@ -1,8 +1,8 @@
-package com.example.my_web_app.common;
+package com.my_web_app.common;
 
-import com.example.my_web_app.common.model.Product;
-import com.example.my_web_app.common.model.ProductBatch;
-import com.example.my_web_app.common.model.ProductMap;
+import com.my_web_app.common.model.Product;
+import com.my_web_app.common.model.ProductBatch;
+import com.my_web_app.common.model.ProductMap;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

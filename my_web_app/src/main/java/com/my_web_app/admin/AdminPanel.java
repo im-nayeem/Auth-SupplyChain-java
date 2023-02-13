@@ -1,16 +1,14 @@
-package com.example.my_web_app.admin;
+package com.my_web_app.admin;
 
 import DB.DatabaseConnection;
-import com.example.my_web_app.Utility;
-import com.example.my_web_app.common.model.Company;
+import com.my_web_app.Utility;
+import com.my_web_app.common.model.Company;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * Created on 31-Jan-23
@@ -27,11 +25,11 @@ public class AdminPanel extends HttpServlet {
         try
         {
             conn=new DatabaseConnection();
-            ResultSet rs= conn.executeQuery("Select * from company_info;");
+            ResultSet rs= conn.executeQuery("Select COUNT(*) as n from company_info;");
             if(rs.next())
             {
-                //check if company info is initialized
-                if(rs.getRow()==0)
+//                check if company info is initialized
+                if(rs.getInt("n")==0)
                 {
                     throw new RuntimeException("No Data!");
                 }
@@ -45,8 +43,8 @@ public class AdminPanel extends HttpServlet {
         }
         catch (Exception e)
         {
-            request.setAttribute("error",e);
-            request.getRequestDispatcher("error/error.jsp").forward(request,response);
+//            request.setAttribute("error",e);
+//            request.getRequestDispatcher("error/error.jsp").forward(request,response);
 
             /** If Tables are not created then create tables and fill up form **/
             try{

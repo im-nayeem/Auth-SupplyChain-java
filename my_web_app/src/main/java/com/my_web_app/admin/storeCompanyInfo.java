@@ -1,13 +1,12 @@
-package com.example.my_web_app.admin;
+package com.my_web_app.admin;
 
 import DB.DatabaseConnection;
-import com.example.my_web_app.common.model.Company;
+import com.my_web_app.common.model.Company;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.PreparedStatement;
 
 /**
  * Created on 01-Feb-23

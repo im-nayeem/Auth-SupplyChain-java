@@ -1,14 +1,13 @@
-package com.example.my_web_app.common.model;
+package com.my_web_app.common.model;
 
 import DB.DatabaseConnection;
-import com.example.my_web_app.Location;
-import com.example.my_web_app.Utility;
+import com.my_web_app.Location;
+import com.my_web_app.Utility;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
-import java.util.Map;
 
 public class Address {
     private String addrId;

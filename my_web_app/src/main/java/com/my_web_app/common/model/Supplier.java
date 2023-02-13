@@ -1,4 +1,4 @@
-package com.example.my_web_app.common.model;
+package com.my_web_app.common.model;
 
 import javax.servlet.http.HttpServletRequest;
 

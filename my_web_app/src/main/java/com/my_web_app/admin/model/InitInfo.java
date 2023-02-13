@@ -1,4 +1,4 @@
-package com.example.my_web_app.admin.model;
+package com.my_web_app.admin.model;
 
 /**
  * Created on 02-Feb-23

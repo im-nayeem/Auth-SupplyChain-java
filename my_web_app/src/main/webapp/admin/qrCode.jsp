@@ -1,4 +1,4 @@
-<%@ page import="com.example.my_web_app.Utility" %>
+<%@ page import="com.my_web_app.Utility" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nayeem

@@ -14,14 +14,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Add ${user}</title>
+    <title>Add ${role}</title>
     <style>
         <%@include file="../assets/user-form.css"%>
     </style>
 </head>
 <body>
 <form class="form-control" method="post" action="add-user">
-    <input type="hidden" value="${user}" name="user">
+    <input type="hidden" value="${role}" name="role">
     <h2>Personal Information:</h2>
     <hr>
     <div class="form-group">

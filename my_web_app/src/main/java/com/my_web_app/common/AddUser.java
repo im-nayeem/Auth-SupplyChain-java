@@ -1,7 +1,7 @@
-package com.example.my_web_app.common;
+package com.my_web_app.common;
 
-import com.example.my_web_app.common.model.Address;
-import com.example.my_web_app.common.model.Seller;
+import com.my_web_app.common.model.Address;
+import com.my_web_app.common.model.Seller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,7 +13,7 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            request.setAttribute("user",request.getParameter("user"));
+            request.setAttribute("role",request.getParameter("role"));
             request.setAttribute("divisions", Address.getDivisionList());
             request.setAttribute("districts",Address.getDistrictList());
             request.setAttribute("upazilas",Address.getUpazilaList());
@@ -28,10 +28,8 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            System.out.println("Entered");
-            System.out.println(request.getParameter("user"));
 
-                if(request.getParameter("user").equals("Seller"))
+                if(request.getParameter("role").equals("Seller"))
                 {
                     Seller seller = new Seller(request);
                     seller.storeInDatabase();

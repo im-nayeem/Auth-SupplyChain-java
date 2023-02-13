@@ -1,4 +1,4 @@
-package com.example.my_web_app;
+package com.my_web_app;
 
 public class Location {
     private String name;

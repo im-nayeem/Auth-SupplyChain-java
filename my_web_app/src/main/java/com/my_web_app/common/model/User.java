@@ -1,9 +1,11 @@
-package com.example.my_web_app.common.model;
+package com.my_web_app.common.model;
 
 import DB.DatabaseConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
+
+import static com.sun.tools.javac.util.StringUtils.toLowerCase;
 
 /**
  * Created on 06-Feb-23
@@ -15,19 +17,21 @@ public class User {
     private String name, email;
     private String hash,salt;
     private Address address;
+    private String role;
     DatabaseConnection conn = null;
 
     public User() {
     }
 
 
-    public User(int nid, String name, String email, String hash, String salt, Address address) {
+    public User(int nid, String name, String email, String hash, String salt, Address address,String role) {
         this.nid = nid;
         this.name = name;
         this.email = email;
         this.hash = hash;
         this.salt = salt;
         this.address = address;
+        this.role = toLowerCase(role);
     }
 
     /**
@@ -41,6 +45,7 @@ public class User {
            this.email = request.getParameter("email");
            this.hash = "";
            this.salt = "";
+           this.role=toLowerCase(role);
 
            String addId = request.getParameter("division")+""+request.getParameter("district")+request.getParameter("upazila")+request.getParameter("union");
            String division = Address.getDivisionList().get(Integer.parseInt(request.getParameter("division"))-1).getName();
