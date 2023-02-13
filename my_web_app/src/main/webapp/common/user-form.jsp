@@ -32,6 +32,10 @@
         <label for="nid">NID Number:</label>
         <input type="number" min="1000000" maxlength="11" id="nid" name="nid" required>
     </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
 
     <c:if test="${user=='Seller'}">
         <h2>Shop Location: </h2>

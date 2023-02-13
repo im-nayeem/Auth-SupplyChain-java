@@ -28,11 +28,14 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-                
+            System.out.println("Entered");
+            System.out.println(request.getParameter("user"));
 
-                if(request.getParameter("user") == "Seller")
+                if(request.getParameter("user").equals("Seller"))
                 {
                     Seller seller = new Seller(request);
+                    seller.storeInDatabase();
+
                 }
                 else if(request.getParameter("user") == "Distributor")
                 {
@@ -43,6 +46,8 @@ public class AddUser extends HttpServlet {
                 }
 
         } catch (Exception e) {
+            request.setAttribute("error",e);
+            request.getRequestDispatcher("error/error.jsp").forward(request,response);
             throw new RuntimeException(e);
         }
     }

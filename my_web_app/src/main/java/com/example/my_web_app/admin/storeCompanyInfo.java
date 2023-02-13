@@ -1,6 +1,7 @@
 package com.example.my_web_app.admin;
 
 import DB.DatabaseConnection;
+import com.example.my_web_app.common.model.Company;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,14 +26,9 @@ public class storeCompanyInfo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             conn=new DatabaseConnection();
-            String query="INSERT INTO company_info(name,distributor_code,seller_code,supplier_code) values(?,?,?,?)";
-            PreparedStatement pstmt= conn.getPreparedStatement(query);
-            pstmt.setString(1,request.getParameter("company-name"));
-            pstmt.setString(2,request.getParameter("distributor-code"));
-            pstmt.setString(3,request.getParameter("seller-code"));
-            pstmt.setString(4,request.getParameter("supplier-code"));
 
-            pstmt.execute();
+            Company company = new Company(request);
+            company.storeInDatabase();
 
             response.sendRedirect("../AdminPanel");
 

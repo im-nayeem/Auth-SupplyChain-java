@@ -21,16 +21,28 @@
         <input type="text" id="company-name" name="company-name" pattern="[a-zA-Z ]+" required>
     </div>
     <div class="form-group">
-        <label for="supplier-code">Supplier Code:</label>
-        <input type="text" id="supplier-code" name="supplier-code" pattern="[A-Z]+" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
     </div>
+
     <div class="form-group">
-        <label for="distributor-code">Distributor Code:</label>
-        <input type="text" id="distributor-code" name="distributor-code" pattern="[A-Z]+" required>
+        <label for="phone-number">Phone Number:</label>
+        <input type="tel" id="phone-number" name="phone-number" pattern="[0-9]+" required>
     </div>
+
     <div class="form-group">
-        <label for="seller-code">Seller Code:</label>
-        <input type="text" id="seller-code" name="seller-code" pattern="[A-Z]+" required>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" maxlength="255" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="logo-url">Logo URL:</label>
+        <input type="url" id="logo-url" name="logo-url">
     </div>
     <div class="form-group form-actions">
         <button type="button" onclick="window.history.back()">Cancel</button>
