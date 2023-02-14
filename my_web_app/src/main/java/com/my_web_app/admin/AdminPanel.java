@@ -52,6 +52,7 @@ public class AdminPanel extends HttpServlet {
                 response.sendRedirect("admin/storeCompanyInfo");
             } catch (Exception ex) {
                 try {
+                    ex.notify();
 
                     //if tables are created but data is not provided
                     response.sendRedirect("admin/storeCompanyInfo");

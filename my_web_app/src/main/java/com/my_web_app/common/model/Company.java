@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 
 public class Company {
     private String name,address,phoneNumber,email,description,logoUrl;
-    private int employeeCount;
     DatabaseConnection conn = null;
 
     /**================Constructor==================**/
@@ -19,7 +18,6 @@ public class Company {
             ResultSet rs = conn.executeQuery("SELECT * FROM company_info;");
             rs.next();
             name = rs.getString("name");
-            employeeCount = rs.getInt("employee_count");
             address = rs.getString("address");
             phoneNumber = rs.getString("phone_number");
             email = rs.getString("email");
@@ -98,7 +96,4 @@ public class Company {
         return logoUrl;
     }
 
-    public int getEmployeeCount() {
-        return employeeCount;
-    }
 }

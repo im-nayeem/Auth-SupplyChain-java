@@ -19,7 +19,7 @@ public class SecurePassword {
     }
 
     /**
-     * Generate salt for computing hash from password
+     * generateSalt method to generate random salt for computing hash from password
      * @param length the length for the salt
      * @return the generated salt
      */
@@ -72,16 +72,16 @@ public class SecurePassword {
     }
 
     /**
-     * Verify password by genrating hash and comparing with the hash stored in DB
+     * verifyPassword the method to verify password by generating hash and comparing with the hash stored in DB
      * @param password the given password to verify
-     * @param key the hash stored in DB
+     * @param hashKey the hash stored in DB
      * @param salt used to generate hash
      * @return whether verified or not
      */
-    public static boolean verifyPassword (String password, String key, String salt) {
+    public static boolean verifyPassword (String password, String hashKey, String salt) {
         Optional<String> optEncrypted = hashPassword(password, salt);
         if (!optEncrypted.isPresent()) return false;
-        return optEncrypted.get().equals(key);
+        return optEncrypted.get().equals(hashKey);
     }
 
 //    public static void main(String[] args) {

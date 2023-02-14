@@ -4,8 +4,8 @@ import DB.DatabaseConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-import static com.sun.tools.javac.util.StringUtils.toLowerCase;
 
 /**
  * Created on 06-Feb-23
@@ -13,9 +13,8 @@ import static com.sun.tools.javac.util.StringUtils.toLowerCase;
  * @author Nayeem
  */
 public class User {
-    private int nid;
+    private long nid;
     private String name, email;
-    private String hash,salt;
     private Address address;
     private String role;
     DatabaseConnection conn = null;
@@ -28,35 +27,31 @@ public class User {
         this.nid = nid;
         this.name = name;
         this.email = email;
-        this.hash = hash;
-        this.salt = salt;
         this.address = address;
-        this.role = toLowerCase(role);
+        this.role = role.toLowerCase();
     }
 
     /**
      * Constructor
      * @param request the HttpServletRequest
      */
-    public User(HttpServletRequest request) {
-       try{
-           this.nid = Integer.parseInt(request.getParameter("nid"));
-           this.name = request.getParameter("name");
-           this.email = request.getParameter("email");
-           this.hash = "";
-           this.salt = "";
-           this.role=toLowerCase(role);
+    public User(HttpServletRequest request,String role) {
+        try{
+            this.nid = Long.parseLong(request.getParameter("nid"));
+            this.name = request.getParameter("name");
+            this.email = request.getParameter("email");
+            this.role=role.toLowerCase();
 
-           String addId = request.getParameter("division")+""+request.getParameter("district")+request.getParameter("upazila")+request.getParameter("union");
-           String division = Address.getDivisionList().get(Integer.parseInt(request.getParameter("division"))-1).getName();
-           String district = Address.getDistrictList().get(Integer.parseInt(request.getParameter("district"))-1).getName();
-           String upazila = Address.getUpazilaList().get(Integer.parseInt(request.getParameter("upazila"))-1).getName();
-           String union = Address.getUnionList().get(Integer.parseInt(request.getParameter("union"))-1).getName();
+            String addId = request.getParameter("division")+""+request.getParameter("district")+request.getParameter("upazila")+request.getParameter("union");
+            String division = Address.getDivisionList().get(Integer.parseInt(request.getParameter("division"))-1).getName();
+            String district = Address.getDistrictList().get(Integer.parseInt(request.getParameter("district"))-1).getName();
+            String upazila = Address.getUpazilaList().get(Integer.parseInt(request.getParameter("upazila"))-1).getName();
+            String union = Address.getUnionList().get(Integer.parseInt(request.getParameter("union"))-1).getName();
 
-           this.address = new Address(addId,division,district,upazila,union);
-       } catch (NumberFormatException e) {
-           throw new RuntimeException(e+" User Constructor");
-       }
+            this.address = new Address(addId,division,district,upazila,union);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e+" User Constructor");
+        }
     }
 
 
@@ -64,13 +59,29 @@ public class User {
     protected void storeInDatabase()
     {
         try {
+            // store address in address table by Address class
             address.storeInDatabase();
+
+            //store user info in users table
             conn = new DatabaseConnection();
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO users(name,nid,email,address_id) VALUES(?,?,?,?)");
             pstmt.setString(1,this.name);
-            pstmt.setInt(2,nid);
+            pstmt.setLong(2,nid);
             pstmt.setString(3,email);
             pstmt.setString(4,address.getAddrId());
+
+            pstmt.execute();
+
+            // get role id from role table where role_name is equal to this.role
+            int roleId = -1;
+            ResultSet rs = conn.executeQuery("SELECT role_id FROM role WHERE role_name='"+this.role+"';");
+            if(rs.next())
+                roleId = rs.getInt("role_id");
+
+            // assign  role to this user by inserting into user_role table
+            pstmt = conn.getPreparedStatement("INSERT INTO user_role(role_id,uid) VALUES(?,?);");
+            pstmt.setInt(1,roleId);
+            pstmt.setLong(2,this.nid);
 
             pstmt.execute();
 
@@ -79,27 +90,27 @@ public class User {
             throw new RuntimeException(e + "User");
         }
         finally {
-            conn.close();
+            if(conn!=null)
+                conn.close();
         }
     }
 
     /**------------Getter------------**/
-    protected int getNid() {
+    public long getNid() {
         return nid;
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    protected Address getAddress() {
+    public Address getAddress() {
         return address;
     }
 
 }
-
 

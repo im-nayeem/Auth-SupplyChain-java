@@ -1,8 +1,11 @@
-package com.my_web_app.common.model;
+package com.my_web_app.distributor;
+
+import com.my_web_app.common.model.Address;
+import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Distributor extends User{
+public class Distributor extends User {
     private String distCenterRoad;
 
     public Distributor(String distCenterRoad) {
@@ -10,12 +13,12 @@ public class Distributor extends User{
     }
 
     public Distributor(int nid, String name, String email, String hash, String salt, Address address, String distCenterRoad) {
-        super(nid, name, email, hash, salt, address);
+        super(nid, name, email, hash, salt, address,"");
         this.distCenterRoad = distCenterRoad;
     }
 
     public Distributor(final HttpServletRequest request) {
-        super(request);
+        super(request,"");
         this.distCenterRoad = distCenterRoad;
     }
 

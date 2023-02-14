@@ -55,6 +55,14 @@ public class Address {
         try{
 
             conn = new DatabaseConnection();
+
+            ResultSet rs = conn.executeQuery("SELECT * FROM address where address_id='"+this.addrId+"';");
+            if(rs.next())
+            {
+                if(rs.getString("division")!=null)
+                    return;
+            }
+
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO address(address_id,division,district,upazila,uniion) VALUES(?,?,?,?,?)");
             pstmt.setString(1,addrId);
             pstmt.setString(2,division);
@@ -68,7 +76,8 @@ public class Address {
             throw new RuntimeException(e + " Address Store");
         }
         finally {
-            conn.close();
+            if(conn!=null)
+                conn.close();
         }
     }
 

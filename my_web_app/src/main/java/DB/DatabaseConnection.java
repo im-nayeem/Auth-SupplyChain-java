@@ -13,7 +13,7 @@ import java.util.Properties;
 
 
 public class DatabaseConnection {
-    private Connection conn;
+    private Connection conn=null;
     private ResultSet rs;
     private Statement stmt;
     private  PreparedStatement pstmt;
@@ -104,9 +104,10 @@ public class DatabaseConnection {
                 stmt.close();
             if(pstmt!=null)
                 pstmt.close();
-            conn.close();
+            if(conn!=null)
+                 conn.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e+" Close DB");
         }
     }
 }

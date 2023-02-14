@@ -36,12 +36,11 @@ public class Utility {
                 " CREATE INDEX idx_address_id ON address(address_id);\n" +
 
                 "CREATE TABLE role(\n" +
-                "     role_id int not null AUTO_INCREMENT PRIMARY KEY,\n" +
-                "     role_name varchar(15),\n" +
-                "     );\n"+
-                "INSERT INTO role(role_name) VALUES(\"seller\");\n" +
-                "INSERT INTO role(role_name) VALUES(\"distributor\");\n" +
-                "INSERT INTO role(role_name) VALUES(\"supplier\");"+
+                "    role_id int not null AUTO_INCREMENT PRIMARY KEY,\n" +
+                "    role_name varchar(15));"+
+                "INSERT INTO role(role_name) VALUES('seller');\n" +
+                "INSERT INTO role(role_name) VALUES('distributor');\n" +
+                "INSERT INTO role(role_name) VALUES('supplier');"+
 
                 " CREATE TABLE users(\n" +
                 "     nid int PRIMARY KEY,\n" +
@@ -62,8 +61,8 @@ public class Utility {
                 "  CREATE TABLE account(\n" +
                 "     acc_id int not null AUTO_INCREMENT PRIMARY KEY,\n" +
                 "     email varchar(30),\n" +
-                "     hash_key varchar(500),\n" +
-                "     salt varchar(500),\n" +
+                "     hash_key varchar(1000),\n" +
+                "     salt varchar(1000),\n" +
                 "     uid int,\n" +
                 "     FOREIGN KEY(uid) REFERENCES users(nid),\n" +
                 "     FOREIGN KEY(email) REFERENCES users(email) on UPDATE CASCADE\n" +
@@ -116,7 +115,6 @@ public class Utility {
 
                 "CREATE TABLE company_info (\n" +
                 "  name VARCHAR(255) NOT NULL,\n" +
-                "  employee_count int,\n"+
                 "  address VARCHAR(255) NOT NULL,\n" +
                 "  phone_number VARCHAR(20) NOT NULL,\n" +
                 "  email VARCHAR(255) NOT NULL,\n" +

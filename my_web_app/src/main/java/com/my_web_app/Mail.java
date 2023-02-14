@@ -8,7 +8,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
-public class SendMail {
+public class Mail {
     private final String host="smtp.gmail.com";
     private Properties pr=System.getProperties();
     private String from;
@@ -18,8 +18,10 @@ public class SendMail {
 
     /**
      * Constructor
+     * @param to the mail address to send mail
+     * @throws IOException
      */
-    public SendMail(String to) throws IOException {
+    public Mail(String to) throws IOException {
 
         Properties prop = new Properties();
         prop.load(DatabaseConnection.class.getClassLoader().getResourceAsStream("mailConfig.properties"));
@@ -33,6 +35,12 @@ public class SendMail {
         pr.put("mail.smtp.starttls.enable","true");
         pr.put("mail.smtp.auth","true");
     }
+
+    /**
+     * Method to send final mail
+     * @param sub the subject of mail
+     * @param msg the message of the mail
+     */
     public void send(String sub,String msg){
 
         Session session=Session.getInstance(pr, new Authenticator() {
@@ -57,14 +65,15 @@ public class SendMail {
         }
     }
 
-    public static void main(String[] args) {
-        SendMail mail = null;
-        try {
-            mail = new SendMail("hnayeem520@gmail.com");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        mail.send("verification","Your verification code is: 1234");
-    }
+
+//    public static void main(String[] args) {
+//        Mail mail = null;
+//        try {
+//            mail = new Mail("hnayeem520@gmail.com");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        mail.send("verification","Your verification code is: 1234");
+//    }
 
 }

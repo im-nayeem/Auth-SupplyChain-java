@@ -37,13 +37,13 @@
         <input type="email" id="email" name="email" required>
     </div>
 
-    <c:if test="${user=='Seller'}">
+    <c:if test="${role=='Seller'}">
         <h2>Shop Location: </h2>
     </c:if>
-    <c:if test="${user=='Distributor'}">
+    <c:if test="${role=='Distributor'}">
         <h2>Distribution Center Location: </h2>
     </c:if>
-    <c:if test="${user=='Supplier'}">
+    <c:if test="${role=='Supplier'}">
         <h2>Working Area: </h2>
     </c:if>
     <hr>
@@ -83,13 +83,13 @@
             </c:forEach>
         </select>
     </div>
-    <c:if test="${user=='Seller'}">
+    <c:if test="${role=='Seller'}">
         <div class="form-group">
             <label for="shop-road">Shop Road:</label>
             <input type="text" id="shop-road" name="shop-road" required pattern="[a-z A-Z,0-9]+">
         </div>
     </c:if>
-    <c:if test="${user=='Distributor'}">
+    <c:if test="${role=='Distributor'}">
         <div class="form-group">
             <label for="dcenter-road">Name:</label>
             <input type="text" id="dcenter-road" name="dcenter-road" required pattern="[a-z A-Z,0-9]+">
