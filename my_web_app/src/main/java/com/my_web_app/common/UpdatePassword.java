@@ -20,7 +20,8 @@ public class UpdatePassword extends HttpServlet {
                request.setAttribute("email",request.getParameter("email"));
                request.getRequestDispatcher("/common/update-password.jsp").forward(request,response);
            }
-        response.sendRedirect("init");
+           request.setAttribute("error","Invalid!");
+           request.getRequestDispatcher("/error/error.jsp").forward(request,response);
        }catch (Exception e){
            request.setAttribute("error",e);
            request.getRequestDispatcher("/error/error.jsp").forward(request,response);

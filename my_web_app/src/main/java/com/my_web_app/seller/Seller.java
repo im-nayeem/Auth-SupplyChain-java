@@ -14,20 +14,12 @@ public class Seller extends User {
     public Seller() {
     }
 
-    public Seller(int nid, String name, String email, String hash, String salt, Address address, String role) {
-        super(nid, name, email, hash, salt, address, role);
-    }
 
     public Seller(String shopName, String shopRoad) {
         this.shopName = shopName;
         this.shopRoad = shopRoad;
     }
 
-    public Seller(int nid, String name, String email, String hash, String salt, Address address, String shopName, String shopRoad,String role) {
-        super(nid, name, email, hash, salt, address, role);
-        this.shopName = shopName;
-        this.shopRoad = shopRoad;
-    }
 
     /**
      * Constructor

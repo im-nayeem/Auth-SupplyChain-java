@@ -33,7 +33,7 @@
 </head>
 <body>
 <div class="error-container">
-    <div class="error-code">404</div>
+    <div class="error-code">Error Found!</div>
     <div class="error-message">${error}</div>
 </div>
 </body>

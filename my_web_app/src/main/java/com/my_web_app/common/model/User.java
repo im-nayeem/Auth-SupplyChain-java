@@ -23,14 +23,6 @@ public class User {
     }
 
 
-    public User(int nid, String name, String email, String hash, String salt, Address address,String role) {
-        this.nid = nid;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.role = role.toLowerCase();
-    }
-
     /**
      * Constructor
      * @param request the HttpServletRequest

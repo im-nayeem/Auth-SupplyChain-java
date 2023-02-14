@@ -5,6 +5,7 @@ import com.my_web_app.Utility;
 import com.my_web_app.common.model.*;
 import com.my_web_app.distributor.Distributor;
 import com.my_web_app.seller.Seller;
+import com.my_web_app.supplier.Supplier;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -56,10 +57,10 @@ public class AddUser extends HttpServlet {
                     mail.send(sub,msg);
 
                 }
-                else if(request.getParameter("user") == "Distributor")
+                else if(request.getParameter("role").equals("Distributor"))
                 {
                     Distributor distributor = new Distributor(request, request.getParameter("role"));
-//                    distributor.storeInDatabase();
+                    distributor.storeInDatabase();
 
                     // create account for distributor with a random password
                     Account account = new Account(distributor.getNid(),distributor.getEmail(),"Distributor"+ Utility.getRandomCode());
@@ -82,7 +83,7 @@ public class AddUser extends HttpServlet {
                 }
                 else{
                     Supplier supplier = new Supplier(request, request.getParameter("role"));
-//                    supplier.storeInDatabase();
+                    supplier.storeInDatabase();
 
                     // create account for supplier with a random password
                     Account account = new Account(supplier.getNid(),supplier.getEmail(),"Supplier"+ Utility.getRandomCode());

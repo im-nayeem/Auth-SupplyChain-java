@@ -95,7 +95,7 @@
     </c:if>
     <c:if test="${role=='Distributor'}">
         <div class="form-group">
-            <label for="dcenter-road">Name:</label>
+            <label for="dcenter-road">Distribution Center Road:</label>
             <input type="text" id="dcenter-road" name="dcenter-road" required pattern="[a-z A-Z,0-9]+">
         </div>
     </c:if>

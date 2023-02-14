@@ -49,7 +49,7 @@
             }
             else{
                 url.label = "Seller";
-                url.url += "/seller/sell?pid=" + "${product.getProductId()}";
+                url.url += "/seller/sell-product?pid=" + "${product.getProductId()}";
             }
             section.urls.push(url);
 
