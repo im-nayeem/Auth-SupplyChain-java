@@ -33,6 +33,10 @@
         <input type="number" min="1000000" maxlength="11" id="nid" name="nid" required>
     </div>
     <div class="form-group">
+        <label for="confirm-nid">Confirm NID Number:</label>
+        <input type="number" min="1000000" maxlength="11" id="confirm-nid" name="confirm-nid" required oninput="checkNidMatch()">
+    </div>
+    <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
     </div>
@@ -100,5 +104,21 @@
         <input type="submit" value="Submit">
     </div>
 </form>
+
+
+<script>
+    // function to check if NID in both nid and confirm-nid field are same
+    function checkNidMatch() {
+        const nid = document.getElementById("nid");
+        const confirm_nid = document.getElementById("confirm-nid");
+
+        if (nid.value !== confirm_nid.value) {
+            confirm_nid.setCustomValidity("NID do not match! It can't be changed in future.");
+
+        } else {
+            confirm_nid.setCustomValidity("");
+        }
+    }
+</script>
 </body>
 </html>

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Supplier extends User{
     public Supplier() {
     }
-    public Supplier(final HttpServletRequest request) {
+    public Supplier(final HttpServletRequest request, String role) {
         super(request,"");
     }
 

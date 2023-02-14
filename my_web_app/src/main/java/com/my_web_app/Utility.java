@@ -60,10 +60,10 @@ public class Utility {
 
                 "  CREATE TABLE account(\n" +
                 "     acc_id int not null AUTO_INCREMENT PRIMARY KEY,\n" +
-                "     email varchar(30),\n" +
-                "     hash_key varchar(1000),\n" +
-                "     salt varchar(1000),\n" +
-                "     uid int,\n" +
+                "     email varchar(30) not null,\n" +
+                "     hash_key varchar(1000) not null,\n" +
+                "     salt varchar(1000) not null,\n" +
+                "     uid int not null,\n" +
                 "     FOREIGN KEY(uid) REFERENCES users(nid),\n" +
                 "     FOREIGN KEY(email) REFERENCES users(email) on UPDATE CASCADE\n" +
                 "     );\n" +
@@ -220,7 +220,7 @@ public class Utility {
         }
     }
 
-    public  static  int getVerificationCode(){
-        return   ThreadLocalRandom.current().nextInt(1111, 1000000 );
+    public  static  int getRandomCode(){
+        return   ThreadLocalRandom.current().nextInt(11111, 10000000 );
     }
 }

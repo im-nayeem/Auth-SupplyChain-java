@@ -17,7 +17,7 @@ public class Distributor extends User {
         this.distCenterRoad = distCenterRoad;
     }
 
-    public Distributor(final HttpServletRequest request) {
+    public Distributor(final HttpServletRequest request,String role) {
         super(request,"");
         this.distCenterRoad = distCenterRoad;
     }
