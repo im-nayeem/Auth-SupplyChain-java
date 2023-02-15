@@ -82,6 +82,9 @@ public class ProductMap {
         DatabaseConnection conn = null;
         try {
             conn = new DatabaseConnection();
+            // start the transaction
+            conn.setAutoCommit(false);
+
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map(name,p_code,have_warranty,have_expiration,table_name) VALUES(?,?,?,?,?)");
             pstmt.setString(1,productName);
             pstmt.setString(2,productCode);
@@ -89,22 +92,32 @@ public class ProductMap {
             pstmt.setString(4,haveExpiration);
             pstmt.setString(5,tableName);
             pstmt.execute();
+
+            // create new table for this released product
+            createProductTable(conn);
+
+            // If everything has gone well so far, commit the transaction
+            conn.commit();
+
         } catch (SQLException e) {
+            // If there's an error during the transaction, rollback the changes
+            if (conn != null) {
+                conn.rollback();
+            }
             throw new RuntimeException(e+"\nCouldn't Store in Database!");
         }
         finally {
-            conn.close();
+            if(conn!=null)
+                conn.close();
         }
     }
 
     /**
      * Method to create table for newly released product
      */
-    public void createProductTable()
+    private void createProductTable(DatabaseConnection conn)
     {
-        DatabaseConnection conn = null;
         try{
-            conn=new DatabaseConnection();
             String query="CREATE TABLE "+tableName+"(\n"+
                     "    pid varchar(20) PRIMARY KEY,\n" +
                     "    status\tvarchar(15),\n" +
@@ -115,12 +128,11 @@ public class ProductMap {
                     "    FOREIGN KEY(batch) REFERENCES batch(batch_id) on UPDATE CASCADE on DELETE CASCADE\n" +
                     "    );";
             conn.execute(query);
+
         } catch (Exception e) {
             throw new RuntimeException(e+"\nCouldn't create table for "+productName+"!");
         }
-        finally {
-            conn.close();
-        }
+
     }
 
     public String getProductCode() {

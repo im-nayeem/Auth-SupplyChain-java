@@ -96,6 +96,28 @@ public class DatabaseConnection {
         }
     }
 
+    public void setAutoCommit(Boolean state){
+        try {
+            conn.setAutoCommit(state);
+        } catch (SQLException e) {
+            throw new RuntimeException(e+" Setting Auto Commit ");
+        }
+    }
+    public void commit(){
+        try {
+            conn.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e+" Commit to DB");
+        }
+    }
+    public void rollback(){
+        try {
+            conn.rollback();
+        } catch (SQLException e) {
+            throw new RuntimeException(e+" Rollback ");
+        }
+    }
+
     public void close() {
         try {
             if(rs!=null)

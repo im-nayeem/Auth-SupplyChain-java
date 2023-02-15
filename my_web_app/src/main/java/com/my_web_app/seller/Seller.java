@@ -37,9 +37,12 @@ public class Seller extends User {
     /**=================Methods====================*/
     public void storeInDatabase(){
         try {
-            super.storeInDatabase();
-
             conn = new DatabaseConnection();
+            // Start the transaction
+            conn.setAutoCommit(false);
+
+            super.storeInDatabase(conn);
+
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO seller(uid,shop_name,shop_road) VALUES(?,?,?)");
             pstmt.setLong(1,getNid());
             pstmt.setString(2,shopName);
@@ -47,12 +50,22 @@ public class Seller extends User {
 
             pstmt.execute();
 
+            // If everything has gone well so far, commit the transaction
+            conn.commit();
+
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            // If there's an error during the transaction, rollback the changes
+            if (conn != null) {
+                conn.rollback();
+            }
+            e.printStackTrace();
+
+            throw new RuntimeException(e + " Seller ");
         }
         finally {
-            conn.close();
+            if(conn!=null)
+                conn.close();
         }
     }
     public String getShopName() {

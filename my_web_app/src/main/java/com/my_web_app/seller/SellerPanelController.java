@@ -1,12 +1,12 @@
-package com.my_web_app.supplier;
+package com.my_web_app.seller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "SupplierPanel", value = "/SupplierPanel")
-public class SupplierPanel extends HttpServlet {
+@WebServlet(name = "SellerPanel", value = "/SellerPanel")
+public class SellerPanelController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

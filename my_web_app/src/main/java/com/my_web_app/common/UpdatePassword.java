@@ -31,6 +31,14 @@ public class UpdatePassword extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+//            Account account = new Account();
+            /** Update Password **/
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error",e);
+            request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+        }
     }
 }

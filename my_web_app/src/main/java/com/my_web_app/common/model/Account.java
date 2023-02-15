@@ -108,6 +108,20 @@ public class Account {
         }
     }
 
+    public void updatePassword(){
+        try{
+            conn = new DatabaseConnection();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+    }
+
+
     /**
      * verifyAccount Method to verify user provided password with hashKey in database during login
      * @param password the password entered while login

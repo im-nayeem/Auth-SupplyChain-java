@@ -6,7 +6,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "SupplyToSeller", value = "/supply-to-seller")
-public class SupplyToSeller extends HttpServlet {
+public class SupplyProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

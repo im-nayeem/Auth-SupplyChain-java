@@ -13,13 +13,13 @@
 </head>
 <body>
 <div class="head">
-<%--    <h2>Amar Company</h2>--%>
+    <h2>Amar Company</h2>
 </div>
 <div class="topnav" id="myTopnav">
     <a href="#home" class="active">Home</a>
     <a href="#news">View Product Info</a>
     <a href="#contact">About Us</a>
-    <a href="#about" class="login-link">Log-in</a>
+    <a href="#about" class="account-link">Log-in</a>
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
@@ -34,7 +34,7 @@
 
 </div>
 <footer>
-    <p>Privacy & Policy | Contact Us | Copyright&copy;2023</p>
+    <p>Privacy & Policy | Contact Us | Copyright &copy; 2023</p>
 </footer>
 
 </body>

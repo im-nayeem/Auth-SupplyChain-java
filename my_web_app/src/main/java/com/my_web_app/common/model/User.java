@@ -17,7 +17,6 @@ public class User {
     private String name, email;
     private Address address;
     private String role;
-    DatabaseConnection conn = null;
 
     public User() {
     }
@@ -34,6 +33,8 @@ public class User {
             this.email = request.getParameter("email");
             this.role=role.toLowerCase();
 
+
+            System.out.println("Entered!");
             String addId = request.getParameter("division")+""+request.getParameter("district")+request.getParameter("upazila")+request.getParameter("union");
             String division = Address.getDivisionList().get(Integer.parseInt(request.getParameter("division"))-1).getName();
             String district = Address.getDistrictList().get(Integer.parseInt(request.getParameter("district"))-1).getName();
@@ -48,14 +49,13 @@ public class User {
 
 
     /**==============Methods====================*/
-    protected void storeInDatabase()
+    protected void storeInDatabase(DatabaseConnection conn)
     {
         try {
             // store address in address table by Address class
             address.storeInDatabase();
 
             //store user info in users table
-            conn = new DatabaseConnection();
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO users(name,nid,email,address_id) VALUES(?,?,?,?)");
             pstmt.setString(1,this.name);
             pstmt.setLong(2,nid);
@@ -78,13 +78,14 @@ public class User {
             pstmt.execute();
 
 
+
         } catch (Exception e) {
+
+
+
             throw new RuntimeException(e + "User");
         }
-        finally {
-            if(conn!=null)
-                conn.close();
-        }
+
     }
 
     /**------------Getter------------**/

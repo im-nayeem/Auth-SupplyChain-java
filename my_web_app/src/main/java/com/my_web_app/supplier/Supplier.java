@@ -23,20 +23,32 @@ public class Supplier extends User {
     /**=================Methods====================*/
     public void storeInDatabase(){
         try {
-            super.storeInDatabase();
-
             conn = new DatabaseConnection();
+            // start the transaction
+            conn.setAutoCommit(false);
+
+            super.storeInDatabase(conn);
+
+
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO supplier(uid) VALUES(?)");
             pstmt.setLong(1,getNid());
 
             pstmt.execute();
 
+            // If everything has gone well so far, commit the transaction
+            conn.commit();
+
 
         } catch (Exception e) {
+            // If there's an error during the transaction, rollback the changes
+            if (conn != null) {
+                conn.rollback();
+            }
             throw new RuntimeException(e);
         }
         finally {
-            conn.close();
+            if(conn!=null)
+                conn.close();
         }
     }
 

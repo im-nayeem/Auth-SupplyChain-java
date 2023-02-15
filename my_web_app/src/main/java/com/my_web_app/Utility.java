@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Utility {
     public static String getInitialQuery()
     {
-        return "CREATE TABLE admin(\n" +
+        return  "CREATE TABLE admin(\n" +
                 "    email varchar(30) UNIQUE,\n" +
                 "    hash_key varchar(500),\n" +
                 "    salt varchar(500),\n" +
@@ -120,8 +120,7 @@ public class Utility {
                 "  email VARCHAR(255) NOT NULL,\n" +
                 "  description TEXT NOT NULL,\n" +
                 "  logo_url VARCHAR(255)\n" +
-                ");"+
-                "\n";
+                ");";
     }
 
     public static String getCode(String Id)
