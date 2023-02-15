@@ -21,6 +21,8 @@ public class Account {
      */
     public Account(Long uid){
         try{
+
+
             conn = new DatabaseConnection();
 
             PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM account WHERE uid=?");
@@ -130,6 +132,27 @@ public class Account {
 
     public Boolean verifyAccount(String password){
         return SecurePassword.verifyPassword(password,this.hashKey,this.salt);
+    }
+
+
+
+    public String getRole(){
+        String role=null;
+        try{
+            conn = new DatabaseConnection();
+
+            ResultSet rs = conn.executeQuery("SELECT role_name from role,user_role WHERE role.role_id=user_role.role_id and user_role.uid="+this.uid);
+
+            if(rs.next())
+                role = rs.getString("role_name");
+        } catch (Exception e) {
+            throw new RuntimeException(e + "getRole");
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+            return role;
+        }
     }
 
     /**----------------------Getters----------------------**/

@@ -5,6 +5,7 @@ import DB.DatabaseConnection;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,16 +65,20 @@ public class ProductBatch{
             throw new RuntimeException(e+"\n Couldn't Get Form Data!");
         }
     }
-    public  ProductBatch(final ResultSet resultSet) throws Exception {
+    public  ProductBatch(final ResultSet resultSet) {
 
-        this.batchId = resultSet.getString("batch_id");
-        this.productCode = resultSet.getString("p_code");
-        this.totalProduct = resultSet.getInt("total_product");
-        this.warrantyMonth = resultSet.getInt("warranty_month");
-        this.warrantyYear = resultSet.getInt("warranty_year");
-        this.manufacDate = resultSet.getString("manufac_date");
-        this.expDate = resultSet.getString("exp_date");
-        this.produced=resultSet.getInt("produced");
+        try{
+            this.batchId = resultSet.getString("batch_id");
+            this.productCode = resultSet.getString("p_code");
+            this.totalProduct = resultSet.getInt("total_product");
+            this.warrantyMonth = resultSet.getInt("warranty_month");
+            this.warrantyYear = resultSet.getInt("warranty_year");
+            this.manufacDate = resultSet.getString("manufac_date");
+            this.expDate = resultSet.getString("exp_date");
+            this.produced=resultSet.getInt("produced");
+        } catch (Exception e) {
+            throw new RuntimeException(e+" ProductBatch");
+        }
     }
 
     /**==================== Methods ==========================**/

@@ -19,8 +19,11 @@ public class ProductInfoGenerator {
     }
     public void generateProductInfo(String batchId) {
 
+
         try {
              conn = new DatabaseConnection();
+
+             conn.setAutoCommit(false);
              ProductBatch productBatch  = new ProductBatch(batchId);
              ProductMap productMap = new ProductMap(productBatch.getProductCode());
              if(productBatch.getProduced()==1)
@@ -35,6 +38,7 @@ public class ProductInfoGenerator {
              for(int i=start;i<productBatch.getTotalProduct()+start;i++)
              {
                  Product product = new Product(productBatch.getProductCode()+i, batchId);
+
                  product.storeInDatabase(productMap.getTableName());
              }
 
@@ -42,7 +46,11 @@ public class ProductInfoGenerator {
             preparedStatement.setInt(1,1);
             preparedStatement.setString(2,batchId);
             preparedStatement.executeUpdate();
+
+            conn.commit();
         } catch (Exception e) {
+            if(conn!=null)
+                conn.rollback();
             throw new RuntimeException(e+" \nProductInfoGenerator");
         }
         finally {

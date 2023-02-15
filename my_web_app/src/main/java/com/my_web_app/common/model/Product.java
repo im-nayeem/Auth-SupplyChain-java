@@ -13,8 +13,9 @@ import java.sql.ResultSet;
  */
 public class Product{
     private String productId,batchId;
-    private  String status=null,lastHolder=null,soldDate=null;
-    DatabaseConnection conn = null;
+    private  String status=null,soldDate=null;
+    long lastHolder=0;
+    private static DatabaseConnection conn = null;
 
     public Product() {
 
@@ -23,6 +24,7 @@ public class Product{
         this.productId = productId;
         this.batchId = batchId;
         this.status = "produced";
+
     }
     public Product(String productId)
     {
@@ -38,7 +40,7 @@ public class Product{
             this.batchId  = resultSet.getString("batch");
             this.status = resultSet.getString("status");
             this.soldDate = resultSet.getString("sold_date");
-            this.lastHolder = resultSet.getString("last_holder");
+            this.lastHolder = resultSet.getLong("last_holder");
 
         } catch (Exception e) {
             throw new RuntimeException(e+"\nProduct");
@@ -56,7 +58,7 @@ public class Product{
             this.batchId  = resultSet.getString("batch");
             this.status = resultSet.getString("status");
             this.soldDate = resultSet.getString("sold_date");
-            this.lastHolder = resultSet.getString("last_holder");
+            this.lastHolder = resultSet.getLong("last_holder");
         } catch (Exception e) {
             throw new RuntimeException(e+" Product");
         }
@@ -67,20 +69,65 @@ public class Product{
     {
         try{
             conn = new DatabaseConnection();
-            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+tableName+"(pid,status,sold_date,last_holder,batch) VALUES(?,?,?,?,?)");
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+tableName+"(pid,status,sold_date,batch) VALUES(?,?,?,?)");
+
+
             pstmt.setString(1,productId);
             pstmt.setString(2,status);
             pstmt.setString(3,soldDate);
-            pstmt.setString(4,lastHolder);
-            pstmt.setString(5,batchId);
+            pstmt.setString(4,batchId);
+
+
             pstmt.execute();
+
 
         } catch (Exception e) {
             throw new RuntimeException(e+" Product Class");
         }
         finally {
+            if(conn!=null)
             conn.close();
         }
+    }
+
+    public static void updateProductHolder(String tableName,String firstProduct,String lastProduct,long currentHolder,long newHolder){
+        try{
+             conn = new DatabaseConnection();
+             String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid BETWEEN ? and ? and last_holder=?";
+             PreparedStatement pstmt = conn.getPreparedStatement( query);
+             pstmt.setLong(1,newHolder);
+             pstmt.setString(2,firstProduct);
+             pstmt.setString(3,lastProduct);
+             pstmt.setLong(4,currentHolder);
+
+             pstmt.execute();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e + "Update Holder");
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+
+    }
+    public static  void updateProductHolder(String tableName,String firstProduct,String lastProduct,long newHolder){
+        try{
+            conn = new DatabaseConnection();
+            String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid BETWEEN ? and ?";
+            PreparedStatement pstmt = conn.getPreparedStatement(query);
+            pstmt.setLong(1,newHolder);
+            pstmt.setString(2,firstProduct);
+            pstmt.setString(3,lastProduct);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+
     }
 
     public String getProductId() {
@@ -95,7 +142,7 @@ public class Product{
         return status;
     }
 
-    public String getLastHolder() {
+    public long getLastHolder() {
         return lastHolder;
     }
 

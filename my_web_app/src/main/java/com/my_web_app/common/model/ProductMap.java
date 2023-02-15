@@ -51,7 +51,8 @@ public class ProductMap {
             throw new RuntimeException(e+"Product Map");
         }
         finally {
-            conn.close();
+            if(conn!=null)
+                conn.close();
         }
     }
 

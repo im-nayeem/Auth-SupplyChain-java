@@ -25,6 +25,7 @@ public class GenerateQRCode extends HttpServlet {
                 request.setAttribute("batchList",batchList);
                 request.getRequestDispatcher("/admin/all-batch.jsp").forward(request, response);
             }
+
             //if product info for this batch is not generated,generate them first
             ProductInfoGenerator productInfoGenerator = new ProductInfoGenerator();
             productInfoGenerator.generateProductInfo(request.getParameter("batch"));
