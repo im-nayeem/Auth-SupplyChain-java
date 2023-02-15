@@ -1,57 +1,66 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #F3F3F3;
-}
 
 #header {
-    background-color: #333;
-    color: #fff;
+    background-color:#d8e2f8;
+    color: #000000;
     padding: 5px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     margin-bottom: 10px;
     font-size: 20px;
 }
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 40px;
+/* CSS for the view-product.jsp page */
+
+/* Set a max-width for the content */
+#content {
+    max-width: 800px;
+    min-height: 80vh;
+    margin: 0 auto;
 }
 
-td, th {
-    border: 1px solid #6e7371;
-    text-align: left;
-    padding: 10px;
-    width: 50%;
+/* Style the table */
+#productInfo {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
 }
-th{
-    background-color: #94949480;
+
+#productInfo td {
+    padding: 8px;
+    border: 1px solid #ddd;
 }
-table a{
-    text-decoration: none;
-    color: black;
+
+/* Set the font size for small screens */
+@media (max-width: 600px) {
+    #productInfo td {
+        font-size: 12px;
+    }
 }
-tr:nth-child(even) {
-    background-color: rgba(196, 217, 220, 0.71);
+
+/* Stack the table rows on small screens */
+@media (max-width: 600px) {
+    #productInfo td {
+        display: block;
+        width: 100%;
+    }
+    #productInfo tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+    #productInfo td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        margin-right: 10px;
+    }
 }
-tr:nth-child(odd) {
-    background-color: rgb(237, 241, 238);
-}
-td:nth-child(odd) {
-    padding-left: 30px;
-}
-.single,.multiple{
-    overflow: auto;
-}
+
 #footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #d8e2f8;
+    color: #000000;
     padding: 10px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: absolute;
-    bottom: 0;
     width: 100%;
 }
 

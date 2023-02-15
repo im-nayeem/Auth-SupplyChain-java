@@ -12,6 +12,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Information</title>
   <style>
     <%@include file="/assets/view-product.css"%>
@@ -45,7 +46,7 @@
           <td><strong>Status</strong></td>
           <td class="info">${product.getStatus()}</td>
       </tr>
-<c:if test="${product.getStatus()=='sold' && product.getLastHolder().contains(sessionScope.get('company').getSellerCode())}">
+<c:if test="${product.getStatus()=='sold'}">
 <%--    <tr>--%>
 <%--        <td><strong>Seller Name:</strong></td>--%>
 <%--        <td class="info">${holder.getName()}</td>--%>
@@ -58,10 +59,10 @@
 <%--        <td><strong>Shop Address:</strong></td>--%>
 <%--        <td class="info">${product.lastHolderShop.address}</td>--%>
 <%--    </tr>--%>
-<%--    <tr>--%>
-<%--      <td><strong>Manufactured Date:</strong></td>--%>
-<%--      <td class="info">${productBatch.getManufacDate()}</td>--%>
-<%--    </tr>--%>
+    <tr>
+      <td><strong>Manufactured Date:</strong></td>
+      <td class="info">${productBatch.getManufacDate()}</td>
+    </tr>
     <tr>
       <td><strong>Expire Date:</strong></td>
       <td class="info">${productBatch.getExpDate()}</td>

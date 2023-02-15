@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "DistributeProduct", value = "/distribute-product")
+@WebServlet(name = "DistributeProduct", value = "/distributor/distribute-product")
 public class DistributeProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

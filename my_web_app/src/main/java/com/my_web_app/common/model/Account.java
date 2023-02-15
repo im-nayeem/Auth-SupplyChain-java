@@ -136,24 +136,6 @@ public class Account {
 
 
 
-    public String getRole(){
-        String role=null;
-        try{
-            conn = new DatabaseConnection();
-
-            ResultSet rs = conn.executeQuery("SELECT role_name from role,user_role WHERE role.role_id=user_role.role_id and user_role.uid="+this.uid);
-
-            if(rs.next())
-                role = rs.getString("role_name");
-        } catch (Exception e) {
-            throw new RuntimeException(e + "getRole");
-        }
-        finally {
-            if(conn!=null)
-                conn.close();
-            return role;
-        }
-    }
 
     /**----------------------Getters----------------------**/
 

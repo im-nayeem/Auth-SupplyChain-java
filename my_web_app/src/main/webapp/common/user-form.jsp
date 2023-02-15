@@ -50,6 +50,9 @@
     <c:if test="${role=='Supplier'}">
         <h2>Working Area: </h2>
     </c:if>
+    <c:if test="${role=='Admin'}">
+        <h2>Address: </h2>
+    </c:if>
     <hr>
     <div class="form-group">
         <label for="division">Division:</label>

@@ -222,4 +222,19 @@ public class Utility {
     public  static  int getRandomCode(){
         return   ThreadLocalRandom.current().nextInt(11111, 10000000 );
     }
+
+    public static String getProductStatus(String holder){
+
+        String status="";
+        if(holder.equals("seller"))
+            status = "supplied";
+        else if(holder.equals("supplier"))
+            status =  "distributed";
+        else if(holder.equals("customer"))
+            status = "sold";
+        else if(holder.equals("distributor"))
+            status = "stored";
+
+        return  status;
+    }
 }

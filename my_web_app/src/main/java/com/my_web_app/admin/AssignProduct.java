@@ -1,23 +1,20 @@
 package com.my_web_app.admin;
 
 import com.my_web_app.Utility;
-import com.my_web_app.common.model.Account;
-import com.my_web_app.common.model.Product;
-import com.my_web_app.common.model.ProductBatch;
-import com.my_web_app.common.model.ProductMap;
+import com.my_web_app.common.model.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "AssignProduct", value = "/assign-product")
+@WebServlet(name = "AssignProduct", value = "/admin/assign-product")
 public class AssignProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             try{
-                request.setAttribute("role",request.getParameter("role"));
-                request.getRequestDispatcher("/common/assign-product.jsp").forward(request,response);
+                request.setAttribute("role","admin");
+                request.getRequestDispatcher("/admin/assign-product.jsp").forward(request,response);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -29,22 +26,23 @@ public class AssignProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Account newHolder = new Account(Long.parseLong(request.getParameter("new-holder-nid")));
+                User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-            Product product = new Product(request.getParameter("first-product"));
-            ProductBatch productBatch = new ProductBatch(product.getBatchId());
-            ProductMap productMap = new ProductMap(productBatch.getProductCode());
+                // check if new holder is valid
+                if(newHolder.getRole().equals("distributor") || newHolder.getRole().equals("supplier") || newHolder.getRole().equals("seller")){
 
-            /**
-             * Check if current holder is admin. In product table last_holder is set null by default. That means this product is just produced and only admin can access to these products.
-             */
-            if(request.getParameter("uid")==null && product.getStatus().equals("produced") && newHolder.getRole()!=null)
-            {
-                Product.updateProductHolder(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"),newHolder.getUid());
-            }
-            Account currentHolder = new Account(Long.parseLong(request.getParameter("uid")));
+                    Product product = new Product(request.getParameter("first-product"));
+                    ProductBatch productBatch = new ProductBatch(product.getBatchId());
+                    ProductMap productMap = new ProductMap(productBatch.getProductCode());
 
-//            if(request.getParameter("uid"))
+                    // update product holder
+                    Product.updateProductHolder(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"),newHolder.getNid());
+
+                    // update product status
+                    Product.updateProductStatus(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"),Utility.getProductStatus(newHolder.getRole()));
+                }
+
+                response.sendRedirect("../AdminPanel");
 
         } catch (Exception e) {
             e.printStackTrace();

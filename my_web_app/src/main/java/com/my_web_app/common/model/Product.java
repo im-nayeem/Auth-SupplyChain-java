@@ -5,6 +5,7 @@ import com.my_web_app.Utility;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 
 /**
  * Created on 03-Feb-23
@@ -115,10 +116,13 @@ public class Product{
         try{
             conn = new DatabaseConnection();
             String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid BETWEEN ? and ?";
+
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setLong(1,newHolder);
             pstmt.setString(2,firstProduct);
             pstmt.setString(3,lastProduct);
+
+            pstmt.execute();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -130,6 +134,45 @@ public class Product{
 
     }
 
+    public static void updateProductStatus(String tableName,String firstProduct,String lastProduct,String status){
+        try{
+            conn = new DatabaseConnection();
+            String query = "UPDATE "+tableName+" SET status=? WHERE pid BETWEEN ? and ?";
+
+            PreparedStatement pstmt = conn.getPreparedStatement(query);
+            pstmt.setString(1,status);
+            pstmt.setString(2,firstProduct);
+            pstmt.setString(3,lastProduct);
+
+            pstmt.execute();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+    }
+    public  static void updateSoldDate(String tableName,String firstProduct,String lastProduct){
+        try{
+            conn = new DatabaseConnection();
+            String query = "UPDATE "+tableName+" SET sold_date=CURDATE() WHERE pid BETWEEN ? and ?";
+
+            PreparedStatement pstmt = conn.getPreparedStatement(query);
+            pstmt.setString(1,firstProduct);
+            pstmt.setString(2,lastProduct);
+
+            pstmt.execute();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+    }
     public String getProductId() {
         return productId;
     }

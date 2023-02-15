@@ -18,7 +18,16 @@
     </style>
 </head>
 <body>
-    <form method="post" action="assign-product">
+    <c:if test="${role=='admin'}">
+         <form method="post" action="assign-product">
+    </c:if>
+    <c:if test="${role=='distributor'}">
+        <form method="post" action="distribute-product">
+    </c:if>
+    <c:if test="${role=='supplier'}">
+        <form method="post" action="supply-to-seller">
+    </c:if>
+
 
     <h2>Assign Product</h2>
         <input type="hidden" value="${uid}" name="uid">

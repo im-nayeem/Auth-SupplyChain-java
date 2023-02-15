@@ -6,6 +6,7 @@ import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Seller extends User {
     private String shopName,shopRoad;
@@ -14,6 +15,15 @@ public class Seller extends User {
     public Seller() {
     }
 
+    public Seller(long uid) throws  Exception{
+        super(uid);
+        conn = new DatabaseConnection();
+        ResultSet resultSet = conn.executeQuery("SELECT * FROM seller WHERE uid="+uid);
+        if(resultSet.next()){
+            this.shopName = resultSet.getString("shop_name");
+            this.shopRoad = resultSet.getString("shop_road");
+        }
+    }
 
     public Seller(String shopName, String shopRoad) {
         this.shopName = shopName;

@@ -18,10 +18,29 @@ public class User {
     private Address address;
     private String role;
 
+
     public User() {
     }
 
+    public User(long uid){
+        DatabaseConnection conn = null;
 
+        try{
+            conn = new DatabaseConnection();
+            ResultSet rs = conn.executeQuery("SELECT * FROM users WHERE nid="+uid);
+
+            if(rs.next()){
+                this.name = rs.getString("name");
+                this.email = rs.getString("email");
+                this.nid = rs.getLong("nid");
+                this.address = new Address(rs.getString("address_id"));
+                this.role = getRole(this.nid);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Constructor
      * @param request the HttpServletRequest
@@ -86,6 +105,32 @@ public class User {
 
     }
 
+    /**
+     * static method to get user role by uid
+     * @param uid the user's nid
+     * @return role the user's role
+     */
+    public static String getRole(long uid){
+        DatabaseConnection conn=null;
+        String role = null;
+        try{
+            conn = new DatabaseConnection();
+
+            ResultSet rs = conn.executeQuery("SELECT role_name from role,user_role WHERE role.role_id=user_role.role_id and user_role.uid="+uid);
+
+            if(rs.next())
+                role = rs.getString("role_name");
+        } catch (Exception e) {
+            throw new RuntimeException(e + "getRole");
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+            return role;
+        }
+    }
+
+
     /**------------Getter------------**/
     public long getNid() {
         return nid;
@@ -103,5 +148,8 @@ public class User {
         return address;
     }
 
+    public String getRole() {
+        return role;
+    }
 }
 
