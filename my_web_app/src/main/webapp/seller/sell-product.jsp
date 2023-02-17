@@ -22,19 +22,19 @@
         <table>
             <tr>
                 <th>Product Name</th>
-                <td>Product A</td>
+                <td>Battery</td>
             </tr>
             <tr>
                 <th>Product ID</th>
-                <td>12345</td>
+                <td>HT4</td>
             </tr>
             <tr>
                 <th>Product Batch</th>
-                <td>Batch 1</td>
+                <td>B01HT</td>
             </tr>
             <tr>
                 <th>Product Status</th>
-                <td>In stock</td>
+                <td>Supplied to Seller</td>
             </tr>
         </table>
         <button class="sold-button" onclick="openModal()">Mark as Sold</button>

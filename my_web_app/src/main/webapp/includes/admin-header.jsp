@@ -17,7 +17,7 @@
 <header>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/AdminPanel">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/AdminPanel" style="background-color: #4CAF50">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/release-product">Release New Product</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/add-batch">Add New Batch</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/generate-qr-code">Generate QR Code</a></li>

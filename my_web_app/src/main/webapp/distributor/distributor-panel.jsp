@@ -14,6 +14,8 @@
     <style>
         <%@include file="../assets/style.css"%>
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         <%@include file="../assets/responsive.js"%>
     </script>
@@ -34,12 +36,14 @@
     </a>
 </div>
 
-<div style="padding-left:16px">
-    <h2>Responsive Topnav Example</h2>
-    <p>Resize the browser window to see how it works.</p>
-</div>
 <div class="main-content">
-
+    <section>
+        <h2>Product Statistics</h2>
+        <canvas id="product-chart"></canvas>
+        <script>
+            <%@include file="../assets/seller-dashboard.js"%>
+        </script>
+    </section>
 </div>
 <footer>
     <p>Privacy & Policy | Contact Us | Copyright&copy;2023</p>

@@ -2,7 +2,15 @@
 <style>
   <%@include file="/assets/admin-dashboard.css"%>
 </style>
-  <h1>Welcome to the Admin Panel Dashboard</h1>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  <%@include file="../assets/dashboard.js"%>
+</script>
+<div class="analysis">
+  <div id="chart1"></div>
+
+  <div id="chart2"></div>
+</div>
   <div class="flex-wrapper">
     <div class="single-chart">
       <svg viewBox="0 0 36 36" class="circular-chart orange">
@@ -19,7 +27,7 @@
         />
         <text x="18" y="20.35" class="percentage">30%</text>
       </svg>
-      <p class="label">Total Product</p>
+      <p class="label">Last Week Sales Rate</p>
     </div>
 
     <div class="single-chart">
@@ -37,7 +45,7 @@
         />
         <text x="18" y="20.35" class="percentage">60%</text>
       </svg>
-      <p class="label">Total Product</p>
+      <p class="label">Last Year Sales Rate</p>
     </div>
 
     <div class="single-chart">
@@ -48,14 +56,14 @@
                 a 15.9155 15.9155 0 0 1 0 -31.831"
         />
         <path class="circle"
-              stroke-dasharray="90, 100"
+              stroke-dasharray="96, 100"
               d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831"
         />
-        <text x="18" y="20.35" class="percentage">90%</text>
+        <text x="18" y="20.35" class="percentage">96%</text>
       </svg>
-      <p class="label">Total Sale</p>
+      <p class="label">Last Year Sales Rate</p>
     </div>
   </div>
 <%@include file="/includes/admin-footer.jsp"%>

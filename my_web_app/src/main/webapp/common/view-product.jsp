@@ -20,7 +20,9 @@
 </head>
 <body>
 <div id="header">
-  <h2>${sessionScope.get("company").getName()}</h2>
+<%--  <h2>${sessionScope.get("company").getName()}</h2>--%>
+    <h5>ABC Company</h5>
+
 </div>
 
 <div id="content">
@@ -46,27 +48,31 @@
           <td><strong>Status</strong></td>
           <td class="info">${product.getStatus()}</td>
       </tr>
+      <tr>
+          <td><strong>Sold Date</strong></td>
+          <td class="info">2023-02-17</td>
+      </tr>
 <c:if test="${product.getStatus()=='sold'}">
-<%--    <tr>--%>
-<%--        <td><strong>Seller Name:</strong></td>--%>
-<%--        <td class="info">${holder.getName()}</td>--%>
-<%--    </tr>--%>
-<%--    <tr>--%>
-<%--        <td><strong>Shop Name:</strong></td>--%>
-<%--        <td class="info">${}</td>--%>
-<%--    </tr>--%>
-<%--    <tr>--%>
-<%--        <td><strong>Shop Address:</strong></td>--%>
-<%--        <td class="info">${product.lastHolderShop.address}</td>--%>
-<%--    </tr>--%>
+    <tr>
+        <td><strong>Seller Name:</strong></td>
+        <td class="info">Seller</td>
+    </tr>
+    <tr>
+        <td><strong>Shop Name:</strong></td>
+        <td class="info">AB Shop</td>
+    </tr>
+    <tr>
+        <td><strong>Shop Address:</strong></td>
+        <td class="info">Kotbari,Cumilla</td>
+    </tr>
     <tr>
       <td><strong>Manufactured Date:</strong></td>
       <td class="info">${productBatch.getManufacDate()}</td>
     </tr>
-    <tr>
-      <td><strong>Expire Date:</strong></td>
-      <td class="info">${productBatch.getExpDate()}</td>
-    </tr>
+<%--    <tr>--%>
+<%--      <td><strong>Expire Date:</strong></td>--%>
+<%--      <td class="info">${productBatch.getExpDate()}</td>--%>
+<%--    </tr>--%>
     <tr>
       <td><strong>Warranty Year:</strong></td>
       <td class="info">${productBatch.getWarrantyYear()}</td>
@@ -77,7 +83,7 @@
     </tr>
     <tr>
       <td><strong>Remaining Warranty:</strong></td>
-      <td class="info">11 months</td>
+      <td class="info">12 months</td>
     </tr>
 </c:if>
   </table>

@@ -25,8 +25,8 @@
 <div class="topnav" id="myTopnav">
   <a href="#home" class="active">Home</a>
   <a href="#news">My Products</a>
-  <a href="#contact">Supply Products</a>
-  <a href="#contact">Sell Products</a>
+  <a href="">Supply Products</a>
+  <a href="./add-user?role=Seller">Add Seller</a>
   <a href="#about" class="account-link">Account</a>
 
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
