@@ -16,7 +16,17 @@ public class SellProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             request.setAttribute("role","seller");
-            request.setAttribute("pid","AP1");
+
+            //if pid is null then sell product in range
+            if(request.getParameter("pid")==null)
+                request.getRequestDispatcher("/seller/sell-products.jsp").forward(request,response);
+
+            Product product = new Product(request.getParameter("pid"));
+            ProductMap productMap = new ProductMap(Utility.getCode(product.getProductId()));
+            request.setAttribute("product",product);
+            request.setAttribute("productMap",productMap);
+
+            // if requested by scanned QR code then sell ony one product
             request.getRequestDispatcher("/seller/sell-product.jsp").forward(request,response);
 
         } catch (Exception e) {
@@ -37,9 +47,6 @@ public class SellProduct extends HttpServlet {
             if(lastProduct==null)
                 lastProduct = firstProduct;
 
-
-
-
             Product product = new Product(firstProduct);
             ProductBatch productBatch = new ProductBatch(product.getBatchId());
             ProductMap productMap = new ProductMap(productBatch.getProductCode());
@@ -48,6 +55,8 @@ public class SellProduct extends HttpServlet {
             // update product status
             Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.getProductStatus("customer"));
             Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+
+            response.sendRedirect("../SellerPanel");
 
         } catch (Exception e) {
             e.printStackTrace();

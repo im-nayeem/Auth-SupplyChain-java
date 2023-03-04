@@ -9,7 +9,7 @@ import java.io.IOException;
 public class SellerPanelController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.getRequestDispatcher("/seller/seller-panel.jsp").forward(request,response);
     }
 
     @Override

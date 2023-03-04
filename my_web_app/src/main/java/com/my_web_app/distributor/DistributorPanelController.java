@@ -9,7 +9,7 @@ import java.io.IOException;
 public class DistributorPanelController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+            request.getRequestDispatcher("/distributor/distributor-panel.jsp").forward(request,response);
     }
 
     @Override

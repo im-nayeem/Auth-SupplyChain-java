@@ -17,11 +17,14 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
+            //set attribute from url request parameter (e.g, add-user?role=distributor)
             request.setAttribute("role",request.getParameter("role"));
+            //retrieve all divisions,districts .... list
             request.setAttribute("divisions", Address.getDivisionList());
             request.setAttribute("districts",Address.getDistrictList());
             request.setAttribute("upazilas",Address.getUpazilaList());
             request.setAttribute("unions",Address.getUnionList());
+
             request.getRequestDispatcher("/common/user-form.jsp").forward(request,response);
         } catch (Exception e) {
             request.setAttribute("error",e);
@@ -56,6 +59,8 @@ public class AddUser extends HttpServlet {
 
                     mail.send(sub,msg);
 
+                    response.sendRedirect("SupplierPanel");
+
                 }
                 else if(request.getParameter("role").equals("Distributor"))
                 {
@@ -79,6 +84,8 @@ public class AddUser extends HttpServlet {
                             "\nDon't share this link to anyone. Otherwise, anyone with this link can get access to your account!";
 
                     mail.send(sub,msg);
+                    response.sendRedirect("AdminPanel");
+
 
                 }
                 else{
@@ -102,6 +109,8 @@ public class AddUser extends HttpServlet {
                             "\nDon't share this link to anyone. Otherwise, anyone with this link can get access to your account!";
 
                     mail.send(sub,msg);
+                    response.sendRedirect("DistributorPanel");
+
 
                 }
 

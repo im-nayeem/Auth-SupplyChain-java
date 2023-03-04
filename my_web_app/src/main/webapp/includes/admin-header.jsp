@@ -21,7 +21,7 @@
             <li><a href="${pageContext.request.contextPath}/admin/release-product">Release New Product</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/add-batch">Add New Batch</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/generate-qr-code">Generate QR Code</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/add-distributor">Add Distributor</a></li>
+            <li><a href="${pageContext.request.contextPath}/add-user?role=Distributor">Add Distributor</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/assign-product">Assign Product</a></li>
 
 

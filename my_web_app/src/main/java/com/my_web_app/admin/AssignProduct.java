@@ -14,7 +14,7 @@ public class AssignProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             try{
                 request.setAttribute("role","admin");
-                request.getRequestDispatcher("/admin/assign-product.jsp").forward(request,response);
+                request.getRequestDispatcher("/common/assign-product.jsp").forward(request,response);
 
             } catch (Exception e) {
                 e.printStackTrace();

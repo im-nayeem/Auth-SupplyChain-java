@@ -28,7 +28,7 @@
 <div id="content">
 
   <c:if test="${product.getStatus()!='sold'}">
-      <h3>This Product is produced by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h3>
+      <h4>This Product is produced by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h4>
   </c:if>
 
   <table id="productInfo" class="responsive-table">

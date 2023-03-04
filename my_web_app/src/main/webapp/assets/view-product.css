@@ -1,7 +1,8 @@
 
 #header {
-    background-color:#d8e2f8;
-    color: #000000;
+    /*background-color:#7a9a95;*/
+    background-image: url("https://img.freepik.com/free-photo/gradient-dark-blue-futuristic-digital-background_53876-160646.jpg");
+    color: white;
     padding: 5px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -13,15 +14,16 @@
 /* Set a max-width for the content */
 #content {
     max-width: 800px;
-    min-height: 80vh;
+    min-height: 70vh;
     margin: 0 auto;
 }
 
 /* Style the table */
 #productInfo {
-    border-collapse: collapse;
-    width: 100%;
+    display: flex;
     max-width: 800px;
+    flex-direction: column;
+    align-content: center;
 }
 
 #productInfo td {
@@ -40,7 +42,6 @@
 @media (max-width: 600px) {
     #productInfo td {
         display: block;
-        width: 100%;
     }
     #productInfo tr {
         display: block;
@@ -55,12 +56,12 @@
 }
 
 #footer {
-    background-color: #d8e2f8;
-    color: #000000;
-    padding: 10px;
+    background-image: url("https://img.freepik.com/free-photo/gradient-dark-blue-futuristic-digital-background_53876-160646.jpg");
+    color: white;
+    padding: 5px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    width: 100%;
+    margin-bottom: 10px;
+    font-size: 20px;
 }
 

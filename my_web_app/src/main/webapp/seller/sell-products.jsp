@@ -5,47 +5,37 @@
   Time: ১২:১৩ AM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Product Information</title>
+    <title>Sell Products</title>
     <style>
+
         <%@include file="../assets/sell-product.css"%>
+
     </style>
 </head>
 <body>
+
 <div class="container">
-    <h1>Product Information:</h1>
-        <table>
-            <tr>
-                <th>Product Name</th>
-                <td>${productMap.getProductName()}</td>
-            </tr>
-            <tr>
-                <th>Product ID</th>
-                <td>${product.getProductId()}</td>
-            </tr>
-            <tr>
-                <th>Product Batch</th>
-                <td>${product.getBatchId()}</td>
-            </tr>
-            <tr>
-                <th>Product Status</th>
-                <td>${product.getStatus()}</td>
-            </tr>
-        </table>
-        <button class="sold-button" onclick="openModal()">Mark as Sold</button>
+    <h2>Sell Products</h2>
+
     <form method="post" action="sell-product" >
-        <input type="hidden" value="${product.getProductId()}" name="first-product">
+        <label for="first-product">First Product ID:</label>
+        <input type="text"  id="first-product" name="first-product" pattern="[a-zA-Z0-9]+" required>
+
+        <label for="last-product">Last Product ID:</label>
+        <input type="text" id="last-product"  name="last-product" pattern="[a-zA-Z0-9]+" required>
+
         <button id="mark-sold" type="submit" style="display:none;">Mark As Sold!</button>
     </form>
 
+    <button class="sold-button" onclick="openModal()">Mark as Sold</button>
 </div>
-
-
 <!-- Pop-up window to confirm marking as sold -->
 <div id="sold-modal" class="modal">
     <div class="modal-content">
@@ -73,7 +63,7 @@
 
     // Confirm marking as sold
     function confirmSold() {
-        if(count<3)
+        if(count<2)
         {
             count=count+1;
             closeModal();

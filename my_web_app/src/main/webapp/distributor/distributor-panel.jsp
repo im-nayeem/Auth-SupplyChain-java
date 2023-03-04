@@ -25,11 +25,12 @@
         <h2>Distributor Panel</h2>
 </div>
 <div class="topnav" id="myTopnav">
-    <a href="#home" class="active">Home</a>
-    <a href="#news">My Products</a>
-    <a href="#contact">Distribute Products</a>
-    <a href="#contact">Sell Products</a>
-    <a href="#about" class="account-link">Account</a>
+    <a href="${pageContext.request.contextPath}/DistributorPanel" class="active">Home</a>
+    <a href="#">My Products</a>
+    <a href="${pageContext.request.contextPath}/distributor/distribute-product">Distribute Products</a>
+    <a href="#">Sell Products</a>
+    <a href="${pageContext.request.contextPath}/add-user?role=Supplier">Add Supplier</a>
+    <a href="#" class="account-link">Account</a>
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>

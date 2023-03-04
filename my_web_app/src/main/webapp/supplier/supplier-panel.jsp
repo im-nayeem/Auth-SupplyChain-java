@@ -23,11 +23,11 @@
   <h2>Supplier Panel</h2>
 </div>
 <div class="topnav" id="myTopnav">
-  <a href="#home" class="active">Home</a>
-  <a href="#news">My Products</a>
-  <a href="">Supply Products</a>
-  <a href="./add-user?role=Seller">Add Seller</a>
-  <a href="#about" class="account-link">Account</a>
+  <a href="${pageContext.request.contextPath}/SupplierPanel" class="active">Home</a>
+  <a href="#">My Products</a>
+  <a href="${pageContext.request.contextPath}/supplier/supply-to-seller">Supply Products</a>
+  <a href="${pageContext.request.contextPath}/add-user?role=Seller">Add Seller</a>
+  <a href="#" class="account-link">Account</a>
 
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
