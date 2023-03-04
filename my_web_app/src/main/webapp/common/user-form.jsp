@@ -92,6 +92,10 @@
     </div>
     <c:if test="${role=='Seller'}">
         <div class="form-group">
+            <label for="shop-name">Shop Name:</label>
+            <input type="text" id="shop-name" name="shop-name" required pattern="[a-z A-Z,0-9]+">
+        </div>
+        <div class="form-group">
             <label for="shop-road">Shop Road:</label>
             <input type="text" id="shop-road" name="shop-road" required pattern="[a-z A-Z,0-9]+">
         </div>

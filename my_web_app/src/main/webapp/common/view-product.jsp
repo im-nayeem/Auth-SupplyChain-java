@@ -20,15 +20,14 @@
 </head>
 <body>
 <div id="header">
-<%--  <h2>${sessionScope.get("company").getName()}</h2>--%>
-    <h5>ABC Company</h5>
+  <a href="${pageContext.request.contextPath}/Init"><h3>${company.getName()}</h3></a>
 
 </div>
 
 <div id="content">
 
   <c:if test="${product.getStatus()!='sold'}">
-      <h4>This Product is produced by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h4>
+      <h4>This type of Product is produced by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h4>
   </c:if>
 
   <table id="productInfo" class="responsive-table">
@@ -48,43 +47,48 @@
           <td><strong>Status</strong></td>
           <td class="info">${product.getStatus()}</td>
       </tr>
-      <tr>
-          <td><strong>Sold Date</strong></td>
-          <td class="info">2023-02-17</td>
-      </tr>
+
 <c:if test="${product.getStatus()=='sold'}">
-    <tr>
-        <td><strong>Seller Name:</strong></td>
-        <td class="info">Seller</td>
-    </tr>
-    <tr>
-        <td><strong>Shop Name:</strong></td>
-        <td class="info">AB Shop</td>
-    </tr>
-    <tr>
-        <td><strong>Shop Address:</strong></td>
-        <td class="info">Kotbari,Cumilla</td>
-    </tr>
-    <tr>
-      <td><strong>Manufactured Date:</strong></td>
-      <td class="info">${productBatch.getManufacDate()}</td>
-    </tr>
-<%--    <tr>--%>
-<%--      <td><strong>Expire Date:</strong></td>--%>
-<%--      <td class="info">${productBatch.getExpDate()}</td>--%>
-<%--    </tr>--%>
-    <tr>
-      <td><strong>Warranty Year:</strong></td>
-      <td class="info">${productBatch.getWarrantyYear()}</td>
-    </tr>
-    <tr>
-      <td><strong>Warranty Month:</strong></td>
-      <td class="info">${productBatch.getWarrantyMonth()}</td>
-    </tr>
-    <tr>
-      <td><strong>Remaining Warranty:</strong></td>
-      <td class="info">12 months</td>
-    </tr>
+          <tr>
+              <td><strong>Sold Date</strong></td>
+              <td class="info">${product.getSoldDate()}</td>
+          </tr>
+        <tr>
+            <td><strong>Sold By:</strong></td>
+            <td class="info">${seller.getName()}</td>
+        </tr>
+        <tr>
+            <td><strong>Seller Name:</strong></td>
+            <td class="info">${seller.getShopName()}</td>
+        </tr>
+        <tr>
+            <td><strong>Shop Address:</strong></td>
+            <td class="info">${seller.getShopRoad()},<br>${seller.getAddress().getUnion()},${seller.getAddress().getUpazila()},${seller.getAddress().getDistrict()}</td>
+        </tr>
+       <c:if test="${productMap.getHaveWarranty()=='yes'}">
+           <tr>
+               <td><strong>Warranty Year:</strong></td>
+               <td class="info">${productBatch.getWarrantyYear()}</td>
+           </tr>
+           <tr>
+               <td><strong>Warranty Month:</strong></td>
+               <td class="info">${productBatch.getWarrantyMonth()}</td>
+           </tr>
+           <tr>
+               <td><strong>Remaining Warranty</strong></td>
+                   <td>${product.getRemWarranty()} days</td>
+           </tr>
+       </c:if>
+        <c:if test="${productMap.getHaveExpiration()=='yes'}">
+            <tr>
+                <td><strong>Manufactured Date:</strong></td>
+                <td class="info">${productBatch.getManufacDate()}</td>
+            </tr>
+            <tr>
+                <td><strong>Expire Date:</strong></td>
+                <td class="info">${productBatch.getExpDate()}</td>
+            </tr>
+        </c:if>
 </c:if>
   </table>
 </div>

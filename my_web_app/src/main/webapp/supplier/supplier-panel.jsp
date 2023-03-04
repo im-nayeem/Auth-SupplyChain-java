@@ -38,7 +38,7 @@
   <h2>Responsive Topnav Example</h2>
   <p>Resize the browser window to see how it works.</p>
 </div>
-<div class="main-content">
+<div class="main-content supplier">
 
 </div>
 <footer>

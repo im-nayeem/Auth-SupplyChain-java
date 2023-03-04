@@ -16,10 +16,10 @@
     <h2>ABC Company</h2>
 </div>
 <div class="topnav" id="myTopnav">
-    <a href="#home" class="active">Home</a>
-    <a href="#news">View Product Info</a>
-    <a href="#contact">About Us</a>
-    <a href="#about" class="account-link">Log-in</a>
+    <a href="./" class="active">Home</a>
+    <a href="${pageContext.request.contextPath}/view-product">View Product Info</a>
+    <a href="#">About Us</a>
+    <a href="#" class="account-link">Log-in</a>
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>

@@ -37,7 +37,7 @@
     </a>
 </div>
 
-<div class="main-content">
+<div class="main-content distributor">
     <section>
         <h2>Product Statistics</h2>
         <canvas id="product-chart"></canvas>

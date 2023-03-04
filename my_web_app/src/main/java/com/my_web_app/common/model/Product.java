@@ -5,7 +5,9 @@ import com.my_web_app.Utility;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Created on 03-Feb-23
@@ -16,6 +18,7 @@ public class Product{
     private String productId,batchId;
     private  String status=null,soldDate=null;
     long lastHolder=0;
+    private int remWarranty;
     private static DatabaseConnection conn = null;
 
     public Product() {
@@ -191,5 +194,18 @@ public class Product{
 
     public String getSoldDate() {
         return soldDate;
+    }
+
+    public long getRemWarranty() {
+        String soldDateString = this.soldDate;
+
+        LocalDate soldDate = LocalDate.parse(soldDateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate today = LocalDate.now();
+
+        long daysSinceSold = ChronoUnit.DAYS.between(soldDate, today);
+        ProductBatch productBatch = new ProductBatch(this.getBatchId());
+
+        return productBatch.getWarrantyYear()*365+productBatch.getWarrantyMonth()*30-daysSinceSold;
+
     }
 }
