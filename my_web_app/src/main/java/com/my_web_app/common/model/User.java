@@ -1,6 +1,7 @@
 package com.my_web_app.common.model;
 
 import DB.DatabaseConnection;
+import com.sun.istack.internal.NotNull;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
@@ -20,6 +21,11 @@ public class User {
 
 
     public User() {
+    }
+
+    public User(String email,String role){
+        this.email = email;
+        this.role = role;
     }
 
     public User(long uid){
@@ -110,7 +116,9 @@ public class User {
      * @param uid the user's nid
      * @return role the user's role
      */
+    @NotNull
     public static String getRole(long uid){
+
         DatabaseConnection conn=null;
         String role = null;
         try{

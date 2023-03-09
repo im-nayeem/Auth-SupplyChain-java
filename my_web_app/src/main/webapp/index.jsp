@@ -19,7 +19,7 @@
     <a href="./" class="active">Home</a>
     <a href="${pageContext.request.contextPath}/view-product">View Product Info</a>
     <a href="#">About Us</a>
-    <a href="#" class="account-link">Log-in</a>
+    <a href="${pageContext.request.contextPath}/LogIn" class="account-link">Log-in</a>
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>

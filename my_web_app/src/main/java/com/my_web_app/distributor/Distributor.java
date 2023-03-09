@@ -7,6 +7,7 @@ import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Distributor extends User {
     private String distCenterRoad;
@@ -20,6 +21,19 @@ public class Distributor extends User {
         this.distCenterRoad = distCenterRoad;
     }
 
+    /**
+     * Constructor to retrieve data
+     * @param uid the user's nid
+     * @throws Exception
+     */
+    public Distributor(long uid) throws  Exception{
+        super(uid);
+        conn = new DatabaseConnection();
+        ResultSet resultSet = conn.executeQuery("SELECT * FROM seller WHERE uid="+uid);
+        if(resultSet.next()){
+            this.distCenterRoad = resultSet.getString("dist_center_road");
+        }
+    }
 
     /**
      * Constructor

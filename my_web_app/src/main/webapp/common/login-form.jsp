@@ -5,6 +5,7 @@
   Time: 9:40 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,10 +18,18 @@
    </style>
 </head>
 <body>
-<form method="post" action="log-in">
+<c:if test="${role=='admin'}">
+    <form method="post" action="AdminLogin">
+</c:if>
+<c:if test="${role!='admin'}">
+<form method="post" action="LogIn">
+    </c:if>
     <h2>Login</h2>
-    <label for="email">email:</label>
-    <input type="text" id="email" name="email" placeholder="Enter email" required>
+    <div id="error">
+     <p>${error}</p>
+    </div>
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="email" placeholder="Enter email" required>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" placeholder="Enter password" required>
     <button type="submit">Login</button>

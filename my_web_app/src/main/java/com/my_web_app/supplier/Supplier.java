@@ -6,11 +6,16 @@ import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Supplier extends User {
     DatabaseConnection conn = null;
 
     public Supplier() {
+    }
+    public Supplier(long uid) throws  Exception{
+        super(uid);
+
     }
 
     /**

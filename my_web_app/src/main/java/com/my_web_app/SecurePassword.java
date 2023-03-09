@@ -85,12 +85,12 @@ public class SecurePassword {
     }
 
 //    public static void main(String[] args) {
-//        String salt = generateSalt(512).get();
-//        String key = hashPassword("Seller710153",salt).get();
+//        String salt = generateSalt(100).get();
+//        String key = hashPassword("im-nayeem",salt).get();
 //        System.out.println("\n"+salt+"\n");
 //        System.out.println(key);
 //
-//        System.out.println(verifyPassword("Seller710153",key,salt));
+//        System.out.println(verifyPassword("im-nayeem",key,salt));
 //
 //    }
 }
