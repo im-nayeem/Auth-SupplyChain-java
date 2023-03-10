@@ -42,7 +42,7 @@ public class SupplyProduct extends HttpServlet {
                 Product.updateProductHolder(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"),newHolder.getNid());
 
                 // update product status
-                Product.updateProductStatus(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"), Utility.getProductStatus(newHolder.getRole()));
+                Product.updateProductStatus(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"), Utility.productStatusByRole(newHolder.getRole()));
             }
 
             response.sendRedirect("../SupplierPanel");

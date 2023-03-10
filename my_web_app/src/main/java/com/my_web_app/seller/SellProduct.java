@@ -4,6 +4,7 @@ import com.my_web_app.Utility;
 import com.my_web_app.common.model.Product;
 import com.my_web_app.common.model.ProductBatch;
 import com.my_web_app.common.model.ProductMap;
+import com.my_web_app.common.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,19 +16,22 @@ public class SellProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
+
             request.setAttribute("role","seller");
-            String pid = request.getParameter("pid");
-            //if pid is null then sell product in range
-            if(pid==null)
+
+            //if pid is null or pid is not provided(there is no request parameter) then sell product in range
+            if(!request.getParameterNames().hasMoreElements())
                 request.getRequestDispatcher("/seller/sell-products.jsp").forward(request,response);
+            //if pid is provided in request then sell the product of productID pid
+           else{
+                Product product = new Product(request.getParameter("pid"));
+                ProductMap productMap = new ProductMap(Utility.getCode(product.getProductId()));
+                request.setAttribute("product",product);
+                request.setAttribute("productMap",productMap);
 
-            Product product = new Product(pid);
-            ProductMap productMap = new ProductMap(Utility.getCode(product.getProductId()));
-            request.setAttribute("product",product);
-            request.setAttribute("productMap",productMap);
-
-            // if requested by scanned QR code then sell ony one product
-            request.getRequestDispatcher("/seller/sell-product.jsp").forward(request,response);
+                // if requested by scanned QR code then sell ony one product
+                request.getRequestDispatcher("/seller/sell-product.jsp").forward(request,response);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,24 +43,38 @@ public class SellProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-//            Seller seller = new Seller(123456789);
-
+            //retrieve the first and last product-id(provided in form) from request parameter
             String firstProduct = request.getParameter("first-product");
             String lastProduct = request.getParameter("last-product");
 
+            //if last product is null then sell only the first product,assign lastProduct=firstProduct
             if(lastProduct==null)
                 lastProduct = firstProduct;
+
+
 
             Product product = new Product(firstProduct);
             ProductBatch productBatch = new ProductBatch(product.getBatchId());
             ProductMap productMap = new ProductMap(productBatch.getProductCode());
 
+            User user = (User) request.getSession().getAttribute("user");
 
-            // update product status
-            Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.getProductStatus("customer"));
-            Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+            // check if the product status is supplied and the seller is assigned with these products
+            if(!User.hasAccessToProduct(user.getNid(),productMap.getTableName(),firstProduct,lastProduct) || !Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("seller")))
+            {
+                //if not then show error
+                request.setAttribute("error","Unauthorized Access!");
+                request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+            }
+            else{
+                // update product status in DB
+                Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("customer"));
+                //update sold date
+                Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
 
-            response.sendRedirect(request.getServletContext().getContextPath()+"/SellerPanel");
+                response.sendRedirect(request.getServletContext().getContextPath()+"/SellerPanel");
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -176,6 +176,45 @@ public class Product{
                 conn.close();
         }
     }
+
+    public static Boolean hasValidStatus(String tableName,String firstProduct,String lastProduct,String status){
+        Boolean ok = false;
+        DatabaseConnection conn = null;
+        try {
+            conn = new DatabaseConnection();
+            String query = "SELECT COUNT(*) AS x FROM "+tableName+" WHERE status=? AND pid BETWEEN ? AND ?;";
+            PreparedStatement pstmt = conn.getPreparedStatement(query);
+            pstmt.setString(1,status);
+            pstmt.setString(2,firstProduct);
+            pstmt.setString(3,lastProduct);
+
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            int x = rs.getInt("x");
+
+            pstmt = conn.getPreparedStatement("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid BETWEEN ? AND ?;");
+            pstmt.setString(1,firstProduct);
+            pstmt.setString(2,lastProduct);
+
+            rs = pstmt.executeQuery();
+            rs.next();
+            int y = rs.getInt("y");
+
+            if(x!=0 && y!=0 && y-x==0)
+                ok = true;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            conn.close();
+        }
+        return ok;
+    }
+
+
+
+    /**-----------------Getters----------------------------*/
     public String getProductId() {
         return productId;
     }

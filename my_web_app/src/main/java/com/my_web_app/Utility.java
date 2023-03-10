@@ -223,7 +223,7 @@ public class Utility {
         return   ThreadLocalRandom.current().nextInt(11111, 10000000 );
     }
 
-    public static String getProductStatus(String holder){
+    public static String productStatusByRole(String holder){
 
         String status="";
         if(holder.equals("seller"))
@@ -234,6 +234,8 @@ public class Utility {
             status = "sold";
         else if(holder.equals("distributor"))
             status = "stored";
+        else if(holder.equals("admin"))
+            status = "produced";
 
         return  status;
     }

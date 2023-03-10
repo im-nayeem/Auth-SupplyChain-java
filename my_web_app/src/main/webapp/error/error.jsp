@@ -16,18 +16,17 @@
             background-position: center center;
         }
         .error-container {
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
 
         .error-message {
             font-size: 25px;
             font-weight: bold;
-            color: #090909;
-            background-color: #888888;
+            color: #ee0606;
+            /*background-color: #888888;*/
 
         }
 

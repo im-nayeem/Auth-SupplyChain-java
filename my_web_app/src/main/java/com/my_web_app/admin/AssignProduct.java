@@ -26,23 +26,38 @@ public class AssignProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+                //retrieve the first and last product-id(provided in form) from request parameter
+                String firstProduct = request.getParameter("first-product");
+                String lastProduct = request.getParameter("last-product");
                 User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
                 // check if new holder is valid
                 if(newHolder.getRole().equals("distributor") || newHolder.getRole().equals("supplier") || newHolder.getRole().equals("seller")){
 
-                    Product product = new Product(request.getParameter("first-product"));
+                    Product product = new Product(firstProduct);
                     ProductBatch productBatch = new ProductBatch(product.getBatchId());
                     ProductMap productMap = new ProductMap(productBatch.getProductCode());
 
-                    // update product holder
-                    Product.updateProductHolder(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"),newHolder.getNid());
+                    if(!Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("admin")))
+                    {
+                        //if not then show error
+                        request.setAttribute("error","Unauthorized Access!");
+                        request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+                    }
+                   else{
+                        // update product holder
+                        Product.updateProductHolder(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
 
-                    // update product status
-                    Product.updateProductStatus(productMap.getTableName(),request.getParameter("first-product"),request.getParameter("last-product"),Utility.getProductStatus(newHolder.getRole()));
+                        // update product status
+                        Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole(newHolder.getRole()));
+
+                        //update sold date
+                        Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+                    }
+
                 }
 
-                response.sendRedirect("../AdminPanel");
+                response.sendRedirect(request.getServletContext().getContextPath()+"/AdminPanel");
 
         } catch (Exception e) {
             e.printStackTrace();

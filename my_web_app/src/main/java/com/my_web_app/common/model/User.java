@@ -137,6 +137,41 @@ public class User {
             return role;
         }
     }
+    public static Boolean hasAccessToProduct(long lastHolder,String tableName,String firstProduct,String lastProduct){
+        Boolean res = false;
+        DatabaseConnection conn = null;
+        try {
+            conn = new DatabaseConnection();
+            String query = "SELECT COUNT(*) AS x FROM "+tableName+" WHERE last_holder=? AND pid BETWEEN ? AND ?;";
+            PreparedStatement pstmt = conn.getPreparedStatement(query);
+            pstmt.setLong(1,lastHolder);
+            pstmt.setString(2,firstProduct);
+            pstmt.setString(3,lastProduct);
+
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            int x = rs.getInt("x");
+
+            pstmt = conn.getPreparedStatement("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid BETWEEN ? AND ?;");
+            pstmt.setString(1,firstProduct);
+            pstmt.setString(2,lastProduct);
+
+            rs = pstmt.executeQuery();
+            rs.next();
+            int y = rs.getInt("y");
+
+            if(x!=0 && y!=0 && y-x==0)
+                res = true;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            conn.close();
+        }
+        return res;
+
+    }
 
 
     /**------------Getter------------**/
