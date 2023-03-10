@@ -21,6 +21,7 @@
     <h2>Update Password</h2>
     <label for="email">Email:</label>
     <input type="text" id="email" name="email" placeholder="Enter email" readonly value="${email}">
+    <input type="hidden" name="uid" value="${uid}">
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" placeholder="Enter password">
     <label for="confirm-password">Confirm Password:</label>

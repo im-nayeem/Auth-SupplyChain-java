@@ -13,7 +13,7 @@ import java.io.IOException;
  *
  * @author Nayeem
  */
-@WebFilter(filterName = "SupplierFilter",servletNames = {"DistributorPanel"},urlPatterns = {"/supplier/*"})
+@WebFilter(filterName = "SupplierFilter",servletNames = {"SupplierPanel"},urlPatterns = {"/supplier/*"})
 public class SupplierFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }

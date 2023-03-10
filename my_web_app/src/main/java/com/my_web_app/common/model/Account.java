@@ -114,6 +114,12 @@ public class Account {
     public void updatePassword(){
         try{
             conn = new DatabaseConnection();
+            PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE account SET hash_key=?,salt=? WHERE email=?");
+            preparedStatement.setString(1,this.hashKey);
+            preparedStatement.setString(2,this.salt);
+            preparedStatement.setString(3,this.email);
+
+            preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
