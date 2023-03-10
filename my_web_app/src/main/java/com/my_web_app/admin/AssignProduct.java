@@ -53,15 +53,21 @@ public class AssignProduct extends HttpServlet {
 
                         //update sold date
                         Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+
+                        response.sendRedirect(request.getServletContext().getContextPath()+"/AdminPanel");
+
                     }
 
                 }
+                else{
+                    request.setAttribute("error","Invalid Holder!");
+                    request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+                }
 
-                response.sendRedirect(request.getServletContext().getContextPath()+"/AdminPanel");
 
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error",e);
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }
 
