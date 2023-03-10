@@ -23,7 +23,6 @@ public class AdminLogin extends HttpServlet {
 
             } catch (Exception e) {
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);
-//                throw new RuntimeException(e);
             }
     }
 
@@ -46,7 +45,6 @@ public class AdminLogin extends HttpServlet {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
-//                throw new RuntimeException(e);
         }
     }
 }

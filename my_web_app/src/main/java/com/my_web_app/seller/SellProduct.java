@@ -16,12 +16,12 @@ public class SellProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             request.setAttribute("role","seller");
-
+            String pid = request.getParameter("pid");
             //if pid is null then sell product in range
-            if(request.getParameter("pid")==null)
+            if(pid==null)
                 request.getRequestDispatcher("/seller/sell-products.jsp").forward(request,response);
 
-            Product product = new Product(request.getParameter("pid"));
+            Product product = new Product(pid);
             ProductMap productMap = new ProductMap(Utility.getCode(product.getProductId()));
             request.setAttribute("product",product);
             request.setAttribute("productMap",productMap);
@@ -56,7 +56,7 @@ public class SellProduct extends HttpServlet {
             Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.getProductStatus("customer"));
             Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
 
-            response.sendRedirect("../SellerPanel");
+            response.sendRedirect(request.getServletContext().getContextPath()+"/SellerPanel");
 
         } catch (Exception e) {
             e.printStackTrace();
