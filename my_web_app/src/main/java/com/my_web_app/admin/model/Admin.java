@@ -16,6 +16,7 @@ public class Admin {
     private String email;
     private String hashKey;
     private  String salt;
+
     public Admin(String email){
         DatabaseConnection conn = null;
         try{

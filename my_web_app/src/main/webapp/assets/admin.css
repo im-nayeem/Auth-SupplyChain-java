@@ -51,4 +51,7 @@ footer {
     display: flex;
     flex-flow: row nowrap;
 }
+.active{
+    background-color: #4CAF50;
+}
 

@@ -23,6 +23,7 @@ public class GenerateQRCode extends HttpServlet {
             if (request.getParameter("batch") == null) {
                 List<ProductBatch>batchList = new ProductBatch().getAllBatch();
                 request.setAttribute("batchList",batchList);
+                request.setAttribute("pageName","generateQr");
                 request.getRequestDispatcher("/admin/all-batch.jsp").forward(request, response);
             }
 

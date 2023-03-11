@@ -19,10 +19,13 @@ public class Init extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             request.getSession().setAttribute("company",new Company());
+            request.setAttribute("pageName","home");
             request.getRequestDispatcher("index.jsp").forward(request,response);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            System.err.println(e.getMessage());
+            request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }
     }
 

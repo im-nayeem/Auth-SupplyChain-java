@@ -34,10 +34,6 @@
   </a>
 </div>
 
-<div style="padding-left:16px">
-  <h2>Responsive Topnav Example</h2>
-  <p>Resize the browser window to see how it works.</p>
-</div>
 <div class="main-content supplier">
 
 </div>

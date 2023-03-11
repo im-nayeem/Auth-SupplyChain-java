@@ -17,16 +17,16 @@
 <header>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/AdminPanel" style="background-color: #4CAF50">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/release-product">Release New Product</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/add-batch">Add New Batch</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/generate-qr-code">Generate QR Code</a></li>
-            <li><a href="${pageContext.request.contextPath}/add-user?role=Distributor">Add Distributor</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/assign-product">Assign Product</a></li>
+            <li><a href="${pageContext.request.contextPath}/AdminPanel" class="${pageName eq 'home' ? 'active' : ''}">Home</a></li>
+            <li><a target="_blank" href="${pageContext.request.contextPath}/admin/release-product" class="${pageName eq 'releaseProduct' ? 'active' : ''}">Release New Product</a></li>
+            <li><a target="_blank" href="${pageContext.request.contextPath}/admin/add-batch" class="${pageName eq 'addBatch' ? 'active' : ''}">Add New Batch</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/generate-qr-code" class="${pageName eq 'generateQr' ? 'active' : ''}">Generate QR Code</a></li>
+            <li><a target="_blank" href="${pageContext.request.contextPath}/add-user?role=Distributor" class="${pageName eq 'addDistributor' ? 'active' : ''}">Add Distributor</a></li>
+            <li><a target="_blank" href="${pageContext.request.contextPath}/admin/assign-product" class="class="${pageName eq 'assignProduct' ? 'active' : ''}"">Assign Product</a></li>
 
 
             <div class="acc">
-                <li><a href="#">Account</a></li>
+                <li><a href="${pageContext.request.contextPath}/user-profile" class="${pageName eq 'profile' ? 'active' : ''}">Account</a></li>
             </div>
         </ul>
     </nav>

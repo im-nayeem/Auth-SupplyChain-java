@@ -1,0 +1,107 @@
+/* Mobile Styles */
+@media only screen and (max-width: 767px) {
+    .profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-details {
+        max-width: 100%;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-actions a {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}
+
+/* Tablet and Desktop Styles */
+@media only screen and (min-width: 768px) {
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile {
+        max-width: 960px;
+    }
+
+    .profile-actions {
+        margin-top: 20px;
+    }
+
+}
+
+.profile-details {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.bio {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.details-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.details-list li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.details-list li strong {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.profile-actions a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 18px;
+    color: #fff;
+    /*background-color: #007bff;*/
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-update-password {
+    background-color: #28a745;
+}
+
+.btn-logout {
+    background-color: #dc3545;
+}
+.btn-update-password:hover,.btn-logout:hover{
+    background-color: #3b5c75;
+}

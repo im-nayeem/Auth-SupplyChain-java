@@ -1,31 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        <%@include file="assets/style.css"%>
-    </style>
-    <script>
-        <%@include file="assets/responsive.js"%>
-    </script>
-</head>
-<body>
-<div class="head">
-    <h2>ABC Company</h2>
-</div>
-<div class="topnav" id="myTopnav">
-    <a href="./" class="active">Home</a>
-    <a href="${pageContext.request.contextPath}/view-product">View Product Info</a>
-    <a href="#">About Us</a>
-    <a href="${pageContext.request.contextPath}/LogIn" class="account-link">Log-in</a>
-
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
-</div>
-
+<%@include file="includes/header.jsp"%>
 <div class="main-content">
     <h2>Featured Products</h2>
 
@@ -62,9 +35,4 @@
         </div>
     </section>
 </div>
-<footer>
-    <p>Privacy & Policy | Contact Us | Copyright &copy; 2023</p>
-</footer>
-
-</body>
-</html>
+<%@include file="includes/footer.jsp"%>

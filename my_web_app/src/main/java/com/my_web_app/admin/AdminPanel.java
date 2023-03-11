@@ -36,6 +36,7 @@ public class AdminPanel extends HttpServlet {
 
             }
             request.getSession().setAttribute("company",new Company());
+            request.setAttribute("pageName","home");
             request.getRequestDispatcher("admin/admin.jsp").forward(request,response);
 
 

@@ -105,7 +105,7 @@
     </tr>
     <tr>
         <td><strong>Last Holder's Address:</strong></td>
-        <td class="info">${seller.getAddress().getUnion()},${seller.getAddress().getUpazila()},${seller.getAddress().getDistrict()}</td>
+        <td class="info">${lastHolder.getAddress().getUnion()},${lastHolder.getAddress().getUpazila()},${lastHolder.getAddress().getDistrict()}</td>
     </tr>
 </c:if>
   </table>
