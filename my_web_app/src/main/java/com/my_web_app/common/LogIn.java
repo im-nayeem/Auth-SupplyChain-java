@@ -24,7 +24,6 @@ public class LogIn extends HttpServlet {
         try{
             request.getRequestDispatcher("/common/login-form.jsp").forward(request,response);
         } catch (Exception e) {
-//            throw new RuntimeException(e);
             System.err.println(e.getMessage());
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }
@@ -37,11 +36,11 @@ public class LogIn extends HttpServlet {
             String password = request.getParameter("password");
 
             Account account = new Account(email);
-            //verify account
+            //verify account,check if password matches with which(hash,salt) stored in DB
             if(account.verifyAccount(password)==true)
             {
-
                 String role = User.getRole(account.getUid());
+
                 //if user is seller go to seller panel
                 if(role.equals("seller"))
                 {
@@ -72,6 +71,7 @@ public class LogIn extends HttpServlet {
             }
             else
             {
+                // if authentication is failed then show error
                 request.setAttribute("error","Incorrect e-mail or password! Try with correct information.");
                 request.getRequestDispatcher("/common/login-form.jsp").forward(request,response);
             }

@@ -57,7 +57,7 @@ public class Product{
             this.lastHolder = resultSet.getLong("last_holder");
 
         } catch (Exception e) {
-            throw new RuntimeException(e+"\nProduct");
+            throw new RuntimeException(e+" Product");
         }
         finally {
             conn.close();

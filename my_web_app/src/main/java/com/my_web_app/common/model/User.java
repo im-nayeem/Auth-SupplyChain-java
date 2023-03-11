@@ -30,10 +30,11 @@ public class User {
 
     public User(long uid){
         DatabaseConnection conn = null;
-
         try{
             conn = new DatabaseConnection();
-            ResultSet rs = conn.executeQuery("SELECT * FROM users WHERE nid="+uid);
+            PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM users WHERE nid=?;");
+            preparedStatement.setLong(1,uid);
+            ResultSet rs = preparedStatement.executeQuery();
 
             if(rs.next()){
                 this.name = rs.getString("name");
@@ -45,6 +46,10 @@ public class User {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
         }
     }
     /**

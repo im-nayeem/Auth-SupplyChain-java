@@ -26,7 +26,7 @@
 
 <div id="content">
 
-  <c:if test="${product.getStatus()!='sold'}">
+  <c:if test="${sessionScope.get('admin')==null and product.getStatus()!='sold'}">
       <h4>This type of Product is produced by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h4>
   </c:if>
 
@@ -48,7 +48,7 @@
           <td class="info">${product.getStatus()}</td>
       </tr>
 
-<c:if test="${product.getStatus()=='sold'}">
+<c:if test="${product.getStatus()=='sold' && sessionScope.get('admin')==null}">
           <tr>
               <td><strong>Sold Date</strong></td>
               <td class="info">${product.getSoldDate()}</td>
@@ -89,6 +89,24 @@
                 <td class="info">${productBatch.getExpDate()}</td>
             </tr>
         </c:if>
+</c:if>
+<c:if test="${sessionScope.get('admin')!=null}">
+    <tr>
+        <td><strong>Last Holder's Name:</strong></td>
+        <td class="info">${lastHolder.getName()}</td>
+    </tr>
+    <tr>
+        <td><strong>Last Holder's Role:</strong></td>
+        <td class="info">${lastHolder.getRole()}</td>
+    </tr>
+    <tr>
+        <td><strong>Last Holder's NID:</strong></td>
+        <td class="info"><a href="${pageContext.request.contextPath}/user-view?uid=${lastHolder.getNid()}">${lastHolder.getNid()}</a></td>
+    </tr>
+    <tr>
+        <td><strong>Last Holder's Address:</strong></td>
+        <td class="info">${seller.getAddress().getUnion()},${seller.getAddress().getUpazila()},${seller.getAddress().getDistrict()}</td>
+    </tr>
 </c:if>
   </table>
 </div>

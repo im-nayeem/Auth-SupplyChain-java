@@ -1,15 +1,16 @@
 package com.my_web_app.common;
 
-import com.my_web_app.common.model.Company;
-import com.my_web_app.common.model.Product;
-import com.my_web_app.common.model.ProductBatch;
-import com.my_web_app.common.model.ProductMap;
+import com.my_web_app.common.model.*;
 import com.my_web_app.seller.Seller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Time;
+import java.time.Clock;
+import java.util.TimeZone;
+
 /**
  * Created on 06-Feb-23
  *
@@ -25,19 +26,24 @@ public class ViewProduct extends HttpServlet {
                    //dispatch to form to collect product id
                    request.getRequestDispatcher("/common/view-product-form.jsp").forward(request,response);
                }
-               Company company = new Company();
-               Product product = new Product(request.getParameter("pid"));
-               ProductBatch productBatch = new ProductBatch(product.getBatchId());
-               ProductMap productMap = new ProductMap(productBatch.getProductCode());
+               else{
+                   Company company = new Company();
+                   Product product = new Product(request.getParameter("pid"));
+                   ProductBatch productBatch = new ProductBatch(product.getBatchId());
+                   ProductMap productMap = new ProductMap(productBatch.getProductCode());
 
-               request.setAttribute("company",company);
-               request.setAttribute("product",product);
-               if(product.getStatus().equals("sold"))
-                    request.setAttribute("seller",new Seller(product.getLastHolder()));
-               request.setAttribute("productBatch",productBatch);
-               request.setAttribute("productMap",productMap);
+                   request.setAttribute("company",company);
+                   request.setAttribute("product",product);
+                   request.setAttribute("productBatch",productBatch);
+                   request.setAttribute("productMap",productMap);
 
-               request.getRequestDispatcher("/common/view-product.jsp").forward(request,response);
+                   if(product.getStatus().equals("sold"))
+                       request.setAttribute("seller",new Seller(product.getLastHolder()));
+
+                   request.setAttribute("lastHolder",new User(product.getLastHolder()));
+
+                   request.getRequestDispatcher("/common/view-product.jsp").forward(request,response);
+               }
            } catch (Exception e) {
                e.printStackTrace();
                request.setAttribute("error",e);

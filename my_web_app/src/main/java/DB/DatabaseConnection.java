@@ -31,9 +31,9 @@ public class DatabaseConnection {
             dataSource.setUrl(prop.getProperty("db.url") + "?allowMultiQueries=true&characterEncoding=utf8");
             dataSource.setUsername(prop.getProperty("db.username"));
             dataSource.setPassword(prop.getProperty("db.password"));
-            dataSource.setMaxIdle(10);
-            dataSource.setMaxIdle(10);
-            dataSource.setMaxOpenPreparedStatements(100);
+            dataSource.setMaxIdle(300);
+            dataSource.setMaxActive(100);
+            dataSource.setMaxOpenPreparedStatements(400);
         } catch (IOException e) {
             throw new RuntimeException(e + " Couldn't read DB properties or set connection pool!");
         }
