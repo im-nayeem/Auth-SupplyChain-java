@@ -1,6 +1,7 @@
 package com.my_web_app.common.model;
 
 import DB.DatabaseConnection;
+import com.my_web_app.Utility;
 import com.sun.istack.internal.NotNull;
 
 import javax.servlet.http.HttpServletRequest;
@@ -147,21 +148,17 @@ public class User {
         DatabaseConnection conn = null;
         try {
             conn = new DatabaseConnection();
-            String query = "SELECT COUNT(*) AS x FROM "+tableName+" WHERE last_holder=? AND pid BETWEEN ? AND ?;";
+            String query = "SELECT COUNT(*) AS x FROM "+tableName+" WHERE last_holder=? AND pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
+
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setLong(1,lastHolder);
-            pstmt.setString(2,firstProduct);
-            pstmt.setString(3,lastProduct);
 
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             int x = rs.getInt("x");
 
-            pstmt = conn.getPreparedStatement("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid BETWEEN ? AND ?;");
-            pstmt.setString(1,firstProduct);
-            pstmt.setString(2,lastProduct);
+            rs = conn.executeQuery("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct));
 
-            rs = pstmt.executeQuery();
             rs.next();
             int y = rs.getInt("y");
 

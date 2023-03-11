@@ -27,7 +27,7 @@ public class ReleaseProduct extends HttpServlet {
 
             response.sendRedirect("add-batch?p_code="+productMap.getProductCode());
         } catch (Exception e) {
-            request.setAttribute("error",e);
+            e.printStackTrace();
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
 
         }

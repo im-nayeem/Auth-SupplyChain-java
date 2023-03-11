@@ -122,14 +122,12 @@ public class Product{
     public static void updateProductHolder(String tableName,String firstProduct,String lastProduct,long currentHolder,long newHolder){
         try{
              conn = new DatabaseConnection();
-             String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid BETWEEN ? and ? and last_holder=?";
+             String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct)+" AND last_holder=?";
              PreparedStatement pstmt = conn.getPreparedStatement( query);
              pstmt.setLong(1,newHolder);
-             pstmt.setString(2,firstProduct);
-             pstmt.setString(3,lastProduct);
-             pstmt.setLong(4,currentHolder);
+             pstmt.setLong(2,currentHolder);
 
-             pstmt.execute();
+             pstmt.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e + "Update Holder");
@@ -150,14 +148,12 @@ public class Product{
     public static  void updateProductHolder(String tableName,String firstProduct,String lastProduct,long newHolder){
         try{
             conn = new DatabaseConnection();
-            String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid BETWEEN ? and ?";
+            String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setLong(1,newHolder);
-            pstmt.setString(2,firstProduct);
-            pstmt.setString(3,lastProduct);
 
-            pstmt.execute();
+            pstmt.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -176,14 +172,12 @@ public class Product{
     public static void updateProductStatus(String tableName,String firstProduct,String lastProduct,String status){
         try{
             conn = new DatabaseConnection();
-            String query = "UPDATE "+tableName+" SET status=? WHERE pid BETWEEN ? and ?";
+            String query = "UPDATE "+tableName+" SET status=? WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setString(1,status);
-            pstmt.setString(2,firstProduct);
-            pstmt.setString(3,lastProduct);
 
-            pstmt.execute();
+            pstmt.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -200,13 +194,9 @@ public class Product{
     public  static void updateSoldDate(String tableName,String firstProduct,String lastProduct){
         try{
             conn = new DatabaseConnection();
-            String query = "UPDATE "+tableName+" SET sold_date=CURDATE() WHERE pid BETWEEN ? and ?";
+            String query = "UPDATE "+tableName+" SET sold_date=CURDATE() WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
-            PreparedStatement pstmt = conn.getPreparedStatement(query);
-            pstmt.setString(1,firstProduct);
-            pstmt.setString(2,lastProduct);
-
-            pstmt.execute();
+            conn.executeUpdate(query);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -227,21 +217,16 @@ public class Product{
         DatabaseConnection conn = null;
         try {
             conn = new DatabaseConnection();
-            String query = "SELECT COUNT(*) AS x FROM "+tableName+" WHERE status=? AND pid BETWEEN ? AND ?;";
+            String query = "SELECT COUNT(*) AS x FROM "+tableName+" WHERE status=? AND pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setString(1,status);
-            pstmt.setString(2,firstProduct);
-            pstmt.setString(3,lastProduct);
 
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             int x = rs.getInt("x");
 
-            pstmt = conn.getPreparedStatement("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid BETWEEN ? AND ?;");
-            pstmt.setString(1,firstProduct);
-            pstmt.setString(2,lastProduct);
+            rs = conn.executeQuery("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct));
 
-            rs = pstmt.executeQuery();
             rs.next();
             int y = rs.getInt("y");
 

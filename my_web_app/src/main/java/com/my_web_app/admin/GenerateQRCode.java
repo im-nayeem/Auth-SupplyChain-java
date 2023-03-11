@@ -38,6 +38,7 @@ public class GenerateQRCode extends HttpServlet {
             //dispatch to qrCode.jsp to generate qr code
             request.getRequestDispatcher("/admin/qrCode.jsp").forward(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             try {
                 //if product info are already generated then generate qr code
                 List<Product> productList = new ProductBatch(request.getParameter("batch")).getAllProduct();
@@ -45,7 +46,7 @@ public class GenerateQRCode extends HttpServlet {
                 request.setAttribute("productList",productList);
                 request.getRequestDispatcher("/admin/qrCode.jsp").forward(request, response);
             } catch (Exception ex) {
-                request.setAttribute("error", e + "\n");
+                ex.printStackTrace();
                 request.getRequestDispatcher("/error/error.jsp").forward(request, response);
             }
 

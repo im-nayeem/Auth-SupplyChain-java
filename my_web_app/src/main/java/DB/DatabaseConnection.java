@@ -80,6 +80,17 @@ public class DatabaseConnection {
         }
         return rs;
     }
+     public int executeUpdate(String query) {
+        int state;
+        try {
+            stmt = conn.createStatement();
+            state = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e + "\nCouldn't Create Statement");
+        }
+        return  state;
+    }
+
 
     /**
      * Method to prepare statement

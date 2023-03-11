@@ -133,7 +133,22 @@ public class Utility {
         }
         return Id.substring(0,i);
     }
+    public static int extractIntFromPid(String pid) {
+        String intPart = pid.replaceAll("[^\\d]", "");
+        return Integer.parseInt(intPart);
+    }
+    public static String getCommaSeparatedPidList(String firstProduct,String lastProduct)
+    {
+        int first = extractIntFromPid(firstProduct);
+        int last = extractIntFromPid(lastProduct);
+        String pidSequence="(";
+        String productCode=getCode(firstProduct);
+        for(int i=first;i<last;i++)
+            pidSequence+="'"+(productCode+i)+"',";
+        pidSequence+="'"+(productCode+last)+"')";
 
+        return pidSequence;
+    }
     public static String getIp()
     {
         try {

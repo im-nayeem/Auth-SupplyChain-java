@@ -37,6 +37,7 @@ public class AssignProduct extends HttpServlet {
                     Product product = new Product(firstProduct);
                     ProductBatch productBatch = new ProductBatch(product.getBatchId());
                     ProductMap productMap = new ProductMap(productBatch.getProductCode());
+
                     // check if the product status is valid('produced') to handover by admin
                     if(!Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("admin")))
                     {
@@ -68,7 +69,7 @@ public class AssignProduct extends HttpServlet {
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }
 
