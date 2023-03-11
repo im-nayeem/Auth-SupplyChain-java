@@ -34,7 +34,7 @@ public class SupplyProduct extends HttpServlet {
             String lastProduct = request.getParameter("last-product");
             User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-            // check if new holder is valid
+            // check if new holder is valid(under the current holder, admin->distributor->supplier->seller)
             if(newHolder.getRole().equals("seller")){
 
                 Product product = new Product(firstProduct);
@@ -64,6 +64,7 @@ public class SupplyProduct extends HttpServlet {
                 }
             }
             else{
+                //if the new holder is not valid then rise error
                 request.setAttribute("error","Invalid Holder!");
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);
             }

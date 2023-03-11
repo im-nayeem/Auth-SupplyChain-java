@@ -18,18 +18,28 @@ public class Product{
     private String productId,batchId;
     private  String status=null,soldDate=null;
     long lastHolder=0;
-    private int remWarranty;
     private static DatabaseConnection conn = null;
 
     public Product() {
 
     }
+
+    /**
+     * Constructor to assign info
+     * @param productId the product's unique ID
+     * @param batchId the product's batch id
+     */
     public Product(String productId, String batchId) {
         this.productId = productId;
         this.batchId = batchId;
         this.status = "produced";
 
     }
+
+    /**
+     * Constructor to retrieve product info
+     * @param productId the product's id to retrieve info
+     */
     public Product(String productId)
     {
         try{
@@ -54,6 +64,10 @@ public class Product{
         }
     }
 
+    /**
+     * Constructor to store info
+     * @param resultSet the ResultSet object containing info retrieved from DB
+     */
     public Product(final ResultSet resultSet)
     {
         try
@@ -67,8 +81,11 @@ public class Product{
             throw new RuntimeException(e+" Product");
         }
     }
+    /**---------------------------------------------------------------------*/
 
-    /** ============ Methods ==============**/
+
+    /** ============================= Methods ============================**/
+
     public void storeInDatabase(String tableName)
     {
         try{
@@ -94,6 +111,14 @@ public class Product{
         }
     }
 
+    /**
+     * updateProductHolder method to update the holder of the product
+     * @param tableName the table's name in database containing the products
+     * @param firstProduct the first product's id
+     * @param lastProduct the last product's id
+     * @param currentHolder current holder's(of the products) nid
+     * @param newHolder new holder's(of the products) nid
+     */
     public static void updateProductHolder(String tableName,String firstProduct,String lastProduct,long currentHolder,long newHolder){
         try{
              conn = new DatabaseConnection();
@@ -115,6 +140,13 @@ public class Product{
         }
 
     }
+    /**
+     * updateProductHolder method to update the holder of the product
+     * @param tableName the table's name in database containing the products
+     * @param firstProduct the first product's id
+     * @param lastProduct the last product's id
+     * @param newHolder new holder's(of the products) nid
+     */
     public static  void updateProductHolder(String tableName,String firstProduct,String lastProduct,long newHolder){
         try{
             conn = new DatabaseConnection();
@@ -137,6 +169,10 @@ public class Product{
 
     }
 
+    /**
+     * updateProductStatus method to update the status of the product
+     * @param status the new status of the product
+     */
     public static void updateProductStatus(String tableName,String firstProduct,String lastProduct,String status){
         try{
             conn = new DatabaseConnection();
@@ -157,6 +193,10 @@ public class Product{
                 conn.close();
         }
     }
+
+    /**
+     * updateSoldDate method to update the handover date(today) of the product
+     */
     public  static void updateSoldDate(String tableName,String firstProduct,String lastProduct){
         try{
             conn = new DatabaseConnection();
@@ -177,6 +217,11 @@ public class Product{
         }
     }
 
+    /**
+     * hasValidStatus method to check if the product status matches with a given status
+     * @param status the given status to check if it matches with the product status
+     * @return True if matches else false
+     */
     public static Boolean hasValidStatus(String tableName,String firstProduct,String lastProduct,String status){
         Boolean ok = false;
         DatabaseConnection conn = null;
@@ -212,9 +257,11 @@ public class Product{
         return ok;
     }
 
+    /**---------------------------------------------------------------------*/
 
 
-    /**-----------------Getters----------------------------*/
+    /**--------------------------Getters----------------------------------*/
+
     public String getProductId() {
         return productId;
     }
@@ -235,6 +282,10 @@ public class Product{
         return soldDate;
     }
 
+    /**
+     * Method to calculate the remaining warranty of the product
+     * @return remaining warranty in days
+     */
     public long getRemWarranty() {
         String soldDateString = this.soldDate;
 

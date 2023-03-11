@@ -31,16 +31,16 @@ public class AssignProduct extends HttpServlet {
                 String lastProduct = request.getParameter("last-product");
                 User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-                // check if new holder is valid
+                // check if new holder is valid(under the current holder, admin->distributor->supplier->seller)
                 if(newHolder.getRole().equals("distributor") || newHolder.getRole().equals("supplier") || newHolder.getRole().equals("seller")){
 
                     Product product = new Product(firstProduct);
                     ProductBatch productBatch = new ProductBatch(product.getBatchId());
                     ProductMap productMap = new ProductMap(productBatch.getProductCode());
-
+                    // check if the product status is valid('produced') to handover by admin
                     if(!Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("admin")))
                     {
-                        //if not then show error
+                        //if product status is not valid then show error
                         request.setAttribute("error","Unauthorized Access!");
                         request.getRequestDispatcher("/error/error.jsp").forward(request,response);
                     }
@@ -60,6 +60,7 @@ public class AssignProduct extends HttpServlet {
 
                 }
                 else{
+                    //if the new holder is not valid then rise error
                     request.setAttribute("error","Invalid Holder!");
                     request.getRequestDispatcher("/error/error.jsp").forward(request,response);
                 }

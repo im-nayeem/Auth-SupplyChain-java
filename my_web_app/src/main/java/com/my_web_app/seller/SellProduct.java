@@ -11,6 +11,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
+/**
+ * Controller to sell products by seller
+ */
 @WebServlet(name = "SellProduct", value = "/seller/sell-product")
 public class SellProduct extends HttpServlet {
     @Override
