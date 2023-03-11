@@ -25,6 +25,10 @@ public class SellerFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
+
+        //set the requested relative path in session, LogIn servlet will redirect to this path
+        req.getSession().setAttribute("servletPath",req.getServletPath()+"?"+req.getQueryString());
+
         if(req.getSession().getAttribute("user")!=null) {
             User user = (User) req.getSession().getAttribute("user");
             if(user.getRole().equals("seller"))

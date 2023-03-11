@@ -36,8 +36,6 @@ public class LogIn extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
 
-
-
             Account account = new Account(email);
             //verify account
             if(account.verifyAccount(password)==true)
@@ -48,7 +46,15 @@ public class LogIn extends HttpServlet {
                 if(role.equals("seller"))
                 {
                     request.getSession().setAttribute("user",new Seller(account.getUid()));
-                    response.sendRedirect("SellerPanel");
+
+                    //if requested servlet is not null in session then redirect to this servlet
+                    if(request.getSession().getAttribute("servletPath")==null)
+                        response.sendRedirect(request.getServletContext().getContextPath()+"/SellerPanel");
+                    else{
+                        String url = (String) request.getSession().getAttribute("servletPath");
+                        request.getSession().removeAttribute("servletPath");
+                        response.sendRedirect(request.getServletContext().getContextPath()+"/"+url);
+                    }
                 }
                 //if user is distributor go to distributor panel
                 else if(role.equals("distributor"))

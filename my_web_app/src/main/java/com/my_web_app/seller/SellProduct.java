@@ -22,15 +22,25 @@ public class SellProduct extends HttpServlet {
             //if pid is null or pid is not provided(there is no request parameter) then sell product in range
             if(!request.getParameterNames().hasMoreElements())
                 request.getRequestDispatcher("/seller/sell-products.jsp").forward(request,response);
-            //if pid is provided in request then sell the product of productID pid
-           else{
+            //if pid is provided in request(requested by scanning QR code) then sell the product of productID=pid
+             else{
                 Product product = new Product(request.getParameter("pid"));
                 ProductMap productMap = new ProductMap(Utility.getCode(product.getProductId()));
                 request.setAttribute("product",product);
                 request.setAttribute("productMap",productMap);
+                User user = (User) request.getSession().getAttribute("user");
 
-                // if requested by scanned QR code then sell ony one product
-                request.getRequestDispatcher("/seller/sell-product.jsp").forward(request,response);
+                //check if seller has access to the product and is not sold
+                if(!User.hasAccessToProduct(user.getNid(),productMap.getTableName(),product.getProductId(),product.getProductId()) || !Product.hasValidStatus(productMap.getTableName(), product.getProductId(), product.getProductId(), Utility.productStatusByRole("seller")))
+                {
+                    //if seller has no access to the product or the product is already sold the shpw error
+                    request.setAttribute("error","Unauthorized Access!");
+                    request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+                }
+                else{
+                    //If seller has access then provide interface to mark as sold
+                    request.getRequestDispatcher("/seller/sell-product.jsp").forward(request,response);
+                }
             }
 
         } catch (Exception e) {
