@@ -6,24 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:choose>
-  <c:when test="${sessionScope.get('admin')!=null}">
+  <c:if test="${sessionScope.get('admin')!=null}">
     <%@include file="../includes/admin-header.jsp"%>
-  </c:when>
-  <c:when test="${sessionScope.get('user').getRole().equals('seller')}">
-    <!-- Code to display about page content -->
-  </c:when>
-  <c:when test="${sessionScope.get('user').getRole().equals('supplier')}">
-    <!-- Code to display contact page content -->
-  </c:when>
-  <c:when test="${sessionScope.get('user').getRole().equals('distributor')}">
-    <!-- Code to display contact page content -->
-  </c:when>
-</c:choose>
+  </c:if>
 
   <style >
     <%@include file="../assets/account-profile.css"%>
   </style>
+
  <div class="main-content">
   <div class="container">
     <div class="profile">
@@ -50,18 +40,7 @@
       </div>
     </div>
   </div>
-<div class="main-content">
-<c:choose>
-  <c:when test="${sessionScope.get('admin')!=null}">
+  <c:if test="${sessionScope.get('admin')!=null}">
     <%@include file="../includes/admin-footer.jsp"%>
-  </c:when>
-  <c:when test="${sessionScope.get('user').getRole().equals('seller')}">
-    <!-- Code to display about page content -->
-  </c:when>
-  <c:when test="${sessionScope.get('user').getRole().equals('supplier')}">
-    <!-- Code to display contact page content -->
-  </c:when>
-  <c:when test="${sessionScope.get('user').getRole().equals('distributor')}">
-    <!-- Code to display contact page content -->
-  </c:when>
-</c:choose>
+  </c:if>
+

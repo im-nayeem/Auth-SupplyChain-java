@@ -101,7 +101,7 @@
     </tr>
     <tr>
         <td><strong>Last Holder's NID:</strong></td>
-        <td class="info"><a href="${pageContext.request.contextPath}/user-view?uid=${lastHolder.getNid()}">${lastHolder.getNid()}</a></td>
+        <td class="info"><a href="${pageContext.request.contextPath}/admin/user-info?uid=${lastHolder.getNid()}">${lastHolder.getNid()}</a></td>
     </tr>
     <tr>
         <td><strong>Last Holder's Address:</strong></td>

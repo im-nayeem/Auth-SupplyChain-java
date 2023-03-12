@@ -27,7 +27,7 @@
     <tbody>
     <c:forEach items="${batchList}" var="batch">
         <tr>
-            <td><a href="./generate-qr-code?batch=${batch.getBatchId()}">${batch.getBatchId()}</a></td>
+            <td><a target="_blank" href="./generate-qr-code?batch=${batch.getBatchId()}">${batch.getBatchId()}</a></td>
             <td>${batch.getProductCode()}</td>
             <td>${batch.getTotalProduct()}</td>
             <td>${batch.getManufacDate()}</td>
