@@ -37,7 +37,7 @@
     <label for="last-product">Last Product ID:</label>
     <input type="text" id="last-product" name="last-product" placeholder="Enter Last Product Code" pattern="([A-Z]+[0-9]+)" required>
 
-    <label for="new-holder-nid">Holder's NID Number:</label>
+    <label for="new-holder-nid">Vendor's NID Number:</label>
     <input type="number" min="1000000" maxlength="11" id="new-holder-nid" name="new-holder-nid" placeholder="Product Receiver's NID" required>
 
 

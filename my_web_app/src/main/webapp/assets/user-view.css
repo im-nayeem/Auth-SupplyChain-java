@@ -5,6 +5,7 @@
     background-color: #f8f8f8;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid cadetblue;
 }
 .info {
     display: grid;

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 03-Feb-23
@@ -108,6 +110,30 @@ public class Product{
         finally {
             if(conn!=null)
             conn.close();
+        }
+    }
+
+    /**
+     * Used for maintaining transaction properties
+     * @param tableName the table name to store product info
+     * @param conn the DatabaseConnection object of the caller method
+     */
+ public void storeInDatabase(String tableName,DatabaseConnection conn)
+    {
+        try{
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+tableName+"(pid,status,sold_date,batch) VALUES(?,?,?,?)");
+
+            pstmt.setString(1,productId);
+            pstmt.setString(2,status);
+            pstmt.setString(3,soldDate);
+            pstmt.setString(4,batchId);
+
+
+            pstmt.execute();
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e+" Product Class");
         }
     }
 
@@ -283,4 +309,8 @@ public class Product{
         return productBatch.getWarrantyYear()*365+productBatch.getWarrantyMonth()*30-daysSinceSold;
 
     }
+
+
+
+
 }

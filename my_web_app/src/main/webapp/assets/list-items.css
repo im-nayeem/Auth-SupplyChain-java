@@ -1,0 +1,27 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.first-tab{
+    max-width: 60%;
+}
+
+th, td {
+    border: 1px solid rgba(213, 208, 208, 0.66);
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    border: 1px dotted black;
+    background-color: #4CAF50;
+    color: white;
+}
+.first th{
+ background-color: rgba(202, 204, 204, 0.54);
+    color: black;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

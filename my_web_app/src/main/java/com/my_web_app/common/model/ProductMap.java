@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 02-Feb-23
@@ -20,6 +22,7 @@ public class ProductMap {
     private String haveWarranty="";
     private  String haveExpiration="";
     private String tableName="";
+    private static DatabaseConnection conn=null;
 
     /**----Constructor-----**/
     public ProductMap(){
@@ -32,7 +35,6 @@ public class ProductMap {
      */
     public ProductMap(String productCode)
     {
-        DatabaseConnection conn=null;
         try{
             conn=new DatabaseConnection();
             PreparedStatement pstmt = conn.getPreparedStatement("SELECT * FROM product_map WHERE p_code=?");
@@ -53,6 +55,18 @@ public class ProductMap {
         finally {
             if(conn!=null)
                 conn.close();
+        }
+    }
+    public ProductMap(final ResultSet rs){
+        try{
+            this.productName=rs.getString("name");
+            this.productCode=rs.getString("p_code");
+            this.haveWarranty=rs.getString("have_warranty");
+            this.haveExpiration=rs.getString("have_expiration");
+            this.tableName=rs.getString("table_name");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -80,7 +94,6 @@ public class ProductMap {
      */
     public void storeInDatabase()
     {
-        DatabaseConnection conn = null;
         try {
             conn = new DatabaseConnection();
             // start the transaction
@@ -154,5 +167,25 @@ public class ProductMap {
 
     public String getTableName() {
         return tableName;
+    }
+
+    /**
+     * Method to get a list of all product info stored in product_map
+     * @return lst the list of all product info stored in product_map
+     */
+    public static List<ProductMap> getAllProductInfoList(){
+        List<ProductMap>lst = new ArrayList<>();
+        try{
+              conn = new DatabaseConnection();
+              ResultSet resultSet = conn.executeQuery("SELECT * FROM product_map");
+              while(resultSet.next())
+                  lst.add(new ProductMap(resultSet));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            if(conn!=null)
+                conn.close();
+            return lst;
+        }
     }
 }

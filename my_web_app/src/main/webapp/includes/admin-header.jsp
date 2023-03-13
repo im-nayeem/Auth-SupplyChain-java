@@ -19,9 +19,10 @@
     <nav>
         <ul>
             <li><a href="${pageContext.request.contextPath}/AdminPanel" class="${pageName eq 'home' ? 'active' : ''}">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/all-products" class="${pageName eq 'allProducts' ? 'active' : ''}">Products</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/user-info" class="${pageName eq 'userInfo' ? 'active' : ''}">Vendor Info</a></li>
             <li><a target="_blank" href="${pageContext.request.contextPath}/admin/release-product" class="${pageName eq 'releaseProduct' ? 'active' : ''}">Release New Product</a></li>
             <li><a target="_blank" href="${pageContext.request.contextPath}/admin/add-batch" class="${pageName eq 'addBatch' ? 'active' : ''}">Add New Batch</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/generate-qr-code" class="${pageName eq 'generateQr' ? 'active' : ''}">Generate QR Code</a></li>
             <li><a target="_blank" href="${pageContext.request.contextPath}/add-user?role=Distributor" class="${pageName eq 'addDistributor' ? 'active' : ''}">Add Distributor</a></li>
             <li><a target="_blank" href="${pageContext.request.contextPath}/admin/assign-product" class="class="${pageName eq 'assignProduct' ? 'active' : ''}"">Assign Product</a></li>
 

@@ -65,6 +65,16 @@
             <td><strong>Shop Address:</strong></td>
             <td class="info">${seller.getShopRoad()},<br>${seller.getAddress().getUnion()},${seller.getAddress().getUpazila()},${seller.getAddress().getDistrict()}</td>
         </tr>
+        <tr>
+            <td><strong>Manufactured Date:</strong></td>
+            <td class="info">${productBatch.getManufacDate()}</td>
+        </tr>
+        <c:if test="${productMap.getHaveExpiration()=='yes'}">
+            <tr>
+                <td><strong>Expire Date:</strong></td>
+                <td class="info">${productBatch.getExpDate()}</td>
+            </tr>
+        </c:if>
        <c:if test="${productMap.getHaveWarranty()=='yes'}">
            <tr>
                <td><strong>Warranty Year:</strong></td>
@@ -79,16 +89,7 @@
                    <td>${product.getRemWarranty()} days</td>
            </tr>
        </c:if>
-        <c:if test="${productMap.getHaveExpiration()=='yes'}">
-            <tr>
-                <td><strong>Manufactured Date:</strong></td>
-                <td class="info">${productBatch.getManufacDate()}</td>
-            </tr>
-            <tr>
-                <td><strong>Expire Date:</strong></td>
-                <td class="info">${productBatch.getExpDate()}</td>
-            </tr>
-        </c:if>
+
 </c:if>
 <c:if test="${sessionScope.get('admin')!=null}">
     <tr>

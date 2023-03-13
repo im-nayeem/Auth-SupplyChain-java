@@ -9,6 +9,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.Time;
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -46,7 +48,6 @@ public class ViewProduct extends HttpServlet {
                }
            } catch (Exception e) {
                e.printStackTrace();
-               request.setAttribute("error",e);
                request.getRequestDispatcher("/error/error.jsp").forward(request,response);
            }
     }

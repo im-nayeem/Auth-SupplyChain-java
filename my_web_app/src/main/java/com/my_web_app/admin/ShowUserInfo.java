@@ -31,7 +31,7 @@ public class ShowUserInfo extends HttpServlet {
                     request.setAttribute("user",new Supplier(uid));
                 else if(User.getRole(uid).equals("distributor"))
                     request.setAttribute("user",new Distributor(uid));
-
+                request.setAttribute("pageName","userInfo");
                 request.getRequestDispatcher("/admin/user-view.jsp").forward(request,response);
             }
         } catch (Exception e) {

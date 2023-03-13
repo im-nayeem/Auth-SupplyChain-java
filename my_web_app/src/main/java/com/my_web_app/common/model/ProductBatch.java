@@ -82,10 +82,38 @@ public class ProductBatch{
     }
 
     /**==================== Methods ==========================**/
+    public void generateProductInfo() {
+        try {
+
+            ProductMap productMap = new ProductMap(this.productCode);
+
+            ResultSet resultSet=conn.executeQuery("SELECT COUNT(*) AS n FROM "+productMap.getTableName());
+            resultSet.next();
+            int start=resultSet.getInt("n");
+
+            for(int i=start;i<this.totalProduct+start;i++)
+            {
+                Product product = new Product(this.productCode+i, this.batchId);
+                product.storeInDatabase(productMap.getTableName(),conn);
+            }
+
+            PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE batch SET produced=? where batch_id=?");
+            preparedStatement.setInt(1,1);
+            preparedStatement.setString(2,batchId);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e+" \nProductInfoGenerator");
+        }
+
+    }
+
     public  void storeInDatabase()
     {
         try{
             conn = new DatabaseConnection();
+            conn.setAutoCommit(false);
+
             PreparedStatement preparedStatement = conn.getPreparedStatement("INSERT INTO batch(batch_id,total_product,p_code,manufac_date,exp_date,warranty_year,warranty_month) VALUES(?,?,?,?,?,?,?)");
             preparedStatement.setString(1,batchId);
             preparedStatement.setInt(2,totalProduct);
@@ -96,8 +124,14 @@ public class ProductBatch{
             preparedStatement.setInt(7,warrantyMonth);
 
             preparedStatement.execute();
+            generateProductInfo();
+
+            conn.commit();
+
 
         } catch (Exception e) {
+            if(conn!=null)
+                conn.rollback();
             throw new RuntimeException(e+"\nCouldn't Store Batch Info In Database");
         }
         finally {
@@ -110,12 +144,14 @@ public class ProductBatch{
      * Method to get list of all batches
      * @return batchList the list of all batches
      */
-    public List<ProductBatch> getAllBatch()
+    public List<ProductBatch> getAllBatch(String productCode)
     {
         try {
             List<ProductBatch>batchList = new ArrayList<>();
             conn = new DatabaseConnection();
-            ResultSet resultSet = conn.executeQuery("SELECT * FROM batch");
+            PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM batch WHERE p_code=?");
+            preparedStatement.setString(1,productCode);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next())
                 batchList.add(new ProductBatch(resultSet));
             return  batchList;
@@ -149,6 +185,10 @@ public class ProductBatch{
 
         } catch (Exception e) {
             throw new RuntimeException(e+" getAllProduct");
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
         }
     }
 

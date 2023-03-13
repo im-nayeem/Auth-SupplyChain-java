@@ -13,7 +13,7 @@ import java.io.IOException;
  *
  * @author Nayeem
  */
-@WebFilter(filterName = "AdminFilter",servletNames = {"AdminPanel"},urlPatterns = {"/admin/*"})
+//@WebFilter(filterName = "AdminFilter",servletNames = {"AdminPanel"},urlPatterns = {"/admin/*"})
 public class AdminFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }

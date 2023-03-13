@@ -25,3 +25,17 @@
 #batchList tr:nth-child(odd) {
     background-color: #fff;
 }
+.grid-container {
+    max-width: 600px;
+    border: 1px dotted black;
+    background-color: rgba(21, 21, 21, 0.85);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* creates three equal-width columns */
+    grid-gap: 1px; /* adds a 10px gap between grid items */
+}
+
+.grid-item {
+    background-color: #f2f2f2; /* sets a light gray background color */
+    padding: 10px; /* adds some padding inside each grid item */
+    text-align: center; /* centers the text inside each grid item */
+}
