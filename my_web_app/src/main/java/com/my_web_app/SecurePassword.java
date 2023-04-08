@@ -84,13 +84,13 @@ public class SecurePassword {
         return optEncrypted.get().equals(hashKey);
     }
 
-//    public static void main(String[] args) {
-//        String salt = generateSalt(100).get();
-//        String key = hashPassword("im-nayeem",salt).get();
-//        System.out.println("\n"+salt+"\n");
-//        System.out.println(key);
-//
-//        System.out.println(verifyPassword("im-nayeem",key,salt));
-//
-//    }
+    public static void main(String[] args) {
+        String salt = generateSalt(100).get();
+        String key = hashPassword("im-nayeem",salt).get();
+        System.out.println("\n"+salt+"\n");
+        System.out.println(key);
+
+        System.out.println(verifyPassword("im-nayeem","A6Y4Of0eF+oiuASyAvMTvMkJ19LagMPNDV4ssJKIlDdqv1AQuH0EIYFIOxERfXj5xT5mSoruXLChuMhT4daRng==","qgGpyBa8VX42tH87VuYk0WPVuLw6SgmS24Q3yhD5xcrE2dzdvOOF6FGTdTNl+l4y4IEmpFIw8RtepLpUxVKoER7X8HF59ZFkdFyte7suyT0zHWIniiLfCqdaKLWP/d5XhOYNgg=="));
+
+    }
 }

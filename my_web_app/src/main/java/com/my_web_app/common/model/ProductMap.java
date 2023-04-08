@@ -138,7 +138,13 @@ public class ProductMap {
                     "    sold_date date null,\n" +
                     "    last_holder int,\n" +
                     "    batch varchar(15),\n" +
+                    "    distributor int,\n"+
+                    "    supplier int,\n"+
+                    "    seller int,\n"+
                     "    FOREIGN KEY(last_holder) REFERENCES users(nid),\n" +
+                    "    FOREIGN KEY(distributor) REFERENCES users(nid),\n" +
+                    "    FOREIGN KEY(supplier) REFERENCES users(nid),\n" +
+                    "    FOREIGN KEY(seller) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(batch) REFERENCES batch(batch_id) on UPDATE CASCADE on DELETE CASCADE\n" +
                     "    );";
             conn.execute(query);

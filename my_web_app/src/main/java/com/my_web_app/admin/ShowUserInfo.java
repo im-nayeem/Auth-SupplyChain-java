@@ -21,7 +21,7 @@ public class ShowUserInfo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             if(request.getParameter("uid")==null) {
-
+                request.getRequestDispatcher("/admin/vendor-uid-form.jsp").forward(request,response);
             }
             else {
                 long uid = Long.parseLong(request.getParameter("uid"));

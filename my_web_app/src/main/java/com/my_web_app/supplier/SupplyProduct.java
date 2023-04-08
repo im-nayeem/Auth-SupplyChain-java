@@ -57,10 +57,10 @@ public class SupplyProduct extends HttpServlet {
                     Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct, Utility.productStatusByRole(newHolder.getRole()));
                     //update sold date
                     Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+                    //update product seller
+                    new Supplier(user.getNid()).updateProductSeller(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
 
                     response.sendRedirect(request.getServletContext().getContextPath()+"/SupplierPanel");
-
-
                 }
             }
             else{

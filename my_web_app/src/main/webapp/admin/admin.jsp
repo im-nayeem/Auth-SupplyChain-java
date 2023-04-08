@@ -45,7 +45,7 @@
         />
         <text x="18" y="20.35" class="percentage">60%</text>
       </svg>
-      <p class="label">Last Year Sales Rate</p>
+      <p class="label">Last Month Sales Rate</p>
     </div>
 
     <div class="single-chart">

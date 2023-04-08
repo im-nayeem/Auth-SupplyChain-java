@@ -25,7 +25,7 @@ public class Company {
             logoUrl = rs.getString("logo_url");
 
         } catch (Exception e) {
-            throw new RuntimeException(e+" \nCompany");
+            throw new RuntimeException(e+"--Company");
         }
         finally {
             conn.close();

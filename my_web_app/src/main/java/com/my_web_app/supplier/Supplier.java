@@ -2,6 +2,7 @@ package com.my_web_app.supplier;
 
 
 import DB.DatabaseConnection;
+import com.my_web_app.Utility;
 import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,32 @@ public class Supplier extends User {
             if (conn != null) {
                 conn.rollback();
             }
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+    }
+
+    public void updateProductSeller(String tableName,String firstProduct,String lastProduct,long seller){
+        try{
+            conn = new DatabaseConnection();
+            conn.setAutoCommit(false);
+            String query = "UPDATE "+tableName+" SET seller=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
+
+            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
+            preparedStatement.setLong(1,seller);
+            preparedStatement.executeUpdate();
+            conn.commit();
+
+        }catch (Exception e) {
+            // If there's an error during the transaction, rollback the changes
+            if (conn != null) {
+                conn.rollback();
+            }
+            e.printStackTrace();
+
             throw new RuntimeException(e);
         }
         finally {

@@ -23,7 +23,6 @@ public class Init extends HttpServlet {
             request.getRequestDispatcher("index.jsp").forward(request,response);
 
         } catch (Exception e) {
-//            throw new RuntimeException(e);
             System.err.println(e.getMessage());
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }

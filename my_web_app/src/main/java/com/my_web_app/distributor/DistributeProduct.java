@@ -42,7 +42,7 @@ public class DistributeProduct extends HttpServlet {
                 ProductMap productMap = new ProductMap(productBatch.getProductCode());
                 User user = (User) request.getSession().getAttribute("user");
 
-                // check if the product status is stored and the distributor is assigned with these products
+                //if the product status is stored and the distributor is assigned with these products then continue else show error
                 if(!User.hasAccessToProduct(user.getNid(),productMap.getTableName(),firstProduct,lastProduct) || !Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("distributor")))
                 {
                     //if not then show error
@@ -56,6 +56,10 @@ public class DistributeProduct extends HttpServlet {
                     Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct, Utility.productStatusByRole(newHolder.getRole()));
                     //update sold date
                     Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+
+                    //update product supplier
+                    Distributor distributor = new Distributor(user.getNid());
+                    distributor.updateProductSupplier(productMap.getTableName(),firstProduct,lastProduct, newHolder.getNid());
 
 
                     response.sendRedirect(request.getServletContext().getContextPath()+"/DistributorPanel");

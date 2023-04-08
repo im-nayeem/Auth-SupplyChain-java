@@ -19,7 +19,7 @@ import java.util.List;
 public class Product{
     private String productId,batchId;
     private  String status=null,soldDate=null;
-    long lastHolder=0;
+    long lastHolder=0,distributor=0,supplier=0,seller=0;
     private static DatabaseConnection conn = null;
 
     public Product() {
@@ -57,6 +57,9 @@ public class Product{
             this.status = resultSet.getString("status");
             this.soldDate = resultSet.getString("sold_date");
             this.lastHolder = resultSet.getLong("last_holder");
+            this.distributor = resultSet.getLong("distributor");
+            this.supplier = resultSet.getLong("supplier");
+            this.seller = resultSet.getLong("seller");
 
         } catch (Exception e) {
             throw new RuntimeException(e+" Product");
@@ -79,6 +82,10 @@ public class Product{
             this.status = resultSet.getString("status");
             this.soldDate = resultSet.getString("sold_date");
             this.lastHolder = resultSet.getLong("last_holder");
+            this.distributor = resultSet.getLong("distributor");
+            this.supplier = resultSet.getLong("supplier");
+            this.seller = resultSet.getLong("seller");
+
         } catch (Exception e) {
             throw new RuntimeException(e+" Product");
         }
@@ -291,6 +298,15 @@ public class Product{
 
     public String getSoldDate() {
         return soldDate;
+    }
+    public long getDistributor(){return distributor;}
+
+    public long getSupplier() {
+        return supplier;
+    }
+
+    public long getSeller() {
+        return seller;
     }
 
     /**

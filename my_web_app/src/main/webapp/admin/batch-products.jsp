@@ -12,6 +12,7 @@
 <div class="main-content">
 <h1>Batch Products</h1>
     <h3>All Products of Batch - ${productBatch.getBatchId()}</h3>
+    <h4><a target="_blank" href="${pageContext.request.contextPath}/admin/generate-qr-code?batch=${productBatch.getBatchId()}">Click Here</a> to generate QR codes for products of this batch.</h4>
     <table class="first-tab">
         <thead class="first">
         <tr>
@@ -54,9 +55,9 @@
         <td>${product.getStatus()}</td>
         <td>${product.getSoldDate()}</td>
         <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getLastHolder()}">${product.getLastHolder()}</a></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributor()}">${product.getDistributor()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getSupplier()}">${product.getSupplier()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getSeller()}">${product.getSeller()}</a></td>
         </tr>
     </c:forEach>
     </tbody>

@@ -2,6 +2,7 @@ package com.my_web_app.distributor;
 
 
 import DB.DatabaseConnection;
+import com.my_web_app.Utility;
 import com.my_web_app.common.model.Address;
 import com.my_web_app.common.model.User;
 
@@ -72,6 +73,32 @@ public class Distributor extends User {
                 conn.rollback();
             }
             e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+        }
+    }
+
+    public void updateProductSupplier(String tableName,String firstProduct,String lastProduct,long supplier){
+        try{
+            conn = new DatabaseConnection();
+            conn.setAutoCommit(false);
+            String query = "UPDATE "+tableName+" SET supplier=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
+
+            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
+            preparedStatement.setLong(1,supplier);
+            preparedStatement.executeUpdate();
+            conn.commit();
+
+        }catch (Exception e) {
+            // If there's an error during the transaction, rollback the changes
+            if (conn != null) {
+                conn.rollback();
+            }
+            e.printStackTrace();
+
             throw new RuntimeException(e);
         }
         finally {

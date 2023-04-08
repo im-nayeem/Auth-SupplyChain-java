@@ -35,6 +35,8 @@ public class AdminPanel extends HttpServlet {
                 }
 
             }
+            // retrieve company data in Company model class
+
             request.getSession().setAttribute("company",new Company());
             request.setAttribute("pageName","home");
             request.getRequestDispatcher("admin/admin.jsp").forward(request,response);

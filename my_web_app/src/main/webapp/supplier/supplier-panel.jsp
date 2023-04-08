@@ -27,7 +27,7 @@
   <a href="#">My Products</a>
   <a href="${pageContext.request.contextPath}/supplier/supply-to-seller">Supply Products</a>
   <a href="${pageContext.request.contextPath}/add-user?role=Seller">Add Seller</a>
-  <a href="#" class="account-link">Account</a>
+  <a href="${pageContext.request.contextPath}/user-profile?uid=${user.getNid()}" class="account-link">Account</a>
 
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>

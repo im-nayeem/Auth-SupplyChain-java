@@ -1,6 +1,7 @@
 package com.my_web_app.admin;
 
 import com.my_web_app.Utility;
+import com.my_web_app.admin.model.Admin;
 import com.my_web_app.common.model.*;
 
 import javax.servlet.*;
@@ -54,6 +55,10 @@ public class AssignProduct extends HttpServlet {
 
                         //update sold date
                         Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
+
+                        Admin admin = (Admin) request.getSession().getAttribute("admin");
+                        // updated product distributor
+                        admin.updateProductDistributor(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
 
                         response.sendRedirect(request.getServletContext().getContextPath()+"/AdminPanel");
 

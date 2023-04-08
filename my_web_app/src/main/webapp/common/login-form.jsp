@@ -29,7 +29,7 @@
      <p>${error}</p>
     </div>
     <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email" placeholder="Enter email" required>
+    <input type="email" id="email" name="email" placeholder="Enter email" required autofocus>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" placeholder="Enter password" required>
     <button type="submit">Login</button>
