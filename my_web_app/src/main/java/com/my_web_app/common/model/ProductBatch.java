@@ -84,18 +84,27 @@ public class ProductBatch{
     /**==================== Methods ==========================**/
     public void generateProductInfo() {
         try {
+            //At first get the number of products containing this product code, it will be the starting product number for this batch. Format of pid:[product code + product number]
 
             ProductMap productMap = new ProductMap(this.productCode);
-
             ResultSet resultSet=conn.executeQuery("SELECT COUNT(*) AS n FROM "+productMap.getTableName());
             resultSet.next();
             int start=resultSet.getInt("n");
 
+            //Execute batch query to insert info for all products
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+productMap.getTableName()+"(pid,status,sold_date,batch) VALUES(?,?,?,?)");
             for(int i=start;i<this.totalProduct+start;i++)
             {
-                Product product = new Product(this.productCode+i, this.batchId);
-                product.storeInDatabase(productMap.getTableName(),conn);
+                pstmt.setString(1,this.productCode+i);
+                pstmt.setString(2,"produced");
+                pstmt.setString(3,null);
+                pstmt.setString(4,batchId);
+                // add batch to prepared statement
+                pstmt.addBatch();
+
             }
+            //execute batch query
+            int[] queryRes = pstmt.executeBatch();
 
             PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE batch SET produced=? where batch_id=?");
             preparedStatement.setInt(1,1);
