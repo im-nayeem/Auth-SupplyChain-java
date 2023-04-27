@@ -24,55 +24,27 @@ public class AdminPanel extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try
         {
-            conn=new DatabaseConnection();
-            ResultSet rs= conn.executeQuery("Select COUNT(*) as n from company_info;");
-            if(rs.next())
-            {
-//                check if company info is initialized
-                if(rs.getInt("n")==0)
-                {
-                    throw new RuntimeException("No Data!");
-                }
-
-            }
             // retrieve company data in Company model class
-
             request.getSession().setAttribute("company",new Company());
             request.setAttribute("pageName","home");
             request.getRequestDispatcher("admin/admin.jsp").forward(request,response);
 
-
-
         }
         catch (Exception e)
         {
-//            request.setAttribute("error",e);
-//            request.getRequestDispatcher("error/error.jsp").forward(request,response);
+            System.err.println(e.getMessage());
 
-            /** If Tables are not created then create tables and fill up form **/
+            /** If Tables are created but company info is not provided then provide company info **/
             try{
-                conn.execute(Utility.getInitialQuery());
-                response.sendRedirect("admin/storeCompanyInfo");
-            } catch (Exception ex) {
-                try {
-                    ex.notify();
-
                     //if tables are created but data is not provided
                     response.sendRedirect("admin/storeCompanyInfo");
                 }
-                catch (Exception e1)
+                catch (Exception ex)
                 {
-                    request.setAttribute("error",e+"\n"+ex);
+                    System.err.println(ex.getMessage());
                     request.getRequestDispatcher("error/error.jsp").forward(request,response);
                 }
             }
-            finally {
-                try{
-                    conn.close();
-                }
-                catch (RuntimeException exception){}
-            }
-        }
     }
 
     @Override
