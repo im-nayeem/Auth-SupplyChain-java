@@ -1,4 +1,4 @@
-package com.my_web_app.supplier;
+package com.my_web_app.distributorAgent;
 
 
 import DB.DatabaseConnection;
@@ -7,14 +7,13 @@ import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-public class Supplier extends User {
+public class DistributorAgent extends User {
     DatabaseConnection conn = null;
 
-    public Supplier() {
+    public DistributorAgent() {
     }
-    public Supplier(long uid) throws  Exception{
+    public DistributorAgent(long uid) throws  Exception{
         super(uid);
 
     }
@@ -23,7 +22,7 @@ public class Supplier extends User {
      * Constructor
      * @param request the HttpServletRequest
      */
-    public Supplier(final HttpServletRequest request, String role)  {
+    public DistributorAgent(final HttpServletRequest request, String role)  {
         super(request,role);
     }
     /**=================Methods====================*/
@@ -36,7 +35,7 @@ public class Supplier extends User {
             super.storeInDatabase(conn);
 
 
-            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO supplier(uid) VALUES(?)");
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO distributorAgent(uid) VALUES(?)");
             pstmt.setLong(1,getNid());
 
             pstmt.execute();

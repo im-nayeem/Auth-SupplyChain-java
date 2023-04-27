@@ -47,7 +47,7 @@
     <c:if test="${role=='Distributor'}">
         <h2>Distribution Center Location: </h2>
     </c:if>
-    <c:if test="${role=='Supplier'}">
+    <c:if test="${role=='DistributorAgent'}">
         <h2>Working Area: </h2>
     </c:if>
     <c:if test="${role=='Admin'}">

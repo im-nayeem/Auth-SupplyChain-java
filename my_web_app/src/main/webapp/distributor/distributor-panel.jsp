@@ -29,7 +29,7 @@
     <a href="#">My Products</a>
     <a href="${pageContext.request.contextPath}/distributor/distribute-product">Distribute Products</a>
     <a href="#">Sell Products</a>
-    <a href="${pageContext.request.contextPath}/add-user?role=Supplier">Add Supplier</a>
+    <a href="${pageContext.request.contextPath}/add-user?role=DistributorAgent">Add DistributorAgent</a>
     <a href="${pageContext.request.contextPath}/user-profile?uid=${user.getNid()}" class="account-link">Account</a>
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">

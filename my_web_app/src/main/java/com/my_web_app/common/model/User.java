@@ -65,7 +65,6 @@ public class User {
             this.role=role.toLowerCase();
 
 
-            System.out.println("Entered!");
             String addId = request.getParameter("division")+""+request.getParameter("district")+request.getParameter("upazila")+request.getParameter("union");
             String division = Address.getDivisionList().get(Integer.parseInt(request.getParameter("division"))-1).getName();
             String district = Address.getDistrictList().get(Integer.parseInt(request.getParameter("district"))-1).getName();

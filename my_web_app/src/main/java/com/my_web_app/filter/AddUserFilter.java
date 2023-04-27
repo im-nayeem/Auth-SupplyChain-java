@@ -32,7 +32,7 @@ public class AddUserFilter implements Filter {
         {
             User user = (User)req.getSession().getAttribute("user");
             String role = req.getParameter("role");
-            if((role.equals("Supplier") && user.getRole().equals("distributor")) || (role.equals("Seller") && user.getRole().equals("supplier")))
+            if((role.equals("DistributorAgent") && user.getRole().equals("distributor")) || (role.equals("Seller") && user.getRole().equals("DistributorAgent")))
                 chain.doFilter(request, response);
             else
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);

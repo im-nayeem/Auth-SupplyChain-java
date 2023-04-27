@@ -24,8 +24,8 @@
     <c:if test="${role=='distributor'}">
         <form method="post" action="distribute-product">
     </c:if>
-    <c:if test="${role=='supplier'}">
-        <form method="post" action="supply-to-seller">
+    <c:if test="${role=='distributorAgent'}">
+        <form method="post" action="distribute-to-seller">
     </c:if>
 
 

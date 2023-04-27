@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ProductBatch{
     private String batchId,productCode,manufacDate,expDate;
-    private int totalProduct=0,warrantyYear=0,warrantyMonth=0,produced=0;
+    private int totalProduct=0,warrantyYear=0,warrantyMonth=0,manufactured=0;
     private  DatabaseConnection conn;
 
     /**----------Constructor------------**/
@@ -39,7 +39,7 @@ public class ProductBatch{
             this.warrantyYear = resultSet.getInt("warranty_year");
             this.manufacDate = resultSet.getString("manufac_date");
             this.expDate = resultSet.getString("exp_date");
-            this.produced=resultSet.getInt("produced");
+            this.manufactured=resultSet.getInt("manufactured");
 
         } catch (Exception e) {
             throw new RuntimeException(e+" Product Batch");
@@ -75,7 +75,7 @@ public class ProductBatch{
             this.warrantyYear = resultSet.getInt("warranty_year");
             this.manufacDate = resultSet.getString("manufac_date");
             this.expDate = resultSet.getString("exp_date");
-            this.produced=resultSet.getInt("produced");
+            this.manufactured=resultSet.getInt("manufactured");
         } catch (Exception e) {
             throw new RuntimeException(e+" ProductBatch");
         }
@@ -96,7 +96,7 @@ public class ProductBatch{
             for(int i=start;i<this.totalProduct+start;i++)
             {
                 pstmt.setString(1,this.productCode+i);
-                pstmt.setString(2,"produced");
+                pstmt.setString(2,"manufactured");
                 pstmt.setString(3,null);
                 pstmt.setString(4,batchId);
                 // add batch to prepared statement
@@ -106,7 +106,7 @@ public class ProductBatch{
             //execute batch query
             int[] queryRes = pstmt.executeBatch();
 
-            PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE batch SET produced=? where batch_id=?");
+            PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE batch SET manufactured=? where batch_id=?");
             preparedStatement.setInt(1,1);
             preparedStatement.setString(2,batchId);
             preparedStatement.executeUpdate();
@@ -229,7 +229,7 @@ public class ProductBatch{
         return productCode;
     }
 
-    public int getProduced() {
-        return produced;
+    public int getManufactured() {
+        return manufactured;
     }
 }

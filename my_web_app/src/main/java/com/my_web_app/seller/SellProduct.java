@@ -72,7 +72,7 @@ public class SellProduct extends HttpServlet {
 
             User user = (User) request.getSession().getAttribute("user");
 
-            // check if the product status is supplied and the seller is assigned with these products
+            // check if the product status is distributed and the seller is assigned with these products
             if(!User.hasAccessToProduct(user.getNid(),productMap.getTableName(),firstProduct,lastProduct) || !Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("seller")))
             {
                 //if not then show error

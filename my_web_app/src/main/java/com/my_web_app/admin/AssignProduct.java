@@ -32,14 +32,14 @@ public class AssignProduct extends HttpServlet {
                 String lastProduct = request.getParameter("last-product");
                 User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-                // check if new holder is valid(under the current holder, admin->distributor->supplier->seller)
-                if(newHolder.getRole().equals("distributor") || newHolder.getRole().equals("supplier") || newHolder.getRole().equals("seller")){
+                // check if new holder is valid(under the current holder, admin->distributor->distributorAgent->seller)
+                if(newHolder.getRole().equals("distributor") || newHolder.getRole().equals("distributorAgent") || newHolder.getRole().equals("seller")){
 
                     Product product = new Product(firstProduct);
                     ProductBatch productBatch = new ProductBatch(product.getBatchId());
                     ProductMap productMap = new ProductMap(productBatch.getProductCode());
 
-                    // check if the product status is valid('produced') to handover by admin
+                    // check if the product status is valid('manufactured') to handover by admin
                     if(!Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("admin")))
                     {
                         //if product status is not valid then show error

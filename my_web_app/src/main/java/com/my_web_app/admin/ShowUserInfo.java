@@ -3,7 +3,7 @@ package com.my_web_app.admin;
 import com.my_web_app.common.model.User;
 import com.my_web_app.distributor.Distributor;
 import com.my_web_app.seller.Seller;
-import com.my_web_app.supplier.Supplier;
+import com.my_web_app.distributorAgent.DistributorAgent;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,8 +27,8 @@ public class ShowUserInfo extends HttpServlet {
                 long uid = Long.parseLong(request.getParameter("uid"));
                 if(User.getRole(uid).equals("seller"))
                     request.setAttribute("user",new Seller(uid));
-                else if(User.getRole(uid).equals("supplier"))
-                    request.setAttribute("user",new Supplier(uid));
+                else if(User.getRole(uid).equals("distributorAgent"))
+                    request.setAttribute("user",new DistributorAgent(uid));
                 else if(User.getRole(uid).equals("distributor"))
                     request.setAttribute("user",new Distributor(uid));
                 request.setAttribute("pageName","userInfo");

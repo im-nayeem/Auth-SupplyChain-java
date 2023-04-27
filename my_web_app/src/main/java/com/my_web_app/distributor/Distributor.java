@@ -81,14 +81,14 @@ public class Distributor extends User {
         }
     }
 
-    public void updateProductSupplier(String tableName,String firstProduct,String lastProduct,long supplier){
+    public void updateProductDistributorAgent(String tableName,String firstProduct,String lastProduct,long distributorAgent){
         try{
             conn = new DatabaseConnection();
             conn.setAutoCommit(false);
-            String query = "UPDATE "+tableName+" SET supplier=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
+            String query = "UPDATE "+tableName+" SET distributor_agent=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             PreparedStatement preparedStatement = conn.getPreparedStatement(query);
-            preparedStatement.setLong(1,supplier);
+            preparedStatement.setLong(1,distributorAgent);
             preparedStatement.executeUpdate();
             conn.commit();
 

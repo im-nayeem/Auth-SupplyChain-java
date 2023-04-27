@@ -40,7 +40,7 @@ public class Utility {
                 "    role_name varchar(15));"+
                 "INSERT INTO role(role_name) VALUES('seller');\n" +
                 "INSERT INTO role(role_name) VALUES('distributor');\n" +
-                "INSERT INTO role(role_name) VALUES('supplier');"+
+                "INSERT INTO role(role_name) VALUES('distributorAgent');"+
 
                 " CREATE TABLE users(\n" +
                 "     nid int PRIMARY KEY,\n" +
@@ -76,11 +76,11 @@ public class Utility {
                 "     );\n" +
                 " CREATE index idx_distributor on distributor(uid);\n" +
 
-                " CREATE TABLE supplier(\n" +
+                " CREATE TABLE distributor_agent(\n" +
                 "     uid int,\n" +
                 "     FOREIGN KEY(uid) REFERENCES users(nid)\n" +
                 "     );\n" +
-                " CREATE index idx_supplier on supplier(uid);\n" +
+                " CREATE index idx_d_agent on distributor_agent(uid);\n" +
 
                 "  CREATE TABLE seller(\n" +
                 "     uid int,\n" +
@@ -107,7 +107,7 @@ public class Utility {
                 "     exp_date date,\n" +
                 "     warranty_year int,\n" +
                 "     warranty_month int,\n" +
-                "     produced int(1) default 0,\n" +
+                "     manufactured int(1) default 0,\n" +
                 "     FOREIGN KEY(p_code) REFERENCES product_map(p_code)\n" +
                 "     );\n" +
                 " CREATE INDEX idx_batch on batch(batch_id);\n" +
@@ -242,15 +242,15 @@ public class Utility {
 
         String status="";
         if(holder.equals("seller"))
-            status = "supplied";
-        else if(holder.equals("supplier"))
-            status =  "distributed";
+            status = "distributed";
+        else if(holder.equals("distributorAgent"))
+            status =  "distributing";
         else if(holder.equals("customer"))
             status = "sold";
         else if(holder.equals("distributor"))
-            status = "stored";
+            status = "supplied";
         else if(holder.equals("admin"))
-            status = "produced";
+            status = "manufactured";
 
         return  status;
     }

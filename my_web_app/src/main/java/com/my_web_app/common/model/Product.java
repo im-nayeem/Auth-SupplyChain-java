@@ -19,7 +19,7 @@ import java.util.List;
 public class Product{
     private String productId,batchId;
     private  String status=null,soldDate=null;
-    long lastHolder=0,distributor=0,supplier=0,seller=0;
+    long lastHolder=0,distributor=0,distributorAgent=0,seller=0;
     private static DatabaseConnection conn = null;
 
     public Product() {
@@ -34,7 +34,7 @@ public class Product{
     public Product(String productId, String batchId) {
         this.productId = productId;
         this.batchId = batchId;
-        this.status = "produced";
+        this.status = "manufactured";
 
     }
 
@@ -58,7 +58,7 @@ public class Product{
             this.soldDate = resultSet.getString("sold_date");
             this.lastHolder = resultSet.getLong("last_holder");
             this.distributor = resultSet.getLong("distributor");
-            this.supplier = resultSet.getLong("supplier");
+            this.distributorAgent = resultSet.getLong("distributor_agent");
             this.seller = resultSet.getLong("seller");
 
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class Product{
             this.soldDate = resultSet.getString("sold_date");
             this.lastHolder = resultSet.getLong("last_holder");
             this.distributor = resultSet.getLong("distributor");
-            this.supplier = resultSet.getLong("supplier");
+            this.distributorAgent = resultSet.getLong("distributor_agent");
             this.seller = resultSet.getLong("seller");
 
         } catch (Exception e) {
@@ -301,8 +301,8 @@ public class Product{
     }
     public long getDistributor(){return distributor;}
 
-    public long getSupplier() {
-        return supplier;
+    public long getDistributorAgent() {
+        return distributorAgent;
     }
 
     public long getSeller() {

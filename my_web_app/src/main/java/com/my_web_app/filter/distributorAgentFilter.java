@@ -13,8 +13,8 @@ import java.io.IOException;
  *
  * @author Nayeem
  */
-@WebFilter(filterName = "SupplierFilter",servletNames = {"SupplierPanel"},urlPatterns = {"/supplier/*"})
-public class SupplierFilter implements Filter {
+@WebFilter(filterName = "distributorAgentFilter",servletNames = {"DistributorAgentPanel"},urlPatterns = {"/DistributorAgent/*"})
+public class distributorAgentFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
 
@@ -27,7 +27,7 @@ public class SupplierFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         if(req.getSession().getAttribute("user")!=null) {
             User user = (User) req.getSession().getAttribute("user");
-            if(user.getRole().equals("supplier"))
+            if(user.getRole().equals("distributorAgent"))
                 chain.doFilter(request, response);
             else
                 req.getRequestDispatcher("/error/error.jsp").forward(request,response);

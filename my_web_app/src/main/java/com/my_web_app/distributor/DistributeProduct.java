@@ -34,8 +34,8 @@ public class DistributeProduct extends HttpServlet {
             String lastProduct = request.getParameter("last-product");
             User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-            // check if new holder is valid(under the current holder, admin->distributor->supplier->seller)
-            if(newHolder.getRole().equals("supplier") || newHolder.getRole().equals("seller")){
+            // check if new holder is valid(under the current holder, admin->distributor->distributorAgent->seller)
+            if(newHolder.getRole().equals("distributorAgent") || newHolder.getRole().equals("seller")){
 
                 Product product = new Product(firstProduct);
                 ProductBatch productBatch = new ProductBatch(product.getBatchId());
@@ -57,9 +57,9 @@ public class DistributeProduct extends HttpServlet {
                     //update sold date
                     Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
 
-                    //update product supplier
+                    //update product distributorAgent
                     Distributor distributor = new Distributor(user.getNid());
-                    distributor.updateProductSupplier(productMap.getTableName(),firstProduct,lastProduct, newHolder.getNid());
+                    distributor.updateProductDistributorAgent(productMap.getTableName(),firstProduct,lastProduct, newHolder.getNid());
 
 
                     response.sendRedirect(request.getServletContext().getContextPath()+"/DistributorPanel");
@@ -68,7 +68,7 @@ public class DistributeProduct extends HttpServlet {
                 }
             }
             else{
-                // if new holder is not supplier or seller the rise error
+                // if new holder is not distributorAgent or seller the rise error
                 request.setAttribute("error","Invalid Holder!");
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);
             }
