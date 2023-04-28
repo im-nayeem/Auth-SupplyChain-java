@@ -20,12 +20,12 @@ public class Utility {
     public static String getInitialQuery()
     {
         return
-//                "CREATE TABLE admin(\n" +
-//                "    email varchar(30) UNIQUE,\n" +
-//                "    hash_key varchar(500),\n" +
-//                "    salt varchar(500),\n" +
-//                "    id int not null AUTO_INCREMENT PRIMARY KEY\n" +
-//                "    );\n" +
+                "CREATE TABLE admin(\n" +
+                "    email varchar(30) UNIQUE,\n" +
+                "    hash_key varchar(500),\n" +
+                "    salt varchar(500),\n" +
+                "    id int not null AUTO_INCREMENT PRIMARY KEY\n" +
+                "    );\n" +
                 " CREATE table address(\n" +
                 "     address_id varchar(15) not null PRIMARY KEY,\n" +
                 "     division varchar(20),\n" +
