@@ -29,9 +29,10 @@ This project is a web-based solution for **Product Authentication** at the margi
     git clone https://github.com/im-nayeem/Product-Authentication.git
     ```
 2. Import the project into your IDE (Eclipse, IntelliJ Idea, etc.)
-3. Configure the database connection in `dbConfig.properties`(my_web_app>src>main>resources>dbConfig.properties)
-4. Configure email and email app-password in `mailConfig.properties`(my_web_app>src>main>resources>mailConfig.properties). This email will be used to send OTP for the verification of user's email and sending mails to them.
+3. Configure the database connection in `dbConfig.properties`(`my_web_app>src>main>resources>dbConfig.properties`)
+4. Configure email and email app-password in `mailConfig.properties`(`my_web_app>src>main>resources>mailConfig.properties`). This email will be used to send OTP for the verification of user's email and sending mails to them.
 5. Build and deploy the project on Tomcat server
+6. Go to `my_web_app/src/main/java/com/my_web_app/SecurePassword.java` and generate hash key and salt from password for admin and execute this [query](https://docs.google.com/document/d/1vib9dpkCHiooprU9Eijkgi5yvR8STv8U8YI-EvbU2MI/edit) to your database once only for the first time.
 
 ## License
 [MIT](https://github.com/im-nayeem/Auth-SupplyChain-java/blob/main/LICENSE)
