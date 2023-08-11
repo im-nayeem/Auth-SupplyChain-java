@@ -1,5 +1,6 @@
 package com.my_web_app.admin;
 
+import com.my_web_app.admin.model.TradersDAO;
 import com.my_web_app.common.model.User;
 import com.my_web_app.distributor.Distributor;
 import com.my_web_app.seller.Seller;
@@ -20,8 +21,11 @@ public class ShowUserInfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            if(request.getParameter("uid")==null) {
-                request.getRequestDispatcher("/admin/vendor-uid-form.jsp").forward(request,response);
+            if(request.getParameter("uid") == null) {
+                TradersDAO tradersDAO = new TradersDAO();
+                request.setAttribute("traders", tradersDAO.getTraders());
+                request.setAttribute("pageName","userInfo");
+                request.getRequestDispatcher("/admin/all-traders.jsp").forward(request, response);
             }
             else {
                 long uid = Long.parseLong(request.getParameter("uid"));

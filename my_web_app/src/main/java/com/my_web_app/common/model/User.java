@@ -7,6 +7,7 @@ import com.sun.istack.internal.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 /**
@@ -27,6 +28,17 @@ public class User {
     public User(String email,String role){
         this.email = email;
         this.role = role;
+    }
+    public User(final ResultSet rs){
+        try{
+            this.name = rs.getString("name");
+            this.email = rs.getString("email");
+            this.nid = rs.getLong("nid");
+            this.address = new Address(rs.getString("address_id"));
+            this.role = getRole(this.nid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public User(long uid){
