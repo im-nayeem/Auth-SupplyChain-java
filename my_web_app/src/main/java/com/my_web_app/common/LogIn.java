@@ -36,7 +36,7 @@ public class LogIn extends HttpServlet {
 
             Account account = new Account(email);
             //verify account,check if password matches with which(hash,salt) stored in DB
-            if(account.verifyAccount(password)==true)
+            if(account.verifyAccount(password))
             {
                 String role = User.getRole(account.getUid());
 
@@ -66,7 +66,10 @@ public class LogIn extends HttpServlet {
                     response.sendRedirect("DistributorAgentPanel");
                 }
                 else
+                {
+                    System.err.println("Error with login - user initialization...");
                     request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+                }
             }
             else
             {

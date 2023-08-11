@@ -2,7 +2,6 @@ package com.my_web_app.seller;
 
 import DB.DatabaseConnection;
 import com.my_web_app.Utility;
-import com.my_web_app.common.model.Address;
 import com.my_web_app.common.model.Product;
 import com.my_web_app.common.model.ProductMap;
 import com.my_web_app.common.model.User;
@@ -82,15 +81,15 @@ public class Seller extends User {
         }
     }
     public void sellProduct(ProductMap productMap, String firstProduct, String lastProduct){
-        DatabaseConnection conn = new DatabaseConnection();
 
         try{
+            DatabaseConnection conn = new DatabaseConnection();
             conn.setAutoCommit(false);
 
             // update product status in DB
             Product.updateProductStatus(conn, productMap.getTableName(),firstProduct,lastProduct, Utility.productStatusByRole("customer"));
             // update sold date
-            Product.updateSoldDate(conn, productMap.getTableName(), firstProduct, lastProduct);
+            Product.updateHandOverDate(conn, productMap.getTableName(), firstProduct, lastProduct);
 
             // if everything is ok then commit
             conn.commit();

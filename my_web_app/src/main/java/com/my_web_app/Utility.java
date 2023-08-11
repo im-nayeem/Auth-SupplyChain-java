@@ -121,8 +121,22 @@ public class Utility {
                 "  description TEXT NOT NULL,\n" +
                 "  logo_url VARCHAR(255)\n" +
                 ");";
+
+//        CREATE TABLE user_product_affiliation(
+//            nid int,
+//        p_code varchar(5),
+//            affiliated int(1),
+//            FOREIGN KEY(nid) REFERENCES users(nid),
+//            FOREIGN KEY(p_code) REFERENCES product_map(p_code)
+//    );
     }
 
+
+    /**
+     * Method to extract product code from product id(pid)
+     * @param Id the product id
+     * @return the product code
+     */
     public static String getCode(String Id)
     {
         int i;
@@ -133,10 +147,24 @@ public class Utility {
         }
         return Id.substring(0,i);
     }
+
+
+    /**
+     * Method to extract integer part of the product id
+     * @param pid the product id
+     * @return the integer part of product id
+     */
     public static int extractIntFromPid(String pid) {
         String intPart = pid.replaceAll("[^\\d]", "");
         return Integer.parseInt(intPart);
     }
+
+
+    /**
+     * @param firstProduct the first product id
+     * @param lastProduct the last product id
+     * @return comma separated pid of products from first and last product id(e.g, 'HT0,HT1,HT2')
+     */
     public static String getCommaSeparatedPidList(String firstProduct,String lastProduct)
     {
         int first = extractIntFromPid(firstProduct);
@@ -149,6 +177,12 @@ public class Utility {
 
         return pidSequence;
     }
+
+
+    /**
+     * Method to get the IP address of the host server
+     * @return the host IP address
+     */
     public static String getIp()
     {
         try {
@@ -169,8 +203,9 @@ public class Utility {
         return null;
     }
 
+
     /**
-     * Method getGeoList
+     * Method to get the list of geolocation(district, upazila, union) by parsing json file
      * @param url the url of json to get list of location
      * @return map the list of location
      * @throws Exception
@@ -234,10 +269,17 @@ public class Utility {
         }
     }
 
+
     public  static  int getRandomCode(){
         return   ThreadLocalRandom.current().nextInt(11111, 10000000 );
     }
 
+
+    /**
+     * Method to get the product status according to the product holder
+     * @param holder the current holder having the product
+     * @return the product status
+     */
     public static String productStatusByRole(String holder){
 
         String status="";

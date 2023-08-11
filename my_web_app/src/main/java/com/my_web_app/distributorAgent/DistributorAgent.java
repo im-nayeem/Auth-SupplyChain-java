@@ -3,6 +3,8 @@ package com.my_web_app.distributorAgent;
 
 import DB.DatabaseConnection;
 import com.my_web_app.Utility;
+import com.my_web_app.common.model.Product;
+import com.my_web_app.common.model.ProductMap;
 import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,28 +59,47 @@ public class DistributorAgent extends User {
         }
     }
 
-    public void updateProductSeller(String tableName,String firstProduct,String lastProduct,long seller){
+    public void updateProductSeller(DatabaseConnection conn, String tableName,String firstProduct,String lastProduct,long seller){
         try{
-            conn = new DatabaseConnection();
-            conn.setAutoCommit(false);
+
             String query = "UPDATE "+tableName+" SET seller=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             PreparedStatement preparedStatement = conn.getPreparedStatement(query);
             preparedStatement.setLong(1,seller);
             preparedStatement.executeUpdate();
-            conn.commit();
 
         }catch (Exception e) {
-            // If there's an error during the transaction, rollback the changes
-            if (conn != null) {
-                conn.rollback();
-            }
             e.printStackTrace();
-
-            throw new RuntimeException(e);
         }
-        finally {
-            if(conn!=null)
+
+    }
+    public void distributeProductToSeller(ProductMap productMap, String firstProduct, String lastProduct, User seller){
+        try{
+            conn = new DatabaseConnection();
+            conn.setAutoCommit(false);
+
+            // update product holder(last holder)
+            Product.updateProductHolder(conn, productMap.getTableName(),firstProduct,lastProduct,seller.getNid());
+
+            // update product status (Distributed)
+            Product.updateProductStatus(conn, productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole(seller.getRole()));
+
+            // update handover date
+            Product.updateHandOverDate(conn, productMap.getTableName(),firstProduct,lastProduct);
+
+            // map product affiliation with distributor for further tracking of history
+            productMap.setProductAffiliation(seller.getNid());
+
+            // update product seller associated with the product
+            updateProductSeller(conn, productMap.getTableName(),firstProduct,lastProduct,seller.getNid());
+
+            conn.commit();
+
+        } catch (Exception e) {
+            if (conn != null)
+                conn.rollback();
+        }finally {
+            if(conn != null)
                 conn.close();
         }
     }

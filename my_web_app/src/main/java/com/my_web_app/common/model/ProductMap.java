@@ -155,6 +155,32 @@ public class ProductMap {
 
     }
 
+    /**
+     * Method to affiliate product with distributor, agent or seller for history tracking purposes
+     * @param nid the user's nid
+     */
+    public void setProductAffiliation(Long nid){
+        conn = new DatabaseConnection();
+        try{
+            String query = "INSERT INTO user_product_affiliation (nid, p_code, affiliated)\n" +
+                    "VALUES (?, ?, 1)\n" +
+                    "ON DUPLICATE KEY UPDATE affiliated = 1;\n";
+            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
+            preparedStatement.setLong(1, nid);
+            preparedStatement.setString(2, this.getProductCode());
+            preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        finally {
+            conn.close();
+        }
+    }
+
+
+
+    /**-------------- Getter -----------------*/
     public String getProductCode() {
         return productCode;
     }
@@ -186,6 +212,7 @@ public class ProductMap {
               ResultSet resultSet = conn.executeQuery("SELECT * FROM product_map");
               while(resultSet.next())
                   lst.add(new ProductMap(resultSet));
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {

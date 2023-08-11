@@ -27,6 +27,7 @@ public class AddUser extends HttpServlet {
 
             request.getRequestDispatcher("/common/user-form.jsp").forward(request,response);
         } catch (Exception e) {
+            System.err.println(e);
             request.setAttribute("error",e);
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }

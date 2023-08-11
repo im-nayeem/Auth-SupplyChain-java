@@ -3,12 +3,14 @@ package com.my_web_app.distributor;
 
 import DB.DatabaseConnection;
 import com.my_web_app.Utility;
-import com.my_web_app.common.model.Address;
+import com.my_web_app.common.model.Product;
+import com.my_web_app.common.model.ProductMap;
 import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Distributor extends User {
     private String distCenterRoad;
@@ -80,16 +82,40 @@ public class Distributor extends User {
                 conn.close();
         }
     }
+    private void updateProductDistributorAgent(DatabaseConnection conn, ProductMap productMap, String firstProduct, String lastProduct, long distributorNid){
+        try {
+            String query = "UPDATE "+productMap.getTableName()+" SET distributor_agent=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
-    public void updateProductDistributorAgent(String tableName,String firstProduct,String lastProduct,long distributorAgent){
+            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
+            preparedStatement.setLong(1,distributorNid);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /** Method to distribute product to distributorAgent **/
+    public void distributeProduct(ProductMap productMap, String firstProduct, String lastProduct, User distributorAgent){
         try{
             conn = new DatabaseConnection();
             conn.setAutoCommit(false);
-            String query = "UPDATE "+tableName+" SET distributor_agent=? WHERE pid IN "+ Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
-            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
-            preparedStatement.setLong(1,distributorAgent);
-            preparedStatement.executeUpdate();
+            // update product holder(last holder)
+            Product.updateProductHolder(conn, productMap.getTableName(),firstProduct,lastProduct,distributorAgent.getNid());
+
+            // update product status (distributing)
+            Product.updateProductStatus(conn, productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole(distributorAgent.getRole()));
+
+            // update handover date
+            Product.updateHandOverDate(conn, productMap.getTableName(),firstProduct,lastProduct);
+
+            // map product affiliation with distributor for further tracking of history
+            productMap.setProductAffiliation(distributorAgent.getNid());
+
+            // update distributorAgent associated with the product
+            updateProductDistributorAgent(conn, productMap, firstProduct, lastProduct, distributorAgent.getNid());
+
+            // If everything gone well then commit
             conn.commit();
 
         }catch (Exception e) {

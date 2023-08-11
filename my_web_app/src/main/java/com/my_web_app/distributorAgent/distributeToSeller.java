@@ -51,14 +51,9 @@ public class distributeToSeller extends HttpServlet {
                     request.getRequestDispatcher("/error/error.jsp").forward(request,response);
                 }
                 else{
-                    // update product holder
-                    Product.updateProductHolder(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
-                    // update product status
-                    Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct, Utility.productStatusByRole(newHolder.getRole()));
-                    //update sold date
-                    Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
-                    //update product seller
-                    new DistributorAgent(user.getNid()).updateProductSeller(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
+
+                    new DistributorAgent(user.getNid()).
+                            distributeProductToSeller(productMap, firstProduct, lastProduct, newHolder);
 
                     response.sendRedirect(request.getServletContext().getContextPath()+"/DistributorAgentPanel");
                 }
