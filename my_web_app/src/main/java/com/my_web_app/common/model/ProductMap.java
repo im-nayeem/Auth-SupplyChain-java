@@ -99,13 +99,20 @@ public class ProductMap {
             // start the transaction
             conn.setAutoCommit(false);
 
-            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map(name,p_code,have_warranty,have_expiration,table_name) VALUES(?,?,?,?,?)");
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map(name, p_code, have_warranty, have_expiration, table_name)\n" +
+                    "VALUES(?, ?, ?, ?, ?)\n" +
+                    "ON DUPLICATE KEY UPDATE\n" +
+                    "    name = VALUES(name),\n" +
+                    "    have_warranty = VALUES(have_warranty),\n" +
+                    "    have_expiration = VALUES(have_expiration),\n" +
+                    "    table_name = VALUES(table_name);\n");
+
             pstmt.setString(1,productName);
             pstmt.setString(2,productCode);
             pstmt.setString(3,haveWarranty);
             pstmt.setString(4,haveExpiration);
             pstmt.setString(5,tableName);
-            pstmt.execute();
+            pstmt.executeUpdate();
 
             // create new table for this released product
             createProductTable(conn);
@@ -132,18 +139,18 @@ public class ProductMap {
     private void createProductTable(DatabaseConnection conn)
     {
         try{
-            String query="CREATE TABLE "+tableName+"(\n"+
+            String query = "CREATE TABLE "+tableName+"(\n"+
                     "    pid varchar(20) PRIMARY KEY,\n" +
                     "    status\tvarchar(15),\n" +
                     "    sold_date date null,\n" +
                     "    last_holder int,\n" +
                     "    batch varchar(15),\n" +
                     "    distributor int,\n"+
-                    "    supplier int,\n"+
+                    "    distributor_agent int,\n"+
                     "    seller int,\n"+
                     "    FOREIGN KEY(last_holder) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(distributor) REFERENCES users(nid),\n" +
-                    "    FOREIGN KEY(supplier) REFERENCES users(nid),\n" +
+                    "    FOREIGN KEY(distributor_agent) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(seller) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(batch) REFERENCES batch(batch_id) on UPDATE CASCADE on DELETE CASCADE\n" +
                     "    );";
@@ -155,6 +162,32 @@ public class ProductMap {
 
     }
 
+    /**
+     * Method to affiliate product with distributor, agent or seller for history tracking purposes
+     * @param nid the user's nid
+     */
+    public void setProductAffiliation(Long nid){
+        conn = new DatabaseConnection();
+        try{
+            String query = "INSERT INTO user_product_affiliation (nid, p_code, affiliated)\n" +
+                    "VALUES (?, ?, 1)\n" +
+                    "ON DUPLICATE KEY UPDATE affiliated = 1;\n";
+            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
+            preparedStatement.setLong(1, nid);
+            preparedStatement.setString(2, this.getProductCode());
+            preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        finally {
+            conn.close();
+        }
+    }
+
+
+
+    /**-------------- Getter -----------------*/
     public String getProductCode() {
         return productCode;
     }
@@ -186,6 +219,7 @@ public class ProductMap {
               ResultSet resultSet = conn.executeQuery("SELECT * FROM product_map");
               while(resultSet.next())
                   lst.add(new ProductMap(resultSet));
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {

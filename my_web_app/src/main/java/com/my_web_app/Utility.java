@@ -40,7 +40,7 @@ public class Utility {
                 "    role_name varchar(15));"+
                 "INSERT INTO role(role_name) VALUES('seller');\n" +
                 "INSERT INTO role(role_name) VALUES('distributor');\n" +
-                "INSERT INTO role(role_name) VALUES('supplier');"+
+                "INSERT INTO role(role_name) VALUES('distributorAgent');"+
 
                 " CREATE TABLE users(\n" +
                 "     nid int PRIMARY KEY,\n" +
@@ -76,11 +76,11 @@ public class Utility {
                 "     );\n" +
                 " CREATE index idx_distributor on distributor(uid);\n" +
 
-                " CREATE TABLE supplier(\n" +
+                " CREATE TABLE distributor_agent(\n" +
                 "     uid int,\n" +
                 "     FOREIGN KEY(uid) REFERENCES users(nid)\n" +
                 "     );\n" +
-                " CREATE index idx_supplier on supplier(uid);\n" +
+                " CREATE index idx_d_agent on distributor_agent(uid);\n" +
 
                 "  CREATE TABLE seller(\n" +
                 "     uid int,\n" +
@@ -107,7 +107,7 @@ public class Utility {
                 "     exp_date date,\n" +
                 "     warranty_year int,\n" +
                 "     warranty_month int,\n" +
-                "     produced int(1) default 0,\n" +
+                "     manufactured int(1) default 0,\n" +
                 "     FOREIGN KEY(p_code) REFERENCES product_map(p_code)\n" +
                 "     );\n" +
                 " CREATE INDEX idx_batch on batch(batch_id);\n" +
@@ -121,8 +121,22 @@ public class Utility {
                 "  description TEXT NOT NULL,\n" +
                 "  logo_url VARCHAR(255)\n" +
                 ");";
+
+//        CREATE TABLE user_product_affiliation(
+//            nid int,
+//        p_code varchar(5),
+//            affiliated int(1),
+//            FOREIGN KEY(nid) REFERENCES users(nid),
+//            FOREIGN KEY(p_code) REFERENCES product_map(p_code)
+//    );
     }
 
+
+    /**
+     * Method to extract product code from product id(pid)
+     * @param Id the product id
+     * @return the product code
+     */
     public static String getCode(String Id)
     {
         int i;
@@ -133,10 +147,24 @@ public class Utility {
         }
         return Id.substring(0,i);
     }
+
+
+    /**
+     * Method to extract integer part of the product id
+     * @param pid the product id
+     * @return the integer part of product id
+     */
     public static int extractIntFromPid(String pid) {
         String intPart = pid.replaceAll("[^\\d]", "");
         return Integer.parseInt(intPart);
     }
+
+
+    /**
+     * @param firstProduct the first product id
+     * @param lastProduct the last product id
+     * @return comma separated pid of products from first and last product id(e.g, 'HT0,HT1,HT2')
+     */
     public static String getCommaSeparatedPidList(String firstProduct,String lastProduct)
     {
         int first = extractIntFromPid(firstProduct);
@@ -149,6 +177,12 @@ public class Utility {
 
         return pidSequence;
     }
+
+
+    /**
+     * Method to get the IP address of the host server
+     * @return the host IP address
+     */
     public static String getIp()
     {
         try {
@@ -169,8 +203,9 @@ public class Utility {
         return null;
     }
 
+
     /**
-     * Method getGeoList
+     * Method to get the list of geolocation(district, upazila, union) by parsing json file
      * @param url the url of json to get list of location
      * @return map the list of location
      * @throws Exception
@@ -234,23 +269,30 @@ public class Utility {
         }
     }
 
+
     public  static  int getRandomCode(){
         return   ThreadLocalRandom.current().nextInt(11111, 10000000 );
     }
 
+
+    /**
+     * Method to get the product status according to the product holder
+     * @param holder the current holder having the product
+     * @return the product status
+     */
     public static String productStatusByRole(String holder){
 
         String status="";
         if(holder.equals("seller"))
-            status = "supplied";
-        else if(holder.equals("supplier"))
-            status =  "distributed";
+            status = "distributed";
+        else if(holder.equals("distributorAgent"))
+            status =  "distributing";
         else if(holder.equals("customer"))
             status = "sold";
         else if(holder.equals("distributor"))
-            status = "stored";
+            status = "supplied";
         else if(holder.equals("admin"))
-            status = "produced";
+            status = "manufactured";
 
         return  status;
     }

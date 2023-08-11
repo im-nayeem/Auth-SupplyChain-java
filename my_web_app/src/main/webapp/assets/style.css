@@ -134,7 +134,7 @@ footer {
 .product-details p {
     margin-bottom: 10px;
 }
-.seller,.distributor,.supplier{
+.seller,.distributor,.distributorAgent{
     color: black;
     background-color: white;
 }

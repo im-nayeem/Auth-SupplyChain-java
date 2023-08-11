@@ -6,14 +6,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-  <c:if test="${sessionScope.get('admin')!=null}">
-    <%@include file="../includes/admin-header.jsp"%>
-  </c:if>
 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
   <style >
     <%@include file="../assets/account-profile.css"%>
   </style>
-
+</head>
+<body>
  <div class="main-content">
   <div class="container">
     <div class="profile">
@@ -40,7 +43,8 @@
       </div>
     </div>
   </div>
-  <c:if test="${sessionScope.get('admin')!=null}">
-    <%@include file="../includes/admin-footer.jsp"%>
-  </c:if>
+ </div>
+
+</body>
+</html>
 

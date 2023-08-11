@@ -30,13 +30,14 @@ public class AdminLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             String email = request.getParameter("email");
-            String password =request.getParameter("password");
+            String password = request.getParameter("password");
             Admin admin = new Admin(email);
             if(admin.verifyAdmin(password))
             {
                 request.getSession().setAttribute("admin",admin);
                 response.sendRedirect("AdminPanel");
             }
+
             else {
                 request.setAttribute("role","admin");
                 request.setAttribute("error","Incorrect E-mail or Password!");

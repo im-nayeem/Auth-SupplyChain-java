@@ -7,6 +7,7 @@ import com.sun.istack.internal.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 /**
@@ -27,6 +28,17 @@ public class User {
     public User(String email,String role){
         this.email = email;
         this.role = role;
+    }
+    public User(final ResultSet rs){
+        try{
+            this.name = rs.getString("name");
+            this.email = rs.getString("email");
+            this.nid = rs.getLong("nid");
+            this.address = new Address(rs.getString("address_id"));
+            this.role = getRole(this.nid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public User(long uid){
@@ -65,7 +77,6 @@ public class User {
             this.role=role.toLowerCase();
 
 
-            System.out.println("Entered!");
             String addId = request.getParameter("division")+""+request.getParameter("district")+request.getParameter("upazila")+request.getParameter("union");
             String division = Address.getDivisionList().get(Integer.parseInt(request.getParameter("division"))-1).getName();
             String district = Address.getDistrictList().get(Integer.parseInt(request.getParameter("district"))-1).getName();
@@ -97,7 +108,10 @@ public class User {
 
             // get role id from role table where role_name is equal to this.role
             int roleId = -1;
-            ResultSet rs = conn.executeQuery("SELECT role_id FROM role WHERE role_name='"+this.role+"';");
+            pstmt = conn.getPreparedStatement("SELECT role_id FROM role WHERE role_name=?;");
+            pstmt.setString(1,this.getRole());
+            ResultSet rs = pstmt.executeQuery();
+
             if(rs.next())
                 roleId = rs.getInt("role_id");
 
@@ -110,7 +124,6 @@ public class User {
 
 
         } catch (Exception e) {
-
 
             throw new RuntimeException(e + "User");
         }
@@ -143,6 +156,15 @@ public class User {
             return role;
         }
     }
+
+    /**
+     * Method to check whether a user has access to product or not(check if the user is current holder)
+     * @param lastHolder the current holder of the product
+     * @param tableName the name of the product table
+     * @param firstProduct the first product id
+     * @param lastProduct the last product id
+     * @return true/false
+     */
     public static Boolean hasAccessToProduct(long lastHolder,String tableName,String firstProduct,String lastProduct){
         Boolean res = false;
         DatabaseConnection conn = null;
@@ -152,17 +174,16 @@ public class User {
 
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setLong(1,lastHolder);
+            ResultSet resultSet = pstmt.executeQuery();
+            resultSet.next();
+            int x = resultSet.getInt("x");
 
-            ResultSet rs = pstmt.executeQuery();
-            rs.next();
-            int x = rs.getInt("x");
+            resultSet = conn.executeQuery("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct));
 
-            rs = conn.executeQuery("SELECT COUNT(*) AS y FROM "+tableName+" WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct));
+            resultSet.next();
+            int y = resultSet.getInt("y");
 
-            rs.next();
-            int y = rs.getInt("y");
-
-            if(x!=0 && y!=0 && y-x==0)
+            if(y != 0 && y - x == 0)
                 res = true;
 
 

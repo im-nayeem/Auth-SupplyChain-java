@@ -4,8 +4,7 @@ import com.my_web_app.common.model.Account;
 import com.my_web_app.common.model.User;
 import com.my_web_app.distributor.Distributor;
 import com.my_web_app.seller.Seller;
-import com.my_web_app.seller.SellerPanelController;
-import com.my_web_app.supplier.Supplier;
+import com.my_web_app.distributorAgent.DistributorAgent;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -37,7 +36,7 @@ public class LogIn extends HttpServlet {
 
             Account account = new Account(email);
             //verify account,check if password matches with which(hash,salt) stored in DB
-            if(account.verifyAccount(password)==true)
+            if(account.verifyAccount(password))
             {
                 String role = User.getRole(account.getUid());
 
@@ -61,13 +60,16 @@ public class LogIn extends HttpServlet {
                     request.getSession().setAttribute("user",new Distributor(account.getUid()));
                     response.sendRedirect("DistributorPanel");
                 }
-                else if(role.equals("supplier"))
+                else if(role.equals("distributorAgent"))
                 {
-                    request.getSession().setAttribute("user",new Supplier(account.getUid()));
-                    response.sendRedirect("SupplierPanel");
+                    request.getSession().setAttribute("user",new DistributorAgent(account.getUid()));
+                    response.sendRedirect("DistributorAgentPanel");
                 }
                 else
+                {
+                    System.err.println("Error with login - user initialization...");
                     request.getRequestDispatcher("/error/error.jsp").forward(request,response);
+                }
             }
             else
             {

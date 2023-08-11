@@ -45,7 +45,7 @@
         <th>Last Handover Date</th>
         <th>Last Holder</th>
         <th>Distributor</th>
-        <th>Supplier</th>
+        <th>DistributorAgent</th>
         <th>Seller</th>
     </tr>
     </thead>
@@ -56,7 +56,7 @@
         <td>${product.getSoldDate()}</td>
         <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getLastHolder()}">${product.getLastHolder()}</a></td>
         <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributor()}">${product.getDistributor()}</a></td>
-        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getSupplier()}">${product.getSupplier()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributorAgent()}">${product.getDistributorAgent()}</a></td>
         <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getSeller()}">${product.getSeller()}</a></td>
         </tr>
     </c:forEach>

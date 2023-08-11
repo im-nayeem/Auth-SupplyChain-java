@@ -20,12 +20,12 @@
 </head>
 <body>
 <div class="head">
-  <h2>Supplier Panel</h2>
+  <h2>distributorAgent Panel</h2>
 </div>
 <div class="topnav" id="myTopnav">
-  <a href="${pageContext.request.contextPath}/SupplierPanel" class="active">Home</a>
+  <a href="${pageContext.request.contextPath}/DistributorAgentPanel" class="active">Home</a>
   <a href="#">My Products</a>
-  <a href="${pageContext.request.contextPath}/supplier/supply-to-seller">Supply Products</a>
+  <a href="${pageContext.request.contextPath}/distributorAgent/distribute-to-seller">Distribute Products To Seller</a>
   <a href="${pageContext.request.contextPath}/add-user?role=Seller">Add Seller</a>
   <a href="${pageContext.request.contextPath}/user-profile?uid=${user.getNid()}" class="account-link">Account</a>
 
@@ -34,7 +34,7 @@
   </a>
 </div>
 
-<div class="main-content supplier">
+<div class="main-content distributorAgent">
 
 </div>
 <footer>

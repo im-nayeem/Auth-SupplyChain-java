@@ -27,7 +27,7 @@
 <div id="content">
 
   <c:if test="${sessionScope.get('admin')==null and product.getStatus()!='sold'}">
-      <h4>This type of Product is produced by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h4>
+      <h4>This type of Product is manufactured by our company. But it is not sure still this is original. <br> This can be confirmed and details can be seen when seller mark it as sold after customer's confirmation to buy.</h4>
   </c:if>
 
   <table id="productInfo" class="responsive-table">
@@ -66,7 +66,7 @@
             <td class="info">${seller.getShopRoad()},<br>${seller.getAddress().getUnion()},${seller.getAddress().getUpazila()},${seller.getAddress().getDistrict()}</td>
         </tr>
         <tr>
-            <td><strong>Manufactured Date:</strong></td>
+            <td><strong>Manufacturing Date:</strong></td>
             <td class="info">${productBatch.getManufacDate()}</td>
         </tr>
         <c:if test="${productMap.getHaveExpiration()=='yes'}">

@@ -12,7 +12,7 @@ import java.util.List;
 public class Address {
     private String addrId;
     private String division=null,district=null,upazila=null,union=null;
-    DatabaseConnection conn = null;
+    private DatabaseConnection conn = null;
     public Address(){
 
     }
@@ -56,7 +56,9 @@ public class Address {
 
             conn = new DatabaseConnection();
 
-            ResultSet rs = conn.executeQuery("SELECT * FROM address where address_id='"+this.addrId+"';");
+            PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM address where address_id=?;");
+            preparedStatement.setString(1,this.addrId);
+            ResultSet rs = preparedStatement.executeQuery();
             if(rs.next())
             {
                 if(rs.getString("division")!=null)

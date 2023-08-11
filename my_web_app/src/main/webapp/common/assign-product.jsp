@@ -24,8 +24,8 @@
     <c:if test="${role=='distributor'}">
         <form method="post" action="distribute-product">
     </c:if>
-    <c:if test="${role=='supplier'}">
-        <form method="post" action="supply-to-seller">
+    <c:if test="${role=='distributorAgent'}">
+        <form method="post" action="distribute-to-seller">
     </c:if>
 
 
@@ -33,13 +33,12 @@
         <input type="hidden" value="${uid}" name="uid">
 
         <label for="first-product">First Product ID:</label>
-    <input type="text" id="first-product" name="first-product" placeholder="Enter First Product ID" pattern="([A-Z]+[0-9]+)" required>
-    <label for="last-product">Last Product ID:</label>
-    <input type="text" id="last-product" name="last-product" placeholder="Enter Last Product Code" pattern="([A-Z]+[0-9]+)" required>
+        <input type="text" id="first-product" name="first-product" placeholder="Enter First Product ID" pattern="([A-Z]+[0-9]+)" required>
+        <label for="last-product">Last Product ID:</label>
+        <input type="text" id="last-product" name="last-product" placeholder="Enter Last Product Code" pattern="([A-Z]+[0-9]+)" required>
 
-    <label for="new-holder-nid">Vendor's NID Number:</label>
-    <input type="number" min="1000000" maxlength="11" id="new-holder-nid" name="new-holder-nid" placeholder="Product Receiver's NID" required>
-
+        <label for="new-holder-nid">Vendor's NID Number:</label>
+        <input type="number" min="1000000" maxlength="11" id="new-holder-nid" name="new-holder-nid" placeholder="Product Receiver's NID" required>
 
     <button type="submit">Assign</button>
 </form>

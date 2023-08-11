@@ -1,7 +1,5 @@
 <%@include file="../includes/admin-header.jsp"%>
 <main>
-    <h1>Welcome to the Admin Panel Dashboard</h1>
-    <p>This is where you can manage your products and accounts.</p>
     <div class="flex-wrapper">
         <div class="single-chart">
             <svg viewBox="0 0 36 36" class="circular-chart orange">

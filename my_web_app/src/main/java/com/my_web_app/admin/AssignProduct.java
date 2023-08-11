@@ -1,5 +1,6 @@
 package com.my_web_app.admin;
 
+import DB.DatabaseConnection;
 import com.my_web_app.Utility;
 import com.my_web_app.admin.model.Admin;
 import com.my_web_app.common.model.*;
@@ -19,7 +20,7 @@ public class AssignProduct extends HttpServlet {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                request.setAttribute("error",e);
+//                request.setAttribute("error",e);
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);
             }
     }
@@ -32,14 +33,14 @@ public class AssignProduct extends HttpServlet {
                 String lastProduct = request.getParameter("last-product");
                 User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-                // check if new holder is valid(under the current holder, admin->distributor->supplier->seller)
-                if(newHolder.getRole().equals("distributor") || newHolder.getRole().equals("supplier") || newHolder.getRole().equals("seller")){
+                // check if new holder is valid(under the current holder, admin->distributor)
+                if(newHolder.getRole().equals("distributor")){
 
                     Product product = new Product(firstProduct);
                     ProductBatch productBatch = new ProductBatch(product.getBatchId());
                     ProductMap productMap = new ProductMap(productBatch.getProductCode());
 
-                    // check if the product status is valid('produced') to handover by admin
+                    // check if the product status is valid(manufactured) to handover by admin
                     if(!Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("admin")))
                     {
                         //if product status is not valid then show error
@@ -47,18 +48,9 @@ public class AssignProduct extends HttpServlet {
                         request.getRequestDispatcher("/error/error.jsp").forward(request,response);
                     }
                    else{
-                        // update product holder
-                        Product.updateProductHolder(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
-
-                        // update product status
-                        Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole(newHolder.getRole()));
-
-                        //update sold date
-                        Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
-
                         Admin admin = (Admin) request.getSession().getAttribute("admin");
-                        // updated product distributor
-                        admin.updateProductDistributor(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
+                        // supply product to distributor
+                        admin.supplyProduct(productMap,firstProduct,lastProduct,newHolder);
 
                         response.sendRedirect(request.getServletContext().getContextPath()+"/AdminPanel");
 
@@ -74,7 +66,7 @@ public class AssignProduct extends HttpServlet {
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
-//            e.printStackTrace();
+            e.printStackTrace();
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }
 

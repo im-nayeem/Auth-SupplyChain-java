@@ -1,4 +1,4 @@
-package com.my_web_app.supplier;
+package com.my_web_app.distributorAgent;
 
 import com.my_web_app.Utility;
 import com.my_web_app.common.model.Product;
@@ -11,12 +11,12 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "SupplyToSeller", value = "/supplier/supply-to-seller")
-public class SupplyProduct extends HttpServlet {
+@WebServlet(name = "DistributeToSeller", value = "/distributorAgent/distribute-to-seller")
+public class distributeToSeller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            request.setAttribute("role","supplier");
+            request.setAttribute("role","distributorAgent");
             request.getRequestDispatcher("/common/assign-product.jsp").forward(request,response);
         }
         catch (Exception e) {
@@ -34,7 +34,7 @@ public class SupplyProduct extends HttpServlet {
             String lastProduct = request.getParameter("last-product");
             User newHolder = new User(Long.parseLong(request.getParameter("new-holder-nid")));
 
-            // check if new holder is valid(under the current holder, admin->distributor->supplier->seller)
+            // check if new holder is valid(under the current holder, admin->distributor->distributorAgent->seller)
             if(newHolder.getRole().equals("seller")){
 
                 Product product = new Product(firstProduct);
@@ -42,25 +42,20 @@ public class SupplyProduct extends HttpServlet {
                 ProductMap productMap = new ProductMap(productBatch.getProductCode());
                 User user = (User) request.getSession().getAttribute("user");
 
-                // check if the product status is distributed and the supplier is assigned with these products
+                // check if the product status is distributing and the distributorAgent is assigned with these products
                 if(!User.hasAccessToProduct(user.getNid(),productMap.getTableName(),firstProduct,lastProduct) || !Product
-                .hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("supplier")))
+                .hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("distributorAgent")))
                 {
                     //if not then show error
                     request.setAttribute("error","Unauthorized Access!");
                     request.getRequestDispatcher("/error/error.jsp").forward(request,response);
                 }
                 else{
-                    // update product holder
-                    Product.updateProductHolder(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
-                    // update product status
-                    Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct, Utility.productStatusByRole(newHolder.getRole()));
-                    //update sold date
-                    Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
-                    //update product seller
-                    new Supplier(user.getNid()).updateProductSeller(productMap.getTableName(),firstProduct,lastProduct,newHolder.getNid());
 
-                    response.sendRedirect(request.getServletContext().getContextPath()+"/SupplierPanel");
+                    new DistributorAgent(user.getNid()).
+                            distributeProductToSeller(productMap, firstProduct, lastProduct, newHolder);
+
+                    response.sendRedirect(request.getServletContext().getContextPath()+"/DistributorAgentPanel");
                 }
             }
             else{

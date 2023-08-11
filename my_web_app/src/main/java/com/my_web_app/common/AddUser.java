@@ -5,7 +5,7 @@ import com.my_web_app.Utility;
 import com.my_web_app.common.model.*;
 import com.my_web_app.distributor.Distributor;
 import com.my_web_app.seller.Seller;
-import com.my_web_app.supplier.Supplier;
+import com.my_web_app.distributorAgent.DistributorAgent;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,6 +27,7 @@ public class AddUser extends HttpServlet {
 
             request.getRequestDispatcher("/common/user-form.jsp").forward(request,response);
         } catch (Exception e) {
+            System.err.println(e);
             request.setAttribute("error",e);
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
         }
@@ -59,7 +60,7 @@ public class AddUser extends HttpServlet {
 
                     mail.send(sub,msg);
 
-                    response.sendRedirect("SupplierPanel");
+                    response.sendRedirect("DistributorAgentPanel");
 
                 }
                 else if(request.getParameter("role").equals("Distributor"))
@@ -89,23 +90,23 @@ public class AddUser extends HttpServlet {
 
                 }
                 else{
-                    Supplier supplier = new Supplier(request, request.getParameter("role"));
-                    supplier.storeInDatabase();
+                    DistributorAgent distributorAgent = new DistributorAgent(request, request.getParameter("role"));
+                    distributorAgent.storeInDatabase();
 
-                    // create account for supplier with a random password
-                    Account account = new Account(supplier.getNid(),supplier.getEmail(),"Supplier"+ Utility.getRandomCode());
+                    // create account for distributorAgent with a random password
+                    Account account = new Account(distributorAgent.getNid(), distributorAgent.getEmail(),"DistributorAgent"+ Utility.getRandomCode());
                     account.storeInDatabase();
 
                     Company company = new Company();
 //                    Company company = (Company) request.getSession().getAttribute("company");
 
                     // Send mail to confirm and update the password(randomly generated above)
-                    Mail mail = new Mail(supplier.getEmail());
+                    Mail mail = new Mail(distributorAgent.getEmail());
                     String sub= "New Employee in "+company.getName();
-                    String msg = "You are assigned as authorized supplier in our company."+
+                    String msg = "You are assigned as authorized distributorAgent in our company."+
                             "Visit this link to confirm and update password: "+
                             request.getScheme() + "://" + Utility.getIp() + ":" + request.getServerPort() + request.getContextPath()+
-                            "/update-password?email="+supplier.getEmail()+"&uid="+supplier.getNid()+"&pass="+account.getPassword() +
+                            "/update-password?email="+ distributorAgent.getEmail()+"&uid="+ distributorAgent.getNid()+"&pass="+account.getPassword() +
                             "\nDon't share this link to anyone. Otherwise, anyone with this link can get access to your account!";
 
                     mail.send(sub,msg);

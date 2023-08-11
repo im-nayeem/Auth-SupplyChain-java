@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created on 03-Feb-23
@@ -19,7 +17,7 @@ import java.util.List;
 public class Product{
     private String productId,batchId;
     private  String status=null,soldDate=null;
-    long lastHolder=0,distributor=0,supplier=0,seller=0;
+    long lastHolder=0,distributor=0,distributorAgent=0,seller=0;
     private static DatabaseConnection conn = null;
 
     public Product() {
@@ -34,7 +32,7 @@ public class Product{
     public Product(String productId, String batchId) {
         this.productId = productId;
         this.batchId = batchId;
-        this.status = "produced";
+        this.status = "manufactured";
 
     }
 
@@ -52,17 +50,18 @@ public class Product{
             pstmt.setString(1,productId);
             ResultSet resultSet = pstmt.executeQuery();
             resultSet.next();
+
             this.productId = resultSet.getString("pid");
             this.batchId  = resultSet.getString("batch");
             this.status = resultSet.getString("status");
             this.soldDate = resultSet.getString("sold_date");
             this.lastHolder = resultSet.getLong("last_holder");
             this.distributor = resultSet.getLong("distributor");
-            this.supplier = resultSet.getLong("supplier");
+            this.distributorAgent = resultSet.getLong("distributor_agent");
             this.seller = resultSet.getLong("seller");
 
         } catch (Exception e) {
-            throw new RuntimeException(e+" Product");
+            throw new RuntimeException(e+" in Product.java");
         }
         finally {
             conn.close();
@@ -83,7 +82,7 @@ public class Product{
             this.soldDate = resultSet.getString("sold_date");
             this.lastHolder = resultSet.getLong("last_holder");
             this.distributor = resultSet.getLong("distributor");
-            this.supplier = resultSet.getLong("supplier");
+            this.distributorAgent = resultSet.getLong("distributor_agent");
             this.seller = resultSet.getLong("seller");
 
         } catch (Exception e) {
@@ -100,23 +99,18 @@ public class Product{
         try{
             conn = new DatabaseConnection();
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+tableName+"(pid,status,sold_date,batch) VALUES(?,?,?,?)");
-
-
             pstmt.setString(1,productId);
             pstmt.setString(2,status);
             pstmt.setString(3,soldDate);
             pstmt.setString(4,batchId);
-
-
             pstmt.execute();
-
 
         } catch (Exception e) {
             throw new RuntimeException(e+" Product Class");
         }
         finally {
             if(conn!=null)
-            conn.close();
+                conn.close();
         }
     }
 
@@ -129,15 +123,11 @@ public class Product{
     {
         try{
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+tableName+"(pid,status,sold_date,batch) VALUES(?,?,?,?)");
-
             pstmt.setString(1,productId);
             pstmt.setString(2,status);
             pstmt.setString(3,soldDate);
             pstmt.setString(4,batchId);
-
-
             pstmt.execute();
-
 
         } catch (Exception e) {
             throw new RuntimeException(e+" Product Class");
@@ -172,29 +162,24 @@ public class Product{
 
     }
     /**
-     * updateProductHolder method to update the holder of the product
+     * updateProductHolder method to update the holder of the product(last holder)
      * @param tableName the table's name in database containing the products
      * @param firstProduct the first product's id
      * @param lastProduct the last product's id
      * @param newHolder new holder's(of the products) nid
      */
-    public static  void updateProductHolder(String tableName,String firstProduct,String lastProduct,long newHolder){
+    public static  void updateProductHolder(DatabaseConnection conn, String tableName,String firstProduct,String lastProduct,long newHolder){
         try{
-            conn = new DatabaseConnection();
             String query = "UPDATE "+tableName+" SET last_holder=? WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             PreparedStatement pstmt = conn.getPreparedStatement(query);
             pstmt.setLong(1,newHolder);
-
             pstmt.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            if(conn!=null)
-                conn.close();
-        }
+
 
     }
 
@@ -202,9 +187,8 @@ public class Product{
      * updateProductStatus method to update the status of the product
      * @param status the new status of the product
      */
-    public static void updateProductStatus(String tableName,String firstProduct,String lastProduct,String status){
+    public static void updateProductStatus(DatabaseConnection conn, String tableName,String firstProduct,String lastProduct,String status){
         try{
-            conn = new DatabaseConnection();
             String query = "UPDATE "+tableName+" SET status=? WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             PreparedStatement pstmt = conn.getPreparedStatement(query);
@@ -215,18 +199,13 @@ public class Product{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            if(conn!=null)
-                conn.close();
-        }
     }
 
     /**
-     * updateSoldDate method to update the handover date(today) of the product
+     * updateHandOverDate method to update the handover date(today) of the product
      */
-    public  static void updateSoldDate(String tableName,String firstProduct,String lastProduct){
+    public  static void updateHandOverDate(DatabaseConnection conn, String tableName, String firstProduct, String lastProduct){
         try{
-            conn = new DatabaseConnection();
             String query = "UPDATE "+tableName+" SET sold_date=CURDATE() WHERE pid IN "+Utility.getCommaSeparatedPidList(firstProduct,lastProduct);
 
             conn.executeUpdate(query);
@@ -234,14 +213,11 @@ public class Product{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            if(conn!=null)
-                conn.close();
-        }
+
     }
 
     /**
-     * hasValidStatus method to check if the product status matches with a given status
+     * Method to check if the product status matches with a given status
      * @param status the given status to check if it matches with the product status
      * @return True if matches else false
      */
@@ -263,7 +239,7 @@ public class Product{
             rs.next();
             int y = rs.getInt("y");
 
-            if(x!=0 && y!=0 && y-x==0)
+            if(y != 0 && y - x == 0)
                 ok = true;
 
 
@@ -274,6 +250,7 @@ public class Product{
         }
         return ok;
     }
+
 
     /**---------------------------------------------------------------------*/
 
@@ -301,8 +278,8 @@ public class Product{
     }
     public long getDistributor(){return distributor;}
 
-    public long getSupplier() {
-        return supplier;
+    public long getDistributorAgent() {
+        return distributorAgent;
     }
 
     public long getSeller() {
@@ -325,7 +302,6 @@ public class Product{
         return productBatch.getWarrantyYear()*365+productBatch.getWarrantyMonth()*30-daysSinceSold;
 
     }
-
 
 
 

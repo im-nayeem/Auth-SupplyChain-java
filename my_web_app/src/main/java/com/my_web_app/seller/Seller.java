@@ -1,7 +1,9 @@
 package com.my_web_app.seller;
 
 import DB.DatabaseConnection;
-import com.my_web_app.common.model.Address;
+import com.my_web_app.Utility;
+import com.my_web_app.common.model.Product;
+import com.my_web_app.common.model.ProductMap;
 import com.my_web_app.common.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +78,28 @@ public class Seller extends User {
         finally {
             if(conn!=null)
                 conn.close();
+        }
+    }
+    public void sellProduct(ProductMap productMap, String firstProduct, String lastProduct){
+
+        try{
+            DatabaseConnection conn = new DatabaseConnection();
+            conn.setAutoCommit(false);
+
+            // update product status in DB
+            Product.updateProductStatus(conn, productMap.getTableName(),firstProduct,lastProduct, Utility.productStatusByRole("customer"));
+            // update sold date
+            Product.updateHandOverDate(conn, productMap.getTableName(), firstProduct, lastProduct);
+
+            // if everything is ok then commit
+            conn.commit();
+
+        }catch (Exception e){
+            // if there is any error then rollback
+            conn.rollback();
+            System.err.println(e);
+        }finally {
+            conn.close();
         }
     }
     public String getShopName() {

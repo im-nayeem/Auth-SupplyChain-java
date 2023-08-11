@@ -1,6 +1,7 @@
 package com.my_web_app.admin;
 
 import com.my_web_app.common.model.ProductBatch;
+import com.my_web_app.common.model.ProductMap;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,7 +18,10 @@ import java.net.URLEncoder;
 public class AddProductBatch extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("p_code",request.getParameter("p_code"));
+        if(request.getParameter("product-code") == null)
+            request.getRequestDispatcher("/admin/product-code-form.jsp").forward(request, response);
+
+        request.setAttribute("productMap", new ProductMap(request.getParameter("product-code")));
         request.getRequestDispatcher("/admin/addBatchForm.jsp").forward(request,response);
     }
 
@@ -28,7 +32,8 @@ public class AddProductBatch extends HttpServlet {
             productBatch.storeInDatabase();
             response.sendRedirect("./generate-qr-code?batch="+ URLEncoder.encode(productBatch.getBatchId(),"UTF-8"));
         } catch (Exception e) {
-            request.setAttribute("error",e);
+            System.err.println(e.getMessage());
+            request.setAttribute("error","Error in adding new batch...");
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
 
         }
