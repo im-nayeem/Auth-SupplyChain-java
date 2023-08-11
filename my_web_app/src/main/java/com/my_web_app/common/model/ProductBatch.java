@@ -1,6 +1,7 @@
 package com.my_web_app.common.model;
 
 import DB.DatabaseConnection;
+import com.my_web_app.Utility;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
@@ -15,8 +16,9 @@ import java.util.List;
  * @author Nayeem
  */
 public class ProductBatch{
-    private String batchId,productCode,manufacDate,expDate;
-    private int totalProduct=0,warrantyYear=0,warrantyMonth=0,manufactured=0;
+    private String batchId,productCode;
+    private String manufacDate = null,expDate = null;
+    private int totalProduct=0,warrantyYear=0,warrantyMonth=0;
     private  DatabaseConnection conn;
 
     /**----------Constructor------------**/
@@ -39,7 +41,6 @@ public class ProductBatch{
             this.warrantyYear = resultSet.getInt("warranty_year");
             this.manufacDate = resultSet.getString("manufac_date");
             this.expDate = resultSet.getString("exp_date");
-            this.manufactured=resultSet.getInt("manufactured");
 
         } catch (Exception e) {
             throw new RuntimeException(e+" Product Batch");
@@ -57,8 +58,12 @@ public class ProductBatch{
             productCode = request.getParameter("product-code");
             manufacDate = request.getParameter("manufacturing-date");
             expDate = request.getParameter("expire-date");
-            warrantyYear = Integer.parseInt(request.getParameter("warranty-year"));
-            warrantyMonth = Integer.parseInt(request.getParameter("warranty-month"));
+            if(request.getParameter("warranty-year") != null) {
+                warrantyYear = Integer.parseInt(request.getParameter("warranty-year"));
+            }
+            if(request.getParameter("warranty-month") != null) {
+                warrantyMonth = Integer.parseInt(request.getParameter("warranty-month"));
+            }
         }
         catch (Exception e)
         {
@@ -75,7 +80,6 @@ public class ProductBatch{
             this.warrantyYear = resultSet.getInt("warranty_year");
             this.manufacDate = resultSet.getString("manufac_date");
             this.expDate = resultSet.getString("exp_date");
-            this.manufactured=resultSet.getInt("manufactured");
         } catch (Exception e) {
             throw new RuntimeException(e+" ProductBatch");
         }
@@ -87,18 +91,19 @@ public class ProductBatch{
             //At first get the number of products containing this product code, it will be the starting product number for this batch. Format of pid:[product code + product number]
 
             ProductMap productMap = new ProductMap(this.productCode);
-            ResultSet resultSet=conn.executeQuery("SELECT COUNT(*) AS n FROM "+productMap.getTableName());
+            ResultSet resultSet = conn.executeQuery("SELECT COUNT(*) AS n FROM "+productMap.getTableName());
             resultSet.next();
-            int start=resultSet.getInt("n");
+            int start = resultSet.getInt("n");
 
             //Execute batch query to insert info for all products
             PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO "+productMap.getTableName()+"(pid,status,sold_date,batch) VALUES(?,?,?,?)");
-            for(int i=start;i<this.totalProduct+start;i++)
+            for(int i = start; i < this.totalProduct + start; i++)
             {
-                pstmt.setString(1,this.productCode+i);
-                pstmt.setString(2,"manufactured");
+                pstmt.setString(1,this.productCode + i);
+                pstmt.setString(2, Utility.productStatusByRole("admin"));
                 pstmt.setString(3,null);
                 pstmt.setString(4,batchId);
+
                 // add batch to prepared statement
                 pstmt.addBatch();
 
@@ -112,7 +117,7 @@ public class ProductBatch{
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException(e+" \nProductInfoGenerator");
+            throw new RuntimeException(e+" \nError with generating Product Info");
         }
 
     }
@@ -157,12 +162,16 @@ public class ProductBatch{
     {
         try {
             List<ProductBatch>batchList = new ArrayList<>();
+
             conn = new DatabaseConnection();
+
             PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM batch WHERE p_code=?");
             preparedStatement.setString(1,productCode);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while(resultSet.next())
                 batchList.add(new ProductBatch(resultSet));
+
             return  batchList;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -187,6 +196,7 @@ public class ProductBatch{
             PreparedStatement pstmt = conn.getPreparedStatement("SELECT * FROM "+productMap.getTableName()+" WHERE batch = ?");
             pstmt.setString(1,batchId);
             ResultSet rs = pstmt.executeQuery();
+
             while (rs.next())
                 lst.add(new Product(rs));
 
@@ -229,7 +239,4 @@ public class ProductBatch{
         return productCode;
     }
 
-    public int getManufactured() {
-        return manufactured;
-    }
 }

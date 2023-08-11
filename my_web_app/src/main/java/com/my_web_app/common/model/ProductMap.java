@@ -99,13 +99,20 @@ public class ProductMap {
             // start the transaction
             conn.setAutoCommit(false);
 
-            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map(name,p_code,have_warranty,have_expiration,table_name) VALUES(?,?,?,?,?)");
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO product_map(name, p_code, have_warranty, have_expiration, table_name)\n" +
+                    "VALUES(?, ?, ?, ?, ?)\n" +
+                    "ON DUPLICATE KEY UPDATE\n" +
+                    "    name = VALUES(name),\n" +
+                    "    have_warranty = VALUES(have_warranty),\n" +
+                    "    have_expiration = VALUES(have_expiration),\n" +
+                    "    table_name = VALUES(table_name);\n");
+
             pstmt.setString(1,productName);
             pstmt.setString(2,productCode);
             pstmt.setString(3,haveWarranty);
             pstmt.setString(4,haveExpiration);
             pstmt.setString(5,tableName);
-            pstmt.execute();
+            pstmt.executeUpdate();
 
             // create new table for this released product
             createProductTable(conn);
@@ -132,18 +139,18 @@ public class ProductMap {
     private void createProductTable(DatabaseConnection conn)
     {
         try{
-            String query="CREATE TABLE "+tableName+"(\n"+
+            String query = "CREATE TABLE "+tableName+"(\n"+
                     "    pid varchar(20) PRIMARY KEY,\n" +
                     "    status\tvarchar(15),\n" +
                     "    sold_date date null,\n" +
                     "    last_holder int,\n" +
                     "    batch varchar(15),\n" +
                     "    distributor int,\n"+
-                    "    distributorAgent int,\n"+
+                    "    distributor_agent int,\n"+
                     "    seller int,\n"+
                     "    FOREIGN KEY(last_holder) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(distributor) REFERENCES users(nid),\n" +
-                    "    FOREIGN KEY(distributorAgent) REFERENCES users(nid),\n" +
+                    "    FOREIGN KEY(distributor_agent) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(seller) REFERENCES users(nid),\n" +
                     "    FOREIGN KEY(batch) REFERENCES batch(batch_id) on UPDATE CASCADE on DELETE CASCADE\n" +
                     "    );";

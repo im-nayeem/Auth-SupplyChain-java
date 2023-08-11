@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * Created on 02-Feb-23
@@ -25,7 +26,10 @@ public class ReleaseProduct extends HttpServlet {
             ProductMap productMap = new ProductMap(request);
             productMap.storeInDatabase();
 
-            response.sendRedirect("add-batch?p_code="+productMap.getProductCode());
+            String redirectUrl = "add-batch?product-code=" + URLEncoder.encode(productMap.getProductCode(),"UTF-8");
+
+            response.sendRedirect(redirectUrl);
+
         } catch (Exception e) {
             e.printStackTrace();
             request.getRequestDispatcher("/error/error.jsp").forward(request,response);
