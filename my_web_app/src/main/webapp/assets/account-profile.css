@@ -1,43 +1,4 @@
 /* Mobile Styles */
-@media only screen and (max-width: 767px) {
-    .profile {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .profile-details {
-        max-width: 100%;
-    }
-
-    .profile-actions {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-actions a {
-        margin-right: 0;
-        margin-bottom: 10px;
-        width: 100%;
-    }
-}
-
-/* Tablet and Desktop Styles */
-@media only screen and (min-width: 768px) {
-    .container {
-        display: flex;
-        justify-content: center;
-    }
-
-    .profile {
-        max-width: 960px;
-    }
-
-    .profile-actions {
-        margin-top: 20px;
-    }
-
-}
 
 .profile-details {
     padding: 20px;

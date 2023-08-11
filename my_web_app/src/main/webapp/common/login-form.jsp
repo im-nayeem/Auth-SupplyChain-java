@@ -18,16 +18,21 @@
    </style>
 </head>
 <body>
+
 <c:if test="${role=='admin'}">
     <form method="post" action="AdminLogin">
 </c:if>
 <c:if test="${role!='admin'}">
-<form method="post" action="LogIn">
-    </c:if>
+    <form method="post" action="LogIn">
+</c:if>
+
     <h2>Login</h2>
+
+<%--    show error if any error arises in login--%>
     <div id="error">
      <p>${error}</p>
     </div>
+
     <label for="email">E-mail:</label>
     <input type="email" id="email" name="email" placeholder="Enter email" required autofocus>
     <label for="password">Password:</label>

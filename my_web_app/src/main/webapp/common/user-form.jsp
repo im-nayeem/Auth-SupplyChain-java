@@ -21,7 +21,7 @@
 </head>
 <body>
 <form class="form-control" method="post" action="add-user">
-    <input type="hidden" value="${role}" name="role">
+    <input type="hidden" value="${role}" name="role" required>
     <h2>Personal Information:</h2>
     <hr>
     <div class="form-group">
