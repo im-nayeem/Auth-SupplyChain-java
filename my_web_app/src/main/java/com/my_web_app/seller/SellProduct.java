@@ -25,6 +25,7 @@ public class SellProduct extends HttpServlet {
             //if pid is null or pid is not provided(there is no request parameter) then sell product in range
             if(!request.getParameterNames().hasMoreElements())
                 request.getRequestDispatcher("/seller/sell-products.jsp").forward(request,response);
+
             //if pid is provided in request(requested by scanning QR code) then sell the product of productID=pid
              else{
                 Product product = new Product(request.getParameter("pid"));
@@ -64,8 +65,6 @@ public class SellProduct extends HttpServlet {
             if(lastProduct==null)
                 lastProduct = firstProduct;
 
-
-
             Product product = new Product(firstProduct);
             ProductBatch productBatch = new ProductBatch(product.getBatchId());
             ProductMap productMap = new ProductMap(productBatch.getProductCode());
@@ -75,19 +74,15 @@ public class SellProduct extends HttpServlet {
             // check if the product status is distributed and the seller is assigned with these products
             if(!User.hasAccessToProduct(user.getNid(),productMap.getTableName(),firstProduct,lastProduct) || !Product.hasValidStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("seller")))
             {
-                //if not then show error
+                // if not then show error
                 request.setAttribute("error","Unauthorized Access!");
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);
             }
             else{
-                // update product status in DB
-                Product.updateProductStatus(productMap.getTableName(),firstProduct,lastProduct,Utility.productStatusByRole("customer"));
-                //update sold date
-                Product.updateSoldDate(productMap.getTableName(),firstProduct,lastProduct);
-
+                Seller seller = new Seller(user.getNid());
+                seller.sellProduct(productMap, firstProduct, lastProduct);
                 response.sendRedirect(request.getServletContext().getContextPath()+"/SellerPanel");
             }
-
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
