@@ -169,9 +169,9 @@ public class ProductMap {
     public void setProductAffiliation(Long nid){
         conn = new DatabaseConnection();
         try{
-            String query = "INSERT INTO user_product_affiliation (nid, p_code, affiliated)\n" +
-                    "VALUES (?, ?, 1)\n" +
-                    "ON DUPLICATE KEY UPDATE affiliated = 1;\n";
+            String query = "INSERT INTO user_product_affiliation (nid, p_code)\n" +
+                    "VALUES (?, ?)\n" +
+                    "ON DUPLICATE KEY UPDATE nid = VALUES(nid),p_code = VALUES(p_code);\n";
             PreparedStatement preparedStatement = conn.getPreparedStatement(query);
             preparedStatement.setLong(1, nid);
             preparedStatement.setString(2, this.getProductCode());
@@ -225,7 +225,7 @@ public class ProductMap {
         }finally {
             if(conn!=null)
                 conn.close();
-            return lst;
         }
+        return lst;
     }
 }

@@ -276,6 +276,7 @@ public class Product{
     public String getSoldDate() {
         return soldDate;
     }
+
     public long getDistributor(){return distributor;}
 
     public long getDistributorAgent() {

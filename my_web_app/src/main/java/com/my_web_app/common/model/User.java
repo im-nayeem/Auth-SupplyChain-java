@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,6 +22,7 @@ public class User {
     private String name, email;
     private Address address;
     private String role;
+    private DatabaseConnection conn = null;
 
 
     public User() {
@@ -42,7 +45,6 @@ public class User {
     }
 
     public User(long uid){
-        DatabaseConnection conn = null;
         try{
             conn = new DatabaseConnection();
             PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM users WHERE nid=?;");
@@ -135,27 +137,7 @@ public class User {
      * @param uid the user's nid
      * @return role the user's role
      */
-    @NotNull
-    public static String getRole(long uid){
 
-        DatabaseConnection conn=null;
-        String role = null;
-        try{
-            conn = new DatabaseConnection();
-
-            ResultSet rs = conn.executeQuery("SELECT role_name from role,user_role WHERE role.role_id=user_role.role_id and user_role.uid="+uid);
-
-            if(rs.next())
-                role = rs.getString("role_name");
-        } catch (Exception e) {
-            throw new RuntimeException(e + "getRole");
-        }
-        finally {
-            if(conn!=null)
-                conn.close();
-            return role;
-        }
-    }
 
     /**
      * Method to check whether a user has access to product or not(check if the user is current holder)
@@ -217,5 +199,80 @@ public class User {
     public String getRole() {
         return role;
     }
+    @NotNull
+    public static String getRole(long uid){
+
+        DatabaseConnection conn=null;
+        String role = null;
+        try{
+            conn = new DatabaseConnection();
+
+            ResultSet rs = conn.executeQuery("SELECT role_name from role,user_role WHERE role.role_id=user_role.role_id and user_role.uid="+uid);
+
+            if(rs.next())
+                role = rs.getString("role_name");
+        } catch (Exception e) {
+            throw new RuntimeException(e + "getRole");
+        }
+        finally {
+            if(conn!=null)
+                conn.close();
+            return role;
+        }
+    }
+
+    /**
+     * Method to get list of user affiliated product codes
+     * @return productCodeList the list of product codes
+     */
+    private List<String> getAffiliation(){
+        List<String> productCodeList = new ArrayList<>();
+        try{
+            conn  = new DatabaseConnection();
+            PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT p_code  FROM user_product_affiliation WHERE nid = ? ;");
+            preparedStatement.setLong(1, this.getNid());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                productCodeList.add(resultSet.getString("p_code"));
+            }
+        }catch (Exception e){
+            System.err.println(e + " in User.getAffiliation() \n");
+        }finally {
+            if(conn != null)
+                conn.close();
+        }
+        return productCodeList;
+    }
+
+    /**
+     * Method to get user affiliated product list
+     * @return productList the list of user affiliated products
+     */
+    public List<Product> getAffiliatedProducts(){
+        List<Product> productList = new ArrayList<>();
+        try{
+            String query = "SELECT * FROM " + Utility.commaSeparatedTablesFromProductCodes(getAffiliation()) + " WHERE distributor = ? or distributor_agent = ? or seller = ?;";
+            conn = new DatabaseConnection();
+            PreparedStatement preparedStatement = conn.getPreparedStatement(query);
+            preparedStatement.setLong(1, this.getNid());
+            preparedStatement.setLong(2, this.getNid());
+            preparedStatement.setLong(3, this.getNid());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                productList.add(new Product(resultSet));
+            }
+
+        }catch (Exception e){
+            System.err.println(e+ " in User.getAffiliatedProducts() \n");
+        }finally {
+            if(conn != null)
+                conn.close();
+        }
+        return  productList;
+    }
+
+
 }
 

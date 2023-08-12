@@ -1,0 +1,17 @@
+.filter-box{
+    display: flex;
+    flex-direction: column;
+}
+.filter-field{
+    margin: 10px 0;
+
+}
+@media screen and (max-width: 768px) {
+    .filter-box{
+        overflow-x: auto;
+    }
+    .filter-field{
+        display: flex;
+        flex-direction: column;
+    }
+}

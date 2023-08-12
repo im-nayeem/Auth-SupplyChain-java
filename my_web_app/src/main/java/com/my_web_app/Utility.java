@@ -169,13 +169,13 @@ public class Utility {
     {
         int first = extractIntFromPid(firstProduct);
         int last = extractIntFromPid(lastProduct);
-        String pidSequence="(";
+        StringBuilder pidSequence= new StringBuilder("(");
         String productCode=getCode(firstProduct);
         for(int i=first;i<last;i++)
-            pidSequence+="'"+(productCode+i)+"',";
-        pidSequence+="'"+(productCode+last)+"')";
+            pidSequence.append("'").append(productCode).append(i).append("',");
+        pidSequence.append("'").append(productCode).append(last).append("')");
 
-        return pidSequence;
+        return pidSequence.toString();
     }
 
 
@@ -241,28 +241,24 @@ public class Utility {
             JSONArray arr = (JSONArray) obj.get("data");
 
             List<Location> map = new ArrayList<>();
-            for (int i = 0; i < arr.size(); i++) {
-                JSONObject location = (JSONObject) arr.get(i);
-//                    System.out.println(division);
+
+            for (Object o : arr) {
+                JSONObject location = (JSONObject) o;
+
                 String name = (String) location.get("name");
                 int id = Integer.parseInt((String) location.get("id"));
-                int parentId=-1;
-                if(location.getOrDefault("division_id",null)!=null)
-                {
+                int parentId = -1;
+                if (location.getOrDefault("division_id", null) != null) {
                     parentId = Integer.parseInt((String) location.get("division_id"));
-                }
-                else if(location.getOrDefault("district_id",null)!=null)
-                {
+                } else if (location.getOrDefault("district_id", null) != null) {
                     parentId = Integer.parseInt((String) location.get("district_id"));
 
-                }
-                else if(location.getOrDefault("upazilla_id",null)!=null)
-                {
+                } else if (location.getOrDefault("upazilla_id", null) != null) {
                     parentId = Integer.parseInt((String) location.get("upazilla_id"));
 
                 }
 
-                map.add(new Location(name,id,parentId));
+                map.add(new Location(name, id, parentId));
             }
             return  map;
 
@@ -295,5 +291,23 @@ public class Utility {
             status = "manufactured";
 
         return  status;
+    }
+
+    /**
+     * Method to get comma separated table names from product code list
+     * @param productCodeList the array of product codes
+     * @return s the comma separated string of table names
+     */
+    public static String commaSeparatedTablesFromProductCodes(List<String> productCodeList){
+        StringBuilder s = new StringBuilder();
+        for(int i = 0; i < productCodeList.size(); i++){
+
+            if(i == productCodeList.size() - 1)
+                s.append("table_").append(productCodeList.get(i).toLowerCase()).append(" ");
+            else
+                s.append("table_").append(productCodeList.get(i).toLowerCase()).append(", ");
+        }
+
+        return s.toString();
     }
 }

@@ -160,11 +160,10 @@ public class ProductBatch{
      */
     public List<ProductBatch> getAllBatch(String productCode)
     {
+        List<ProductBatch>batchList = new ArrayList<>();
+
         try {
-            List<ProductBatch>batchList = new ArrayList<>();
-
             conn = new DatabaseConnection();
-
             PreparedStatement preparedStatement = conn.getPreparedStatement("SELECT * FROM batch WHERE p_code=?");
             preparedStatement.setString(1,productCode);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -172,13 +171,13 @@ public class ProductBatch{
             while(resultSet.next())
                 batchList.add(new ProductBatch(resultSet));
 
-            return  batchList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         finally {
             conn.close();
         }
+        return  batchList;
     }
 
     /**

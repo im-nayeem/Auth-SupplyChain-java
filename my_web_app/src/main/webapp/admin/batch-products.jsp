@@ -7,7 +7,7 @@
 --%>
 <%@include file="/includes/admin-header.jsp"%>
 <style>
-    <%@include file="/assets/list-items.css"%>
+    <%@include file="/assets/css/list-items.css"%>
 </style>
 <div class="main-content">
 <h1>Batch Products</h1>
@@ -26,7 +26,7 @@
         <tr>
             <td>${productMap.getProductName()}</td>
             <td>${productBatch.getTotalProduct()}</td>
-            <td>${productBatch.getWarrantyYear()}Years,${productBatch.getWarrantyMonth()}Months</td>
+            <td>${productBatch.getWarrantyYear()} Years, ${productBatch.getWarrantyMonth()} Months</td>
             <td>${productBatch.getManufacDate()}</td>
             <c:if test="${productMap.getHaveExpiration()=='yes'}">
                <td>${productBatch.getExpDate()}</td>
@@ -54,10 +54,10 @@
         <td><a target="_blank" href="${pageContext.request.contextPath}/view-product?pid=${product.getProductId()}">${product.getProductId()}</a></td>
         <td>${product.getStatus()}</td>
         <td>${product.getSoldDate()}</td>
-        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getLastHolder()}">${product.getLastHolder()}</a></td>
-        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributor()}">${product.getDistributor()}</a></td>
-        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributorAgent()}">${product.getDistributorAgent()}</a></td>
-        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getSeller()}">${product.getSeller()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getLastHolder()}">${product.getLastHolder() == 0 ? 'Manufacturer' : product.getLastHolder()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributor()}">${product.getDistributor() == 0 ? 'N/A' : product.getDistributor()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getDistributorAgent()}">${product.getDistributorAgent() == 0 ? 'N/A' : product.getDistributorAgent()}</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/user-info?uid=${product.getSeller()}">${product.getSeller() == 0 ? 'N/A' : product.getSeller()}</a></td>
         </tr>
     </c:forEach>
     </tbody>

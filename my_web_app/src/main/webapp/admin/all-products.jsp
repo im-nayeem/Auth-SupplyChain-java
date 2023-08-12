@@ -8,7 +8,7 @@
 
 <%@include file="/includes/admin-header.jsp"%>
 <style>
-   <%@include file="/assets/list-items.css"%>
+   <%@include file="/assets/css/list-items.css"%>
 </style>
 <h1>Product List</h1>
 

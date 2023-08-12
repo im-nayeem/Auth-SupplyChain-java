@@ -1,11 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Nayeem
-  Date: 11-Mar-23
-  Time: 10:56 PM
+  User: hnaye
+  Date: 2/15/2023
+  Time: 1:24 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -23,19 +23,15 @@
 </head>
 <body>
 <div class="head">
-    <h2>${company.getName()}</h2>
+    <h2>distributorAgent Panel</h2>
 </div>
 <div class="topnav" id="myTopnav">
-    <a href="./" class="${pageName eq 'home' ? 'active' : ''}">Home</a>
-    <a href="${pageContext.request.contextPath}/view-product">View Product Info</a>
-    <a href="#">About Us</a>
-
-    <c:if test="${sessionScope.get('user')==null}">
-        <a href="${pageContext.request.contextPath}/LogIn" class="account-link">Log-in</a>
-    </c:if>
-    <c:if test="${sessionScope.get('user')!=null}">
-        <a href="${pageContext.request.contextPath}/user-profile" class="account-link ${pageName eq 'profile' ? 'active' : ''}">Account</a>
-    </c:if>
+    <a href="${pageContext.request.contextPath}/DistributorAgentPanel" class="${pageName == 'home' || pageName == null ? 'active' : ''}"
+    >Home</a>
+    <a href="${pageContext.request.contextPath}/user/product-affiliation" class="${pageName eq 'my-products' ? 'active' : ''}">My Products</a>
+    <a href="${pageContext.request.contextPath}/distributorAgent/distribute-to-seller">Distribute Products To Seller</a>
+    <a href="${pageContext.request.contextPath}/add-user?role=Seller">Add Seller</a>
+    <a href="${pageContext.request.contextPath}/user-profile?uid=${user.getNid()}" class="account-link">Account</a>
 
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
