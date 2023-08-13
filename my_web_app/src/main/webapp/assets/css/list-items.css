@@ -9,6 +9,7 @@ table {
 th, td {
     border: 1px solid rgba(183, 182, 182, 0.66);
     text-align: left;
+    padding: 8px;
 }
 
 th {
@@ -22,15 +23,12 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #e1dfdf;
+    background-color: #efefef;
 }
 
 @media screen and (max-width: 768px) {
     .table-view {
         width: 100%;
         overflow-x: auto;
-    }
-    th,td{
-        padding: 5px;
     }
 }

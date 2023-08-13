@@ -3,9 +3,9 @@ package com.my_web_app.common;
 import com.my_web_app.Mail;
 import com.my_web_app.Utility;
 import com.my_web_app.common.model.*;
-import com.my_web_app.distributor.Distributor;
-import com.my_web_app.seller.Seller;
-import com.my_web_app.distributorAgent.DistributorAgent;
+import com.my_web_app.distributor.model.Distributor;
+import com.my_web_app.seller.model.Seller;
+import com.my_web_app.distributorAgent.model.DistributorAgent;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -37,21 +37,19 @@ public class AddUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
-                if(request.getParameter("role").equals("Seller"))
+                if(request.getParameter("role").equals("seller"))
                 {
                     Seller seller = new Seller(request, request.getParameter("role"));
-                    seller.storeInDatabase();
 
                     // create account for seller with a random password
                     Account account = new Account(seller.getNid(),seller.getEmail(),"Seller"+ Utility.getRandomCode());
-                    account.storeInDatabase();
 
                     Company company = new Company();
 //                    Company company = (Company) request.getSession().getAttribute("company");
 
                     // Send mail to confirm and update the password(randomly generated above)
                     Mail mail = new Mail(seller.getEmail());
-                    String sub= "New Employee in "+company.getName();
+                    String sub= "New Trader in "+company.getName();
                     String msg = "You are assigned as authorized seller in our company."+
                                  "Visit this link to confirm and update password: "+
                                   request.getScheme() + "://" + Utility.getIp() + ":" + request.getServerPort() + request.getContextPath()+
@@ -59,25 +57,25 @@ public class AddUser extends HttpServlet {
                                     "\nDon't share this link to anyone. Otherwise, anyone with this link can get access to your account!";
 
                     mail.send(sub,msg);
+                    seller.storeInDatabase();
+                    account.storeInDatabase();
 
                     response.sendRedirect("DistributorAgentPanel");
 
                 }
-                else if(request.getParameter("role").equals("Distributor"))
+                else if(request.getParameter("role").equals("distributor"))
                 {
                     Distributor distributor = new Distributor(request, request.getParameter("role"));
-                    distributor.storeInDatabase();
 
                     // create account for distributor with a random password
                     Account account = new Account(distributor.getNid(),distributor.getEmail(),"Distributor"+ Utility.getRandomCode());
-                    account.storeInDatabase();
 
                     Company company = new Company();
 //                    Company company = (Company) request.getSession().getAttribute("company");
 
                     // Send mail to confirm and update the password(randomly generated above)
                     Mail mail = new Mail(distributor.getEmail());
-                    String sub= "New Employee in "+company.getName();
+                    String sub= "New Trader in "+company.getName();
                     String msg = "You are assigned as authorized distributor in our company."+
                             "Visit this link to confirm and update password: "+
                             request.getScheme() + "://" + Utility.getIp() + ":" + request.getServerPort() + request.getContextPath()+
@@ -85,24 +83,25 @@ public class AddUser extends HttpServlet {
                             "\nDon't share this link to anyone. Otherwise, anyone with this link can get access to your account!";
 
                     mail.send(sub,msg);
+                    distributor.storeInDatabase();
+                    account.storeInDatabase();
+
                     response.sendRedirect("AdminPanel");
 
 
                 }
                 else{
                     DistributorAgent distributorAgent = new DistributorAgent(request, request.getParameter("role"));
-                    distributorAgent.storeInDatabase();
 
                     // create account for distributorAgent with a random password
                     Account account = new Account(distributorAgent.getNid(), distributorAgent.getEmail(),"DistributorAgent"+ Utility.getRandomCode());
-                    account.storeInDatabase();
 
                     Company company = new Company();
 //                    Company company = (Company) request.getSession().getAttribute("company");
 
                     // Send mail to confirm and update the password(randomly generated above)
                     Mail mail = new Mail(distributorAgent.getEmail());
-                    String sub= "New Employee in "+company.getName();
+                    String sub= "New Trader in "+company.getName();
                     String msg = "You are assigned as authorized distributorAgent in our company."+
                             "Visit this link to confirm and update password: "+
                             request.getScheme() + "://" + Utility.getIp() + ":" + request.getServerPort() + request.getContextPath()+
@@ -110,13 +109,17 @@ public class AddUser extends HttpServlet {
                             "\nDon't share this link to anyone. Otherwise, anyone with this link can get access to your account!";
 
                     mail.send(sub,msg);
-                    response.sendRedirect("DistributorPanel");
+                    distributorAgent.storeInDatabase();
+                    account.storeInDatabase();
+
+                    response.sendRedirect("DistributorAgentPanel");
 
 
                 }
 
         } catch (Exception e) {
-            request.setAttribute("error",e);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
             request.getRequestDispatcher("error/error.jsp").forward(request,response);
             throw new RuntimeException(e);
         }

@@ -111,10 +111,6 @@ public class ProductBatch{
             //execute batch query
             int[] queryRes = pstmt.executeBatch();
 
-            PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE batch SET manufactured=? where batch_id=?");
-            preparedStatement.setInt(1,1);
-            preparedStatement.setString(2,batchId);
-            preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             throw new RuntimeException(e+" \nError with generating Product Info");

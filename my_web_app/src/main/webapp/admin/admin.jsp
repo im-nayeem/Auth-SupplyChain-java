@@ -1,10 +1,10 @@
 <%@include file="/includes/admin-header.jsp"%>
 <style>
-  <%@include file="/assets/admin-dashboard.css"%>
+  <%@include file="/assets/css/admin-dashboard.css"%>
 </style>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-  <%@include file="../assets/dashboard.js"%>
+  <%@include file="../assets/js/dashboard.js"%>
 </script>
 <div class="analysis">
   <div id="chart1"></div>

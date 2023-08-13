@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
     </script>
     <style>
-        <%@include file="../assets/qrCode.css"%>
+        <%@include file="../assets/css/qrCode.css"%>
     </style>
 </head>
 <body>

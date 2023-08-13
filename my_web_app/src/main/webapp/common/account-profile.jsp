@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
   <style >
-    <%@include file="../assets/account-profile.css"%>
+    <%@include file="../assets/css/account-profile.css"%>
   </style>
 </head>
 <body>
@@ -37,7 +37,12 @@
 
         </ul>
         <div class="profile-actions">
-          <a href="#" class="btn-update-password">Update Password</a>
+          <c:if test="${sessionScope.get('admin')!=null}">
+            <a href="${pageContext.request.contextPath}/admin/update-password" class="btn-update-password">Update Password</a>
+          </c:if>
+          <c:if test="${sessionScope.get('admin')==null}">
+            <a href="#" class="btn-update-password">Update Password</a>
+          </c:if>
           <a href="${pageContext.request.contextPath}/LogOut" class="btn-logout">Logout</a>
         </div>
       </div>

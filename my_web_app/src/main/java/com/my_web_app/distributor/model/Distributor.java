@@ -1,4 +1,4 @@
-package com.my_web_app.distributor;
+package com.my_web_app.distributor.model;
 
 
 import DB.DatabaseConnection;

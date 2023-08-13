@@ -15,7 +15,7 @@
     <title>Sell Products</title>
     <style>
 
-        <%@include file="../assets/sell-product.css"%>
+        <%@include file="../assets/css/sell-product.css"%>
 
     </style>
 </head>
@@ -47,7 +47,7 @@
 </div>
 
 <script>
-   <%@include file="../assets/sell-confirmation.js"%>
+   <%@include file="../assets/js/sell-confirmation.js"%>
 </script>
 </body>
 </html>

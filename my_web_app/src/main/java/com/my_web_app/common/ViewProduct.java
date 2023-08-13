@@ -1,17 +1,12 @@
 package com.my_web_app.common;
 
 import com.my_web_app.common.model.*;
-import com.my_web_app.seller.Seller;
+import com.my_web_app.seller.model.Seller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.Time;
-import java.time.Clock;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created on 06-Feb-23

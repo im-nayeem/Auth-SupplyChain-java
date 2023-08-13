@@ -86,11 +86,11 @@ public class SecurePassword {
 
 //    public static void main(String[] args) {
 //        String salt = generateSalt(100).get();
-//        String key = hashPassword("pass",salt).get();
+//        String key = hashPassword("password@admin",salt).get();
 //        System.out.println("\n"+salt+"\n");
 //        System.out.println(key);
 //
-//        System.out.println(verifyPassword("pass",key,salt));
+//        System.out.println(verifyPassword("password@admin",key,salt));
 //
 //    }
 }

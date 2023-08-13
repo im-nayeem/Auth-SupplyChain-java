@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Nayeem
-  Date: 2/14/2023
-  Time: 9:46 PM
+  Date: 13-Aug-23
+  Time: 1:39 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,18 +17,18 @@
     </style>
 </head>
 <body>
-<form method="post" action="update-password">
+<form method="post" action="${pageContext.request.contextPath}/admin/update-password">
     <h2>Update Password</h2>
     <label for="email">Email:</label>
-    <input type="text" id="email" name="email" placeholder="Enter email" readonly value="${email}">
-    <input type="hidden" name="uid" value="${uid}">
-    <label for="password">Password:</label>
+    <input type="text" id="email" name="email" placeholder="Enter email" readonly value="${admin.getEmail()}">
+    <label for="old-password">Old Password:</label>
+    <input type="password" id="old-password" name="old-password" placeholder="Enter Old password">
+    <label for="password">New Password:</label>
     <input type="password" id="password" name="password" placeholder="Enter password" required>
-    <label for="confirm-password">Confirm Password:</label>
+    <label for="confirm-password">Confirm New Password:</label>
     <input type="password" id="confirm-password" name="confirm-password" required>
     <button type="submit">Update</button>
 </form>
-
 <script>
     <%@include file="/assets/js/password-checker.js"%>
 </script>

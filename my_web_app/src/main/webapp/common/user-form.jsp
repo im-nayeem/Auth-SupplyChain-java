@@ -16,7 +16,7 @@
 
     <title>Add ${role}</title>
     <style>
-        <%@include file="../assets/user-form.css"%>
+        <%@include file="../assets/css/user-form.css"%>
     </style>
 </head>
 <body>

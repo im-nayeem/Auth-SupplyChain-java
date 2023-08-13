@@ -1,7 +1,5 @@
 package com.my_web_app.common;
 
-import com.my_web_app.SecurePassword;
-import com.my_web_app.Utility;
 import com.my_web_app.common.model.Account;
 
 import javax.servlet.*;
@@ -9,8 +7,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "UpdatePassword", value = "/update-password")
-public class UpdatePassword extends HttpServlet {
+@WebServlet(name = "UpdateOTP", value = "/update-password")
+public class UpdateOTP extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try{

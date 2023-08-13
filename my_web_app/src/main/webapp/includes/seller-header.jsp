@@ -13,11 +13,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
-    <%@include file="../assets/style.css"%>
+    <%@include file="../assets/css/style.css"%>
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    <%@include file="../assets/responsive.js"%>
+    <%@include file="../assets/js/responsive.js"%>
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -28,7 +28,7 @@
 <div class="topnav" id="myTopnav">
   <a href="${pageContext.request.contextPath}/SellerPanel" class="${pageName == 'home' || pageName == null ? 'active' : ''}"
   >Home</a>
-  <a href="#">My Products</a>
+  <a href="${pageContext.request.contextPath}/user/product-affiliation">My Products</a>
   <a href="${pageContext.request.contextPath}/seller/sell-product" class="${pageName eq 'my-products' ? 'active' : ''}">Sell Products</a>
   <a href="${pageContext.request.contextPath}/user-profile" class="account-link">Account</a>
 

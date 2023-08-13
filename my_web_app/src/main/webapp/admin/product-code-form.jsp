@@ -11,7 +11,7 @@
 <head>
   <title>Add New Batch of Product</title>
   <style>
-    <%@include file="../assets/form.css"%>
+    <%@include file="../assets/css/form.css"%>
   </style>
 </head>
 <body>

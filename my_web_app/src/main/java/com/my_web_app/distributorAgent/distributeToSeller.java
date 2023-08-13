@@ -5,6 +5,7 @@ import com.my_web_app.common.model.Product;
 import com.my_web_app.common.model.ProductBatch;
 import com.my_web_app.common.model.ProductMap;
 import com.my_web_app.common.model.User;
+import com.my_web_app.distributorAgent.model.DistributorAgent;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

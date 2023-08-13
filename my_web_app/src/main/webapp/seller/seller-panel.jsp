@@ -5,7 +5,7 @@
         <h2>Product Statistics</h2>
         <canvas id="product-chart"></canvas>
         <script>
-          <%@include file="../assets/seller-dashboard.js"%>
+          <%@include file="../assets/js/seller-dashboard.js"%>
         </script>
       </section>
     </div>

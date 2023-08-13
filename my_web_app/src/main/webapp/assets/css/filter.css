@@ -6,6 +6,9 @@
     margin: 10px 0;
 
 }
+input{
+    padding: 3px;
+}
 @media screen and (max-width: 768px) {
     .filter-box{
         overflow-x: auto;

@@ -46,9 +46,9 @@
                 <td class="product-batch">${product.getBatchId()}</td>
                 <td class="product-status">${product.getStatus()}</td>
                 <td>${product.getSoldDate()}</td>
-                <td>${product.getDistributor() == 0 ? 'N/A' : product.getDistributor()}</td>
-                <td>${product.getDistributorAgent() == 0 ? 'N/A' : product.getDistributorAgent()}</td>
-                <td>${product.getSeller() == 0 ? 'N/A' : product.getSeller()}</td>
+                <td><a href="/user-profile?uid=${product.getDistributor()}"> ${product.getDistributor() == 0 ? 'N/A' : product.getDistributor()}</a></td>
+                <td><a href="/user-profile?uid=${product.getDistributorAgent()}">${product.getDistributorAgent() == 0 ? 'N/A' : product.getDistributorAgent()}</a></td>
+                <td><a href="/user-profile?uid=${product.getSeller()}">${product.getSeller() == 0 ? 'N/A' : product.getSeller()}</a></td>
             </tr>
         </c:forEach>
         </tbody>

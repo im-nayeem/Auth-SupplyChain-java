@@ -1,4 +1,4 @@
-package com.my_web_app.distributorAgent;
+package com.my_web_app.distributorAgent.model;
 
 
 import DB.DatabaseConnection;
@@ -37,7 +37,7 @@ public class DistributorAgent extends User {
             super.storeInDatabase(conn);
 
 
-            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO distributorAgent(uid) VALUES(?)");
+            PreparedStatement pstmt = conn.getPreparedStatement("INSERT INTO distributor_agent(uid) VALUES(?)");
             pstmt.setLong(1,getNid());
 
             pstmt.execute();

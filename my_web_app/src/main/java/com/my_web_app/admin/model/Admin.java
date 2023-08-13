@@ -47,17 +47,24 @@ public class Admin {
     public Boolean verifyAdmin(String password){
         return SecurePassword.verifyPassword(password,this.hashKey,this.salt);
     }
-
-    public static void setUpDB(){
-        DatabaseConnection conn = null;
+    public void updatePassword(String newPassword){
         try{
-            conn = new DatabaseConnection();
-            PreparedStatement preparedStatement = conn.getPreparedStatement(Utility.getInitialQuery());
-            preparedStatement.executeQuery();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            String salt = SecurePassword.generateSalt(500).get();
+            String hashKey = SecurePassword.hashPassword(newPassword,salt).get();
+
+            DatabaseConnection conn  = new DatabaseConnection();
+            PreparedStatement preparedStatement = conn.getPreparedStatement("UPDATE admin SET hash_key=?,salt=? WHERE email=?");
+            preparedStatement.setString(1, hashKey);
+            preparedStatement.setString(2, salt);
+            preparedStatement.setString(3, this.email);
+
+            preparedStatement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
+
 
     private  void updateProductDistributor(DatabaseConnection conn, ProductMap productMap,String firstProduct, String lastProduct, long distributorNid){
         try{

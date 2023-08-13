@@ -2,9 +2,9 @@ package com.my_web_app.admin;
 
 import com.my_web_app.admin.model.TradersDAO;
 import com.my_web_app.common.model.User;
-import com.my_web_app.distributor.Distributor;
-import com.my_web_app.seller.Seller;
-import com.my_web_app.distributorAgent.DistributorAgent;
+import com.my_web_app.distributor.model.Distributor;
+import com.my_web_app.seller.model.Seller;
+import com.my_web_app.distributorAgent.model.DistributorAgent;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

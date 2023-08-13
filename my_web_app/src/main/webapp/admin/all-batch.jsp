@@ -9,7 +9,7 @@
 
 <%@include file="/includes/admin-header.jsp"%>
 <style>
-    <%@include file="/assets/all-batch.css"%>
+    <%@include file="/assets/css/all-batch.css"%>
 </style>
 <h1>All Batches of Product - ${productMap.getProductCode()}</h1>
 <div class="grid-container">

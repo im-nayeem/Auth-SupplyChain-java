@@ -17,8 +17,6 @@ import java.sql.ResultSet;
  */
 @WebServlet(name = "AdminPanel", value = "/AdminPanel")
 public class AdminPanel extends HttpServlet {
-    private DatabaseConnection conn;
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,16 +30,15 @@ public class AdminPanel extends HttpServlet {
         }
         catch (Exception e)
         {
-            System.err.println(e.getMessage());
+           e.printStackTrace();
 
-            /** If Tables are created but company info is not provided then provide company info **/
+            /** If company info is not provided then provide company info for the first time **/
             try{
-                    //if tables are created but data is not provided
                     response.sendRedirect("admin/storeCompanyInfo");
                 }
                 catch (Exception ex)
                 {
-                    System.err.println(ex.getMessage());
+                    ex.printStackTrace();
                     request.getRequestDispatcher("error/error.jsp").forward(request,response);
                 }
             }

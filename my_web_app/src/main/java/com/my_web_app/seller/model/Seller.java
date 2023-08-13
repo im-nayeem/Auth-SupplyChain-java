@@ -1,4 +1,4 @@
-package com.my_web_app.seller;
+package com.my_web_app.seller.model;
 
 import DB.DatabaseConnection;
 import com.my_web_app.Utility;

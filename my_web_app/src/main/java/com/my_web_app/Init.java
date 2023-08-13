@@ -1,6 +1,5 @@
 package com.my_web_app;
 
-import DB.DatabaseConnection;
 import com.my_web_app.common.model.Company;
 
 import javax.servlet.*;
@@ -24,19 +23,10 @@ public class Init extends HttpServlet {
             request.getRequestDispatcher("index.jsp").forward(request,response);
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
-
-            // If tables in database are not created then create tables
-            DatabaseConnection conn;
-            try{
-                conn = new DatabaseConnection();
-                conn.execute(Utility.getInitialQuery());
-            } catch (Exception ex) {
-                System.err.println(ex.getMessage());
+                e.printStackTrace();
                 request.getRequestDispatcher("/error/error.jsp").forward(request,response);
             }
 
-        }
     }
 
     @Override

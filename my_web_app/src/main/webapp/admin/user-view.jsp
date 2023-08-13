@@ -7,7 +7,7 @@
 --%>
 <%@include file="../includes/admin-header.jsp"%>
 <style>
-    <%@include file="../assets/user-view.css"%>
+    <%@include file="../assets/css/user-view.css"%>
 </style>
 <div class="container">
     <div class="info">
