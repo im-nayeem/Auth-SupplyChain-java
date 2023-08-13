@@ -55,3 +55,32 @@ This project follows the Model-View-Controller (MVC) design pattern for its arch
 ## Project Report
 Please find the project report [here](https://www.overleaf.com/read/dngpbwvhntvp).
 
+## Screenshots
+![homepage](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/4c56e9b6-b8f0-42b0-b771-ee4d908a69bd)
+![responsive homepage](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/c7da675c-1cbb-4f4e-bf70-19b5ac677017)
+![admin dashboard](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/c1c0416d-eb11-42f0-bee2-a2e37d233dc8)
+![products](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/39483627-586e-40ac-8736-131e99fb111c)
+![batches](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/23e26ae4-f8dd-4831-80ea-669301ce31de)
+![bath products](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/fdc7ea2f-e38a-49c7-8054-33370e050c1b)
+![qr codes](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/cc13da9e-dc01-4c2c-8fe6-d53e2f54dca9)
+![traders](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/ba6abf02-31df-4de8-8120-0a7e629c77f7)
+![release-product](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/4e61c142-c5a7-4c3a-8be1-2c31199d17e5)
+![add-batch](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/10ac3d65-c86e-43bc-8306-fe383232dedf)
+![add-distributor](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/3d37a1fe-2f34-4a40-b512-9904a9659729)
+![confirmation-by-email](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/50a833a8-cf3e-42c1-8b7e-5156ef4b781c)
+![supply-product](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/e44a4c5a-ccf6-4957-b10e-29ce9b794867)
+![image](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/5f2d3c1d-bc49-4f1f-932c-cfa59df2aba5)
+![sold product](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/e8bdd79d-1f4f-4e80-83e9-d181b0eafb4b)
+![affiliated product](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/171a1914-0a2b-4dc3-b1a9-f36c5840b611)
+![mark as sold](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/75f7fccb-03f8-43a0-95c4-2c59df9a4747)
+![mark sold](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/d5f0163b-e78e-42fc-b952-be2d1043117c)
+![sold stats](https://github.com/im-nayeem/Auth-SupplyChain-java/assets/77660934/af8456d1-837a-4c89-8371-8179c500cb2b)
+
+
+
+
+
+
+
+
+
