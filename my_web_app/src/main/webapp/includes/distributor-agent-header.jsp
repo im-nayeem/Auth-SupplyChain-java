@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="head">
-    <h2>distributorAgent Panel</h2>
+    <h2>Distributor Agent Panel</h2>
 </div>
 <div class="topnav" id="myTopnav">
     <a href="${pageContext.request.contextPath}/DistributorAgentPanel" class="${pageName == 'home' || pageName == null ? 'active' : ''}"

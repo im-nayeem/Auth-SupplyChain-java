@@ -29,7 +29,7 @@ public class storeCompanyInfo extends HttpServlet {
             Company company = new Company(request);
             company.storeInDatabase();
 
-            response.sendRedirect("../AdminPanel");
+            response.sendRedirect("../admin/update-password");
 
 
         }
